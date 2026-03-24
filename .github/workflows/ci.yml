@@ -1,0 +1,35 @@
+name: Frontend CI
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Detect frontend test script
+        id: detect_tests
+        shell: bash
+        run: |
+          TEST_COMMAND=$(node -e "const pkg=require('./package.json'); const scripts=pkg.scripts ?? {}; const candidates=['test','test:unit','test:ci']; const found=candidates.find((name)=>typeof scripts[name]==='string'); process.stdout.write(found ?? '')")
+          echo "command=$TEST_COMMAND" >> "$GITHUB_OUTPUT"
+
+      - name: Run frontend tests
+        if: steps.detect_tests.outputs.command != ''
+        run: npm run ${{ steps.detect_tests.outputs.command }}
+
+      - name: Build frontend
+        run: npm run build

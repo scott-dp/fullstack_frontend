@@ -1,38 +1,40 @@
 <script setup lang="ts">
 /**
- * Login view presenting a username/password form.
- * Authenticates via the auth store and redirects to the originally
- * requested page (or dashboard) on success.
+ * Registration view presenting a sign-up form with password confirmation.
+ * Registers via the auth store and redirects to the dashboard on success.
  */
 import { ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { HttpError } from '@/api/client'
 
 const router = useRouter()
-const route = useRoute()
 const auth = useAuthStore()
 
 /** Bound username input value. */
 const username = ref('')
 /** Bound password input value. */
 const password = ref('')
-/** Error message displayed on authentication failure. */
+/** Bound password confirmation input value. */
+const confirmPassword = ref('')
+/** Error message displayed on registration failure. */
 const error = ref('')
 
 /**
- * Handles form submission by attempting login.
- * On success redirects to the originally requested route or dashboard.
- * On failure displays the error message from the server.
+ * Handles form submission by validating password match and attempting registration.
+ * On success redirects to the dashboard. On failure displays the error message.
  */
 async function handleSubmit() {
   error.value = ''
+  if (password.value !== confirmPassword.value) {
+    error.value = 'Passwords do not match'
+    return
+  }
   try {
-    await auth.login({ username: username.value, password: password.value })
-    const redirect = route.query.redirect as string
-    router.push(redirect || '/')
+    await auth.register({ username: username.value, password: password.value })
+    router.push('/')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Login failed'
+    error.value = err instanceof HttpError ? err.message : 'Registration failed'
   }
 }
 </script>
@@ -40,39 +42,28 @@ async function handleSubmit() {
 <template>
   <div class="auth-page">
     <div class="auth-card card">
-      <h1>Sign In</h1>
-      <p class="text-muted">IK System - Internal Control</p>
+      <h1>Register</h1>
+      <p class="text-muted">Create your account</p>
       <form @submit.prevent="handleSubmit" class="auth-form">
         <div v-if="error" class="alert-error">{{ error }}</div>
         <div class="form-group">
           <label for="username" class="form-label">Username</label>
-          <input
-            id="username"
-            v-model="username"
-            type="text"
-            class="form-input"
-            required
-            autocomplete="username"
-            autofocus
-          />
+          <input id="username" v-model="username" type="text" class="form-input" required minlength="3" maxlength="50" autocomplete="username" autofocus />
         </div>
         <div class="form-group">
           <label for="password" class="form-label">Password</label>
-          <input
-            id="password"
-            v-model="password"
-            type="password"
-            class="form-input"
-            required
-            autocomplete="current-password"
-          />
+          <input id="password" v-model="password" type="password" class="form-input" required minlength="6" autocomplete="new-password" />
+        </div>
+        <div class="form-group">
+          <label for="confirm-password" class="form-label">Confirm Password</label>
+          <input id="confirm-password" v-model="confirmPassword" type="password" class="form-input" required minlength="6" autocomplete="new-password" />
         </div>
         <button type="submit" class="btn btn-primary btn-full" :disabled="auth.loading">
-          {{ auth.loading ? 'Signing in...' : 'Sign In' }}
+          {{ auth.loading ? 'Creating account...' : 'Register' }}
         </button>
       </form>
       <p class="auth-footer">
-        Don't have an account? <router-link to="/register">Register</router-link>
+        Already have an account? <router-link to="/login">Sign in</router-link>
       </p>
     </div>
   </div>
