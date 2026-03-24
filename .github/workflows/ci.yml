@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  test-build-coverage:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,16 +20,35 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Detect frontend test script
-        id: detect_tests
-        shell: bash
-        run: |
-          TEST_COMMAND=$(node -e "const pkg=require('./package.json'); const scripts=pkg.scripts ?? {}; const candidates=['test','test:unit','test:ci']; const found=candidates.find((name)=>typeof scripts[name]==='string'); process.stdout.write(found ?? '')")
-          echo "command=$TEST_COMMAND" >> "$GITHUB_OUTPUT"
-
-      - name: Run frontend tests
-        if: steps.detect_tests.outputs.command != ''
-        run: npm run ${{ steps.detect_tests.outputs.command }}
+      - name: Run frontend unit tests with coverage
+        run: npm run test:coverage
 
       - name: Build frontend
         run: npm run build
+
+      - name: Run Cypress e2e tests
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm run dev -- --host 127.0.0.1 --port 4173
+          wait-on: 'http://127.0.0.1:4173'
+          wait-on-timeout: 120
+          browser: chrome
+          command: npm run cy:run
+
+      - name: Upload frontend unit coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-unit-coverage
+          path: coverage/unit
+          if-no-files-found: warn
+
+      - name: Upload Cypress artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-cypress-artifacts
+          path: |
+            cypress/videos
+            cypress/screenshots
+          if-no-files-found: ignore

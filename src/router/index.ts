@@ -11,7 +11,7 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
-const routes: RouteRecordRaw[] = [
+export const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'landing',
@@ -61,27 +61,32 @@ const routes: RouteRecordRaw[] = [
   },
 ]
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-})
+type AuthGuardStore = {
+  isAuthenticated: boolean
+  isAdmin: boolean
+  checkAuth: () => Promise<void>
+}
 
 /**
  * Global navigation guard.
  * Checks auth status on first navigation, then enforces route meta rules.
  */
-router.beforeEach(async (to) => {
-  const auth = useAuthStore()
-
+export async function applyRouteGuard(
+  to: Pick<(typeof routes)[number], 'meta'> & {
+    fullPath: string
+    matched: Array<{ meta: Record<string, unknown> }>
+  },
+  auth: AuthGuardStore,
+) {
   if (!auth.isAuthenticated) {
     await auth.checkAuth()
   }
 
-  if (to.meta.public) {
+  if (to.meta?.public) {
     return
   }
 
-  if (to.meta.guest && auth.isAuthenticated) {
+  if (to.meta?.guest && auth.isAuthenticated) {
     return { name: 'dashboard' }
   }
 
@@ -92,6 +97,19 @@ router.beforeEach(async (to) => {
   if (to.matched.some((r) => r.meta.requiresAdmin) && !auth.isAdmin) {
     return { name: 'dashboard' }
   }
-})
+}
+
+export function createAppRouter() {
+  const router = createRouter({
+    history: createWebHistory(),
+    routes,
+  })
+
+  router.beforeEach((to) => applyRouteGuard(to, useAuthStore()))
+
+  return router
+}
+
+const router = createAppRouter()
 
 export default router

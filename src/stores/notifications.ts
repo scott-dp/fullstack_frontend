@@ -16,12 +16,20 @@ export const useNotificationStore = defineStore('notifications', () => {
 
   /** Fetches all notifications for the current user from the server. */
   async function fetchNotifications() {
-    notifications.value = await notificationApi.list()
+    try {
+      notifications.value = await notificationApi.list()
+    } catch {
+      notifications.value = []
+    }
   }
 
   /** Fetches only the unread notification count from the server. */
   async function fetchUnreadCount() {
-    unreadCount.value = await notificationApi.unreadCount()
+    try {
+      unreadCount.value = await notificationApi.unreadCount()
+    } catch {
+      unreadCount.value = 0
+    }
   }
 
   /**
