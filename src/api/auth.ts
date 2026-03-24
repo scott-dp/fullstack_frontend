@@ -64,8 +64,6 @@ export interface AuthResponse {
 export interface RegistrationResponse {
   /** Server confirmation message. */
   message: string
-  /** Verification link to activate the account. */
-  verificationLink: string
 }
 
 /** Response body for successful email verification. */

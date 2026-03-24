@@ -23,8 +23,6 @@ const confirmPassword = ref('')
 const error = ref('')
 /** Success message shown after registration. */
 const success = ref('')
-/** Verification link returned by the backend for local/dev flows. */
-const verificationLink = ref('')
 
 /**
  * Handles form submission by validating password match and attempting registration.
@@ -33,7 +31,6 @@ const verificationLink = ref('')
 async function handleSubmit() {
   error.value = ''
   success.value = ''
-  verificationLink.value = ''
   if (password.value !== confirmPassword.value) {
     error.value = t('Passwords do not match')
     return
@@ -45,7 +42,6 @@ async function handleSubmit() {
       password: password.value,
     })
     success.value = response.message
-    verificationLink.value = response.verificationLink
   } catch (err: unknown) {
     error.value = err instanceof HttpError ? err.message : t('Registration failed')
   }
@@ -60,9 +56,6 @@ async function handleSubmit() {
       <form @submit.prevent="handleSubmit" class="auth-form">
         <div v-if="success" class="alert-success">
           <p>{{ success }}</p>
-          <a v-if="verificationLink" :href="verificationLink" class="verification-link">
-            Open verification link
-          </a>
         </div>
         <div v-if="error" class="alert-error">{{ error }}</div>
         <div class="form-group">
@@ -128,11 +121,6 @@ async function handleSubmit() {
   border-radius: var(--radius);
   font-size: 14px;
   margin-bottom: 16px;
-}
-.verification-link {
-  display: inline-block;
-  margin-top: 8px;
-  font-weight: 600;
 }
 .btn-full {
   width: 100%;

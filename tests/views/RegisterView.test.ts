@@ -48,10 +48,9 @@ describe('RegisterView', () => {
     expect(authStoreMock.register).not.toHaveBeenCalled()
   })
 
-  it('registers and shows the verification link on success', async () => {
+  it('registers and shows the email verification message on success', async () => {
     authStoreMock.register.mockResolvedValue({
-      message: 'Registration successful. Verify your email before logging in.',
-      verificationLink: 'http://localhost:5173/verify-email?token=abc',
+      message: 'Registration successful. Check your email to verify your account before logging in.',
     })
 
     render(RegisterView, {
@@ -75,8 +74,12 @@ describe('RegisterView', () => {
       password: 'secret123',
     })
     expect(pushMock).not.toHaveBeenCalled()
-    expect(await screen.findByText('Registration successful. Verify your email before logging in.')).toBeTruthy()
-    expect(screen.getByText('Open verification link')).toBeTruthy()
+    expect(
+      await screen.findByText(
+        'Registration successful. Check your email to verify your account before logging in.',
+      ),
+    ).toBeTruthy()
+    expect(screen.queryByText('Open verification link')).toBeNull()
   })
 
   it('shows the API error message on failed registration', async () => {

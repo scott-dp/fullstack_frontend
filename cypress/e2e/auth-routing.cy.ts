@@ -21,6 +21,9 @@ describe('auth routing', () => {
     cy.intercept('GET', '/api/dashboard', {
       statusCode: 200,
       body: {
+        organizationAssigned: true,
+        organizationName: 'Everest',
+        message: null,
         totalChecklistTemplates: 0,
         checklistsCompletedToday: 0,
         temperatureAlertsToday: 0,
@@ -48,7 +51,7 @@ describe('auth routing', () => {
     }).as('login')
 
     cy.visit('/login?redirect=%2Fapp')
-    cy.get('#username').type('manager')
+    cy.get('#identifier').type('manager')
     cy.get('#password').type('secret123')
     cy.contains('button', 'Sign In').click()
 
