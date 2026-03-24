@@ -58,7 +58,7 @@ async function submit() {
       })),
       comment: overallComment.value || undefined,
     })
-    router.push('/checklists/history')
+    router.push('/app/checklists/history')
   } catch (err: unknown) {
     error.value = err instanceof HttpError ? err.message : 'Failed to submit checklist'
   } finally {
@@ -74,7 +74,7 @@ async function submit() {
         <h1 v-if="template">{{ template.title }}</h1>
         <p v-if="template" class="text-muted">{{ template.description }}</p>
       </div>
-      <router-link to="/checklists" class="btn btn-secondary">Back</router-link>
+      <router-link to="/app/checklists" class="btn btn-secondary">Back</router-link>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>

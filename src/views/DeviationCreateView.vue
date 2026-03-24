@@ -37,7 +37,7 @@ async function submit() {
       category: category.value,
       severity: severity.value,
     })
-    router.push('/deviations')
+    router.push('/app/deviations')
   } catch (err: unknown) {
     error.value = err instanceof HttpError ? err.message : 'Failed to create deviation'
   } finally {
@@ -50,7 +50,7 @@ async function submit() {
   <div>
     <div class="page-header">
       <h1>Report Deviation</h1>
-      <router-link to="/deviations" class="btn btn-secondary">Back</router-link>
+      <router-link to="/app/deviations" class="btn btn-secondary">Back</router-link>
     </div>
 
     <div class="card">

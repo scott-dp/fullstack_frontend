@@ -1,18 +1,23 @@
 /**
  * Vue Router configuration.
- * Defines all application routes, lazy-loaded view components,
- * and the global navigation guard for authentication and authorization.
  *
  * Route meta fields:
- * - `guest` - Route is only accessible to unauthenticated users (login, register).
- * - `requiresAuth` - Route requires an authenticated session; redirects to login otherwise.
- * - `requiresAdmin` - Route requires the ADMIN role; redirects to dashboard otherwise.
+ * - `guest` - Only accessible to unauthenticated users (redirects to dashboard if logged in).
+ * - `requiresAuth` - Requires an authenticated session; redirects to login otherwise.
+ * - `requiresAdmin` - Requires the ADMIN role; redirects to dashboard otherwise.
+ * - `public` - Accessible to everyone regardless of auth state.
  * @module
  */
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
-/** Application route definitions with lazy-loaded components. */
 const routes: RouteRecordRaw[] = [
+  {
+    path: '/',
+    name: 'landing',
+    component: () => import('@/views/LandingView.vue'),
+    meta: { public: true },
+  },
   {
     path: '/login',
     name: 'login',
@@ -26,7 +31,7 @@ const routes: RouteRecordRaw[] = [
     meta: { guest: true },
   },
   {
-    path: '/',
+    path: '/app',
     component: () => import('@/layouts/AppLayout.vue'),
     meta: { requiresAuth: true },
     children: [
@@ -41,6 +46,12 @@ const routes: RouteRecordRaw[] = [
       { path: 'notifications', name: 'notifications', component: () => import('@/views/NotificationsView.vue') },
       { path: 'settings', name: 'settings', component: () => import('@/views/SettingsView.vue') },
       {
+        path: 'admin',
+        name: 'admin-dashboard',
+        component: () => import('@/views/AdminDashboardView.vue'),
+        meta: { requiresAdmin: true },
+      },
+      {
         path: 'admin/users',
         name: 'admin-users',
         component: () => import('@/views/AdminUsersView.vue'),
@@ -52,7 +63,35 @@ const routes: RouteRecordRaw[] = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+})
+
+/**
+ * Global navigation guard.
+ * Checks auth status on first navigation, then enforces route meta rules.
+ */
+router.beforeEach(async (to) => {
+  const auth = useAuthStore()
+
+  if (!auth.isAuthenticated) {
+    await auth.checkAuth()
+  }
+
+  if (to.meta.public) {
+    return
+  }
+
+  if (to.meta.guest && auth.isAuthenticated) {
+    return { name: 'dashboard' }
+  }
+
+  if (to.matched.some((r) => r.meta.requiresAuth) && !auth.isAuthenticated) {
+    return { name: 'login', query: { redirect: to.fullPath } }
+  }
+
+  if (to.matched.some((r) => r.meta.requiresAdmin) && !auth.isAdmin) {
+    return { name: 'dashboard' }
+  }
 })
 
 export default router
