@@ -6,6 +6,7 @@
  * On mobile, behaves as a slide-out drawer controlled by the `open` prop.
  */
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 
 /** @prop open - Whether the mobile sidebar drawer is open. */
@@ -14,6 +15,7 @@ defineProps<{ open: boolean }>()
 const emit = defineEmits<{ close: [] }>()
 const route = useRoute()
 const auth = useAuthStore()
+const { t } = useI18n()
 
 /** Navigation items displayed in the sidebar, each with a route path, label, and SVG icon path. */
 const navItems = [
@@ -43,9 +45,9 @@ function isActive(to: string) {
   <aside class="sidebar" :class="{ open }">
     <div class="sidebar-header">
       <h1 class="logo">IK System</h1>
-      <span class="org-name">{{ auth.user?.organizationName || 'No organization' }}</span>
+      <span class="org-name">{{ auth.user?.organizationName || t('No organization') }}</span>
     </div>
-    <nav class="sidebar-nav" role="navigation" aria-label="Main navigation">
+    <nav class="sidebar-nav" role="navigation" :aria-label="t('Dashboard')">
       <router-link
         v-for="item in navItems"
         :key="item.to"
@@ -55,7 +57,7 @@ function isActive(to: string) {
         @click="emit('close')"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path :d="item.icon" /></svg>
-        <span>{{ item.label }}</span>
+        <span>{{ t(item.label) }}</span>
       </router-link>
       <div v-if="auth.isAdmin" class="nav-divider" />
       <router-link
@@ -66,7 +68,7 @@ function isActive(to: string) {
         @click="emit('close')"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-        <span>Admin Panel</span>
+        <span>{{ t('Admin Panel') }}</span>
       </router-link>
       <router-link
         v-if="auth.isAdmin"
@@ -76,7 +78,7 @@ function isActive(to: string) {
         @click="emit('close')"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" /></svg>
-        <span>User Management</span>
+        <span>{{ t('User Management') }}</span>
       </router-link>
     </nav>
   </aside>

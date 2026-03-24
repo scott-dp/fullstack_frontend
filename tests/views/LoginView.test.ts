@@ -2,6 +2,7 @@ import { render, fireEvent, screen } from '@testing-library/vue'
 import { describe, expect, it, vi } from 'vitest'
 import LoginView from '@/views/LoginView.vue'
 import { HttpError } from '@/api/client'
+import { i18n } from '@/i18n'
 
 const pushMock = vi.fn()
 const authStoreMock = {
@@ -37,6 +38,7 @@ describe('LoginView', () => {
 
     render(LoginView, {
       global: {
+        plugins: [i18n],
         stubs: {
           RouterLink: routerLinkStub,
         },
@@ -64,6 +66,7 @@ describe('LoginView', () => {
 
     render(LoginView, {
       global: {
+        plugins: [i18n],
         stubs: {
           RouterLink: routerLinkStub,
         },

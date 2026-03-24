@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/vue'
 import { describe, expect, it, vi } from 'vitest'
 import LandingView from '@/views/LandingView.vue'
+import { i18n } from '@/i18n'
 
 const authStoreMock = {
   isAuthenticated: false,
@@ -21,6 +22,7 @@ describe('LandingView', () => {
 
     render(LandingView, {
       global: {
+        plugins: [i18n],
         stubs: {
           RouterLink: routerLinkStub,
         },
@@ -42,6 +44,7 @@ describe('LandingView', () => {
 
     render(LandingView, {
       global: {
+        plugins: [i18n],
         stubs: {
           RouterLink: routerLinkStub,
         },
