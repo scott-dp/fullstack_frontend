@@ -5,6 +5,7 @@
  * - `guest` - Only accessible to unauthenticated users (redirects to dashboard if logged in).
  * - `requiresAuth` - Requires an authenticated session; redirects to login otherwise.
  * - `requiresAdmin` - Requires the ADMIN role; redirects to dashboard otherwise.
+ * - `requiresManageAccess` - Requires ADMIN or MANAGER role; redirects to dashboard otherwise.
  * - `public` - Accessible to everyone regardless of auth state.
  * @module
  */
@@ -31,6 +32,12 @@ export const routes: RouteRecordRaw[] = [
     meta: { guest: true },
   },
   {
+    path: '/verify-email',
+    name: 'verify-email',
+    component: () => import('@/views/VerifyEmailView.vue'),
+    meta: { public: true },
+  },
+  {
     path: '/app',
     component: () => import('@/layouts/AppLayout.vue'),
     meta: { requiresAuth: true },
@@ -55,7 +62,7 @@ export const routes: RouteRecordRaw[] = [
         path: 'admin/users',
         name: 'admin-users',
         component: () => import('@/views/AdminUsersView.vue'),
-        meta: { requiresAdmin: true },
+        meta: { requiresManageAccess: true },
       },
     ],
   },
@@ -64,6 +71,7 @@ export const routes: RouteRecordRaw[] = [
 type AuthGuardStore = {
   isAuthenticated: boolean
   isAdmin: boolean
+  hasManageAccess: boolean
   checkAuth: () => Promise<void>
 }
 
@@ -95,6 +103,10 @@ export async function applyRouteGuard(
   }
 
   if (to.matched.some((r) => r.meta.requiresAdmin) && !auth.isAdmin) {
+    return { name: 'dashboard' }
+  }
+
+  if (to.matched.some((r) => r.meta.requiresManageAccess) && !auth.hasManageAccess) {
     return { name: 'dashboard' }
   }
 }

@@ -5,11 +5,19 @@
  */
 import { ref, onMounted } from 'vue'
 import { dashboardApi, type DashboardData } from '@/api/dashboard'
+import { organizationInviteApi } from '@/api/organizationInvites'
+import { useAuthStore } from '@/stores/auth'
+import { HttpError } from '@/api/client'
 
 /** Aggregated dashboard statistics, null until loaded. */
 const data = ref<DashboardData | null>(null)
 /** Whether the dashboard data is still being fetched. */
 const loading = ref(true)
+const auth = useAuthStore()
+const inviteToken = ref('')
+const joining = ref(false)
+const joinError = ref('')
+const joinSuccess = ref('')
 
 onMounted(async () => {
   try {
@@ -18,6 +26,24 @@ onMounted(async () => {
     loading.value = false
   }
 })
+
+async function acceptInvite() {
+  joinError.value = ''
+  joinSuccess.value = ''
+  joining.value = true
+
+  try {
+    const updatedUser = await organizationInviteApi.accept({ token: inviteToken.value.trim() })
+    auth.user = updatedUser
+    data.value = await dashboardApi.get()
+    inviteToken.value = ''
+    joinSuccess.value = 'Invitation accepted. Your organization dashboard is now ready.'
+  } catch (err: unknown) {
+    joinError.value = err instanceof HttpError ? err.message : 'Failed to accept invitation'
+  } finally {
+    joining.value = false
+  }
+}
 </script>
 
 <template>
@@ -27,6 +53,32 @@ onMounted(async () => {
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
+
+    <template v-else-if="data && !data.organizationAssigned">
+      <div class="card onboarding-card">
+        <h2>No organization assigned yet</h2>
+        <p class="text-muted">
+          {{ data.message || 'You need an invitation from an admin or restaurant manager before you can access restaurant data.' }}
+        </p>
+        <form class="invite-form" @submit.prevent="acceptInvite">
+          <div class="form-group">
+            <label class="form-label" for="invite-token">Invitation token</label>
+            <input
+              id="invite-token"
+              v-model="inviteToken"
+              class="form-input"
+              placeholder="Paste invite token here"
+              :disabled="joining"
+            />
+          </div>
+          <div v-if="joinSuccess" class="alert-success">{{ joinSuccess }}</div>
+          <div v-if="joinError" class="alert-error">{{ joinError }}</div>
+          <button type="submit" class="btn btn-primary" :disabled="joining || !inviteToken.trim()">
+            {{ joining ? 'Joining organization...' : 'Join organization' }}
+          </button>
+        </form>
+      </div>
+    </template>
 
     <template v-else-if="data">
       <div class="stats-grid">
@@ -112,6 +164,28 @@ onMounted(async () => {
 }
 .quick-actions {
   margin-top: 8px;
+}
+.onboarding-card {
+  max-width: 720px;
+}
+.invite-form {
+  margin-top: 20px;
+}
+.alert-success {
+  padding: 10px 14px;
+  background: var(--success-bg);
+  color: var(--success);
+  border-radius: var(--radius);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.alert-error {
+  padding: 10px 14px;
+  background: var(--danger-bg);
+  color: var(--danger);
+  border-radius: var(--radius);
+  font-size: 14px;
+  margin-bottom: 16px;
 }
 .quick-actions h2 {
   margin-bottom: 16px;

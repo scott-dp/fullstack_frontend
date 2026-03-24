@@ -39,6 +39,7 @@ describe('RegisterView', () => {
     })
 
     await fireEvent.update(screen.getByLabelText('Username'), 'alice')
+    await fireEvent.update(screen.getByLabelText('Email'), 'alice@example.com')
     await fireEvent.update(screen.getByLabelText('Password'), 'secret123')
     await fireEvent.update(screen.getByLabelText('Confirm Password'), 'different123')
     await fireEvent.click(screen.getByRole('button', { name: 'Register' }))
@@ -47,8 +48,10 @@ describe('RegisterView', () => {
     expect(authStoreMock.register).not.toHaveBeenCalled()
   })
 
-  it('registers and redirects on success', async () => {
-    authStoreMock.register.mockResolvedValue(undefined)
+  it('registers and shows the email verification message on success', async () => {
+    authStoreMock.register.mockResolvedValue({
+      message: 'Registration successful. Check your email to verify your account before logging in.',
+    })
 
     render(RegisterView, {
       global: {
@@ -60,15 +63,23 @@ describe('RegisterView', () => {
     })
 
     await fireEvent.update(screen.getByLabelText('Username'), 'alice')
+    await fireEvent.update(screen.getByLabelText('Email'), 'alice@example.com')
     await fireEvent.update(screen.getByLabelText('Password'), 'secret123')
     await fireEvent.update(screen.getByLabelText('Confirm Password'), 'secret123')
     await fireEvent.click(screen.getByRole('button', { name: 'Register' }))
 
     expect(authStoreMock.register).toHaveBeenCalledWith({
       username: 'alice',
+      email: 'alice@example.com',
       password: 'secret123',
     })
-    expect(pushMock).toHaveBeenCalledWith('/')
+    expect(pushMock).not.toHaveBeenCalled()
+    expect(
+      await screen.findByText(
+        'Registration successful. Check your email to verify your account before logging in.',
+      ),
+    ).toBeTruthy()
+    expect(screen.queryByText('Open verification link')).toBeNull()
   })
 
   it('shows the API error message on failed registration', async () => {
@@ -91,6 +102,7 @@ describe('RegisterView', () => {
     })
 
     await fireEvent.update(screen.getByLabelText('Username'), 'alice')
+    await fireEvent.update(screen.getByLabelText('Email'), 'alice@example.com')
     await fireEvent.update(screen.getByLabelText('Password'), 'secret123')
     await fireEvent.update(screen.getByLabelText('Confirm Password'), 'secret123')
     await fireEvent.click(screen.getByRole('button', { name: 'Register' }))

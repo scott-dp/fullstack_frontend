@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * Login view presenting a username/password form.
+ * Login view presenting an email-or-username/password form.
  * Authenticates via the auth store and redirects to the originally
  * requested page (or dashboard) on success.
  */
@@ -15,12 +15,20 @@ const route = useRoute()
 const auth = useAuthStore()
 const { t } = useI18n()
 
-/** Bound username input value. */
-const username = ref('')
+/** Bound username/email input value. */
+const identifier = ref('')
 /** Bound password input value. */
 const password = ref('')
+/** Bound email input value for code-based login. */
+const emailForCode = ref('')
+/** Bound one-time code value. */
+const emailCode = ref('')
 /** Error message displayed on authentication failure. */
 const error = ref('')
+/** Status message for code delivery. */
+const codeMessage = ref('')
+/** Error message for code flow. */
+const codeError = ref('')
 
 /**
  * Handles form submission by attempting login.
@@ -30,11 +38,33 @@ const error = ref('')
 async function handleSubmit() {
   error.value = ''
   try {
-    await auth.login({ username: username.value, password: password.value })
+    await auth.login({ identifier: identifier.value, password: password.value })
     const redirect = route.query.redirect as string
     router.push(redirect || '/')
   } catch (err: unknown) {
     error.value = err instanceof HttpError ? err.message : t('Login failed')
+  }
+}
+
+async function requestCode() {
+  codeError.value = ''
+  codeMessage.value = ''
+  try {
+    const response = await auth.requestEmailCode({ email: emailForCode.value })
+    codeMessage.value = response.message
+  } catch (err: unknown) {
+    codeError.value = err instanceof HttpError ? err.message : 'Failed to send login code'
+  }
+}
+
+async function handleEmailCodeLogin() {
+  codeError.value = ''
+  try {
+    await auth.loginWithEmailCode({ email: emailForCode.value, code: emailCode.value })
+    const redirect = route.query.redirect as string
+    router.push(redirect || '/')
+  } catch (err: unknown) {
+    codeError.value = err instanceof HttpError ? err.message : 'Email code login failed'
   }
 }
 </script>
@@ -47,14 +77,14 @@ async function handleSubmit() {
       <form @submit.prevent="handleSubmit" class="auth-form">
         <div v-if="error" class="alert-error">{{ error }}</div>
         <div class="form-group">
-          <label for="username" class="form-label">{{ t('Username') }}</label>
+          <label for="identifier" class="form-label">Email or username</label>
           <input
-            id="username"
-            v-model="username"
+            id="identifier"
+            v-model="identifier"
             type="text"
             class="form-input"
             required
-            autocomplete="username"
+            autocomplete="username email"
             autofocus
           />
         </div>
@@ -71,6 +101,40 @@ async function handleSubmit() {
         </div>
         <button type="submit" class="btn btn-primary btn-full" :disabled="auth.loading">
           {{ auth.loading ? t('Signing in...') : t('Sign In') }}
+        </button>
+      </form>
+      <div class="auth-divider"><span>or</span></div>
+      <form @submit.prevent="handleEmailCodeLogin" class="auth-form code-form">
+        <div v-if="codeMessage" class="alert-success">{{ codeMessage }}</div>
+        <div v-if="codeError" class="alert-error">{{ codeError }}</div>
+        <div class="form-group">
+          <label for="email-code-email" class="form-label">Email</label>
+          <input
+            id="email-code-email"
+            v-model="emailForCode"
+            type="email"
+            class="form-input"
+            required
+            autocomplete="email"
+          />
+        </div>
+        <button type="button" class="btn btn-secondary btn-full" :disabled="auth.loading || !emailForCode" @click="requestCode">
+          Send login code
+        </button>
+        <div class="form-group">
+          <label for="email-code" class="form-label">Login code</label>
+          <input
+            id="email-code"
+            v-model="emailCode"
+            type="text"
+            inputmode="numeric"
+            maxlength="6"
+            class="form-input"
+            placeholder="6-digit code"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full" :disabled="auth.loading || !emailForCode || !emailCode">
+          Sign in with email code
         </button>
       </form>
       <p class="auth-footer">
@@ -112,6 +176,33 @@ async function handleSubmit() {
 .btn-full {
   width: 100%;
   margin-top: 8px;
+}
+.alert-success {
+  padding: 10px 14px;
+  background: var(--success-bg);
+  color: var(--success);
+  border-radius: var(--radius);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.auth-divider {
+  margin: 24px 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+  font-size: 13px;
+  text-transform: uppercase;
+}
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: var(--border);
+}
+.code-form {
+  margin-top: 0;
 }
 .auth-footer {
   margin-top: 20px;

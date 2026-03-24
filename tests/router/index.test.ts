@@ -6,6 +6,7 @@ describe('route guard', () => {
     const auth = {
       isAuthenticated: false,
       isAdmin: false,
+      hasManageAccess: false,
       checkAuth: vi.fn().mockResolvedValue(undefined),
     }
 
@@ -26,6 +27,7 @@ describe('route guard', () => {
     const auth = {
       isAuthenticated: true,
       isAdmin: false,
+      hasManageAccess: false,
       checkAuth: vi.fn(),
     }
 
@@ -45,6 +47,7 @@ describe('route guard', () => {
     const auth = {
       isAuthenticated: false,
       isAdmin: false,
+      hasManageAccess: false,
       checkAuth: vi.fn().mockResolvedValue(undefined),
     }
 
@@ -64,6 +67,7 @@ describe('route guard', () => {
     const auth = {
       isAuthenticated: true,
       isAdmin: false,
+      hasManageAccess: false,
       checkAuth: vi.fn(),
     }
 
@@ -83,6 +87,7 @@ describe('route guard', () => {
     const auth = {
       isAuthenticated: true,
       isAdmin: true,
+      hasManageAccess: true,
       checkAuth: vi.fn(),
     }
 
@@ -91,6 +96,46 @@ describe('route guard', () => {
         meta: {},
         fullPath: '/app/admin',
         matched: [{ meta: { requiresAuth: true } }, { meta: { requiresAdmin: true } }],
+      },
+      auth,
+    )
+
+    expect(result).toBeUndefined()
+  })
+
+  it('redirects users without manage access away from management routes', async () => {
+    const auth = {
+      isAuthenticated: true,
+      isAdmin: false,
+      hasManageAccess: false,
+      checkAuth: vi.fn(),
+    }
+
+    const result = await applyRouteGuard(
+      {
+        meta: {},
+        fullPath: '/app/admin/users',
+        matched: [{ meta: { requiresAuth: true } }, { meta: { requiresManageAccess: true } }],
+      },
+      auth,
+    )
+
+    expect(result).toEqual({ name: 'dashboard' })
+  })
+
+  it('allows managers onto management routes', async () => {
+    const auth = {
+      isAuthenticated: true,
+      isAdmin: false,
+      hasManageAccess: true,
+      checkAuth: vi.fn(),
+    }
+
+    const result = await applyRouteGuard(
+      {
+        meta: {},
+        fullPath: '/app/admin/users',
+        matched: [{ meta: { requiresAuth: true } }, { meta: { requiresManageAccess: true } }],
       },
       auth,
     )

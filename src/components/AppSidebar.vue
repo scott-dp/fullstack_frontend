@@ -59,7 +59,7 @@ function isActive(to: string) {
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path :d="item.icon" /></svg>
         <span>{{ t(item.label) }}</span>
       </router-link>
-      <div v-if="auth.isAdmin" class="nav-divider" />
+      <div v-if="auth.hasManageAccess" class="nav-divider" />
       <router-link
         v-if="auth.isAdmin"
         to="/app/admin"
@@ -71,7 +71,7 @@ function isActive(to: string) {
         <span>{{ t('Admin Panel') }}</span>
       </router-link>
       <router-link
-        v-if="auth.isAdmin"
+        v-if="auth.hasManageAccess"
         to="/app/admin/users"
         class="nav-item"
         :class="{ active: route.path === '/app/admin/users' }"
