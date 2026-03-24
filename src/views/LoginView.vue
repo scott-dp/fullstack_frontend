@@ -6,12 +6,14 @@
  */
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { HttpError } from '@/api/client'
 
 const router = useRouter()
 const route = useRoute()
 const auth = useAuthStore()
+const { t } = useI18n()
 
 /** Bound username input value. */
 const username = ref('')
@@ -32,7 +34,7 @@ async function handleSubmit() {
     const redirect = route.query.redirect as string
     router.push(redirect || '/')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Login failed'
+    error.value = err instanceof HttpError ? err.message : t('Login failed')
   }
 }
 </script>
@@ -40,12 +42,12 @@ async function handleSubmit() {
 <template>
   <div class="auth-page">
     <div class="auth-card card">
-      <h1>Sign In</h1>
-      <p class="text-muted">IK System - Internal Control</p>
+      <h1>{{ t('Sign In') }}</h1>
+      <p class="text-muted">{{ t('IK System - Internal Control') }}</p>
       <form @submit.prevent="handleSubmit" class="auth-form">
         <div v-if="error" class="alert-error">{{ error }}</div>
         <div class="form-group">
-          <label for="username" class="form-label">Username</label>
+          <label for="username" class="form-label">{{ t('Username') }}</label>
           <input
             id="username"
             v-model="username"
@@ -57,7 +59,7 @@ async function handleSubmit() {
           />
         </div>
         <div class="form-group">
-          <label for="password" class="form-label">Password</label>
+          <label for="password" class="form-label">{{ t('Password') }}</label>
           <input
             id="password"
             v-model="password"
@@ -68,11 +70,11 @@ async function handleSubmit() {
           />
         </div>
         <button type="submit" class="btn btn-primary btn-full" :disabled="auth.loading">
-          {{ auth.loading ? 'Signing in...' : 'Sign In' }}
+          {{ auth.loading ? t('Signing in...') : t('Sign In') }}
         </button>
       </form>
       <p class="auth-footer">
-        Don't have an account? <router-link to="/register">Register</router-link>
+        {{ t("Don't have an account?") }} <router-link to="/register">{{ t('Register') }}</router-link>
       </p>
     </div>
   </div>

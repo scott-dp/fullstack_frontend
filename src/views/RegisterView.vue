@@ -5,11 +5,13 @@
  */
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { HttpError } from '@/api/client'
 
 const router = useRouter()
 const auth = useAuthStore()
+const { t } = useI18n()
 
 /** Bound username input value. */
 const username = ref('')
@@ -27,14 +29,14 @@ const error = ref('')
 async function handleSubmit() {
   error.value = ''
   if (password.value !== confirmPassword.value) {
-    error.value = 'Passwords do not match'
+    error.value = t('Passwords do not match')
     return
   }
   try {
     await auth.register({ username: username.value, password: password.value })
     router.push('/')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Registration failed'
+    error.value = err instanceof HttpError ? err.message : t('Registration failed')
   }
 }
 </script>
@@ -42,28 +44,28 @@ async function handleSubmit() {
 <template>
   <div class="auth-page">
     <div class="auth-card card">
-      <h1>Register</h1>
-      <p class="text-muted">Create your account</p>
+      <h1>{{ t('Register') }}</h1>
+      <p class="text-muted">{{ t('Create your account.') }}</p>
       <form @submit.prevent="handleSubmit" class="auth-form">
         <div v-if="error" class="alert-error">{{ error }}</div>
         <div class="form-group">
-          <label for="username" class="form-label">Username</label>
+          <label for="username" class="form-label">{{ t('Username') }}</label>
           <input id="username" v-model="username" type="text" class="form-input" required minlength="3" maxlength="50" autocomplete="username" autofocus />
         </div>
         <div class="form-group">
-          <label for="password" class="form-label">Password</label>
+          <label for="password" class="form-label">{{ t('Password') }}</label>
           <input id="password" v-model="password" type="password" class="form-input" required minlength="6" autocomplete="new-password" />
         </div>
         <div class="form-group">
-          <label for="confirm-password" class="form-label">Confirm Password</label>
+          <label for="confirm-password" class="form-label">{{ t('Confirm Password') }}</label>
           <input id="confirm-password" v-model="confirmPassword" type="password" class="form-input" required minlength="6" autocomplete="new-password" />
         </div>
         <button type="submit" class="btn btn-primary btn-full" :disabled="auth.loading">
-          {{ auth.loading ? 'Creating account...' : 'Register' }}
+          {{ auth.loading ? t('Creating account...') : t('Register') }}
         </button>
       </form>
       <p class="auth-footer">
-        Already have an account? <router-link to="/login">Sign in</router-link>
+        {{ t('Already have an account?') }} <router-link to="/login">{{ t('Sign In') }}</router-link>
       </p>
     </div>
   </div>

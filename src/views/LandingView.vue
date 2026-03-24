@@ -4,22 +4,39 @@
  * Showcases the IK System features and encourages login or registration.
  */
 import { useAuthStore } from '@/stores/auth'
+import { useI18n } from 'vue-i18n'
+import { setI18nLocale, type AppLocale } from '@/i18n'
 
 const auth = useAuthStore()
+const { t, locale } = useI18n()
+
+function changeLocale(event: Event) {
+  setI18nLocale((event.target as HTMLSelectElement).value as AppLocale)
+}
 </script>
 
 <template>
   <div class="landing">
     <header class="landing-header">
       <div class="landing-container">
-        <span class="landing-logo">IK System</span>
+        <span class="landing-logo">{{ t('IK System') }}</span>
         <nav class="landing-nav">
+          <label class="landing-locale">
+            <span>{{ t('Language') }}</span>
+            <select :value="locale" @change="changeLocale">
+              <option value="en">{{ t('English') }}</option>
+              <option value="es">{{ t('Spanish') }}</option>
+              <option value="no">{{ t('Norwegian') }}</option>
+              <option value="ne">{{ t('Nepali') }}</option>
+              <option value="ur">{{ t('Urdu') }}</option>
+            </select>
+          </label>
           <template v-if="auth.isAuthenticated">
-            <router-link to="/app" class="btn btn-primary">Go to Dashboard</router-link>
+            <router-link to="/app" class="btn btn-primary">{{ t('Go to Dashboard') }}</router-link>
           </template>
           <template v-else>
-            <router-link to="/login" class="btn btn-secondary">Sign In</router-link>
-            <router-link to="/register" class="btn btn-primary">Get Started</router-link>
+            <router-link to="/login" class="btn btn-secondary">{{ t('Sign In') }}</router-link>
+            <router-link to="/register" class="btn btn-primary">{{ t('Get Started') }}</router-link>
           </template>
         </nav>
       </div>
@@ -28,75 +45,74 @@ const auth = useAuthStore()
     <section class="hero">
       <div class="landing-container">
         <span class="hero-badge">IK-Mat &amp; IK-Alkohol</span>
-        <h1>Digital Internal Control<br />for Food &amp; Alcohol Compliance</h1>
+        <h1>{{ t('Digital Internal Control') }}<br />{{ t('for Food & Alcohol Compliance') }}</h1>
         <p class="hero-sub">
-          Replace paper checklists and manual routines with a structured digital solution.
-          Monitor daily operations, ensure proper documentation, and pass inspections with confidence.
+          {{ t('Replace paper checklists and manual routines with a structured digital solution. Monitor daily operations, ensure proper documentation, and pass inspections with confidence.') }}
         </p>
         <div class="hero-actions">
           <router-link v-if="!auth.isAuthenticated" to="/register" class="btn btn-primary btn-lg">
-            Start Free Trial
+            {{ t('Start Free Trial') }}
           </router-link>
           <router-link v-else to="/app" class="btn btn-primary btn-lg">
-            Open Dashboard
+            {{ t('Open Dashboard') }}
           </router-link>
-          <a href="#features" class="btn btn-secondary btn-lg">See Features</a>
+          <a href="#features" class="btn btn-secondary btn-lg">{{ t('See Features') }}</a>
         </div>
       </div>
     </section>
 
     <section id="features" class="features">
       <div class="landing-container">
-        <h2 class="section-title">Everything you need for compliance</h2>
-        <p class="section-sub">Two integrated services covering food and alcohol regulations</p>
+        <h2 class="section-title">{{ t('Everything you need for compliance') }}</h2>
+        <p class="section-sub">{{ t('Two integrated services covering food and alcohol regulations') }}</p>
 
         <div class="features-grid">
           <div class="feature-card">
             <div class="feature-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
             </div>
-            <h3>Digital Checklists</h3>
-            <p>Daily, weekly, and monthly task lists for hygiene, cleaning, and safety procedures. Never miss a routine.</p>
+            <h3>{{ t('Digital Checklists') }}</h3>
+            <p>{{ t('Daily, weekly, and monthly task lists for hygiene, cleaning, and safety procedures. Never miss a routine.') }}</p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             </div>
-            <h3>Temperature Logging</h3>
-            <p>Record storage temperatures with automatic alerts when readings go outside safe thresholds.</p>
+            <h3>{{ t('Temperature Logging') }}</h3>
+            <p>{{ t('Record storage temperatures with automatic alerts when readings go outside safe thresholds.') }}</p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
             </div>
-            <h3>Deviation Management</h3>
-            <p>Report, track, and resolve non-compliance incidents with full audit trails and comment threads.</p>
+            <h3>{{ t('Deviation Management') }}</h3>
+            <p>{{ t('Report, track, and resolve non-compliance incidents with full audit trails and comment threads.') }}</p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" /></svg>
             </div>
-            <h3>Role-Based Access</h3>
-            <p>Staff, managers, and administrators each see exactly what they need. Full control over permissions.</p>
+            <h3>{{ t('Role-Based Access') }}</h3>
+            <p>{{ t('Staff, managers, and administrators each see exactly what they need. Full control over permissions.') }}</p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
             </div>
-            <h3>Smart Notifications</h3>
-            <p>Alerts for overdue tasks, temperature deviations, and assigned issues so nothing slips through.</p>
+            <h3>{{ t('Smart Notifications') }}</h3>
+            <p>{{ t('Alerts for overdue tasks, temperature deviations, and assigned issues so nothing slips through.') }}</p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1" /></svg>
             </div>
-            <h3>Compliance Dashboard</h3>
-            <p>Real-time overview of your compliance status with analytics on checklists, temperatures, and deviations.</p>
+            <h3>{{ t('Compliance Dashboard') }}</h3>
+            <p>{{ t('Real-time overview of your compliance status with analytics on checklists, temperatures, and deviations.') }}</p>
           </div>
         </div>
       </div>
@@ -107,22 +123,22 @@ const auth = useAuthStore()
         <div class="services-grid">
           <div class="service-card food">
             <h3>IK-Mat</h3>
-            <p class="service-label">Food Compliance</p>
+            <p class="service-label">{{ t('Food Compliance') }}</p>
             <ul>
-              <li>Hygiene and cleaning checklists</li>
-              <li>Temperature monitoring</li>
-              <li>Food safety documentation</li>
-              <li>HACCP support</li>
+              <li>{{ t('Hygiene and cleaning checklists') }}</li>
+              <li>{{ t('Temperature monitoring') }}</li>
+              <li>{{ t('Food safety documentation') }}</li>
+              <li>{{ t('HACCP support') }}</li>
             </ul>
           </div>
           <div class="service-card alcohol">
             <h3>IK-Alkohol</h3>
-            <p class="service-label">Alcohol Compliance</p>
+            <p class="service-label">{{ t('Alcohol Compliance') }}</p>
             <ul>
-              <li>Responsible service routines</li>
-              <li>Age verification documentation</li>
-              <li>Staff training records</li>
-              <li>Serving practice audits</li>
+              <li>{{ t('Responsible service routines') }}</li>
+              <li>{{ t('Age verification documentation') }}</li>
+              <li>{{ t('Staff training records') }}</li>
+              <li>{{ t('Serving practice audits') }}</li>
             </ul>
           </div>
         </div>
@@ -131,21 +147,21 @@ const auth = useAuthStore()
 
     <section class="cta-section">
       <div class="landing-container">
-        <h2>Ready to simplify compliance?</h2>
-        <p>Join restaurants, bars, and cafes already using IK System to stay audit-ready.</p>
+        <h2>{{ t('Ready to simplify compliance?') }}</h2>
+        <p>{{ t('Join restaurants, bars, and cafes already using IK System to stay audit-ready.') }}</p>
         <router-link v-if="!auth.isAuthenticated" to="/register" class="btn btn-primary btn-lg">
-          Create your account
+          {{ t('Create your account') }}
         </router-link>
         <router-link v-else to="/app" class="btn btn-primary btn-lg">
-          Go to Dashboard
+          {{ t('Go to Dashboard') }}
         </router-link>
       </div>
     </section>
 
     <footer class="landing-footer">
       <div class="landing-container">
-        <p>IK System &mdash; Digital Internal Control for Food &amp; Alcohol Compliance</p>
-        <p class="text-sm">Sponsored by Everest Sushi &amp; Fusion AS (org. 937 219 997)</p>
+        <p>{{ t('IK System') }} &mdash; {{ t('Digital Internal Control for Food & Alcohol Compliance') }}</p>
+        <p class="text-sm">{{ t('Sponsored by Everest Sushi & Fusion AS (org. 937 219 997)') }}</p>
       </div>
     </footer>
   </div>
@@ -180,6 +196,21 @@ const auth = useAuthStore()
 .landing-nav {
   display: flex;
   gap: 8px;
+  align-items: center;
+}
+.landing-locale {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text);
+}
+.landing-locale select {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text-h);
+  padding: 6px 10px;
 }
 
 /* Container */
