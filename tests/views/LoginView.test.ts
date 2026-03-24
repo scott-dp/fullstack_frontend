@@ -8,6 +8,8 @@ const pushMock = vi.fn()
 const authStoreMock = {
   loading: false,
   login: vi.fn(),
+  requestEmailCode: vi.fn(),
+  loginWithEmailCode: vi.fn(),
 }
 const routeMock = {
   query: {},
@@ -45,11 +47,11 @@ describe('LoginView', () => {
       },
     })
 
-    await fireEvent.update(screen.getByLabelText('Username'), 'alice')
+    await fireEvent.update(screen.getByLabelText('Email or username'), 'alice@example.com')
     await fireEvent.update(screen.getByLabelText('Password'), 'secret')
     await fireEvent.click(screen.getByRole('button', { name: 'Sign In' }))
 
-    expect(authStoreMock.login).toHaveBeenCalledWith({ username: 'alice', password: 'secret' })
+    expect(authStoreMock.login).toHaveBeenCalledWith({ identifier: 'alice@example.com', password: 'secret' })
     expect(pushMock).toHaveBeenCalledWith('/app')
   })
 
@@ -73,10 +75,40 @@ describe('LoginView', () => {
       },
     })
 
-    await fireEvent.update(screen.getByLabelText('Username'), 'alice')
+    await fireEvent.update(screen.getByLabelText('Email or username'), 'alice')
     await fireEvent.update(screen.getByLabelText('Password'), 'wrong')
     await fireEvent.click(screen.getByRole('button', { name: 'Sign In' }))
 
     expect(await screen.findByText('Invalid credentials')).toBeTruthy()
+  })
+
+  it('requests an email login code and logs in with it', async () => {
+    routeMock.query = { redirect: '/app' }
+    authStoreMock.requestEmailCode.mockResolvedValue({ message: 'A login code has been sent to your email.' })
+    authStoreMock.loginWithEmailCode.mockResolvedValue(undefined)
+
+    render(LoginView, {
+      global: {
+        plugins: [i18n],
+        stubs: {
+          RouterLink: routerLinkStub,
+        },
+      },
+    })
+
+    await fireEvent.update(screen.getByLabelText('Email'), 'alice@example.com')
+    await fireEvent.click(screen.getByRole('button', { name: 'Send login code' }))
+
+    expect(authStoreMock.requestEmailCode).toHaveBeenCalledWith({ email: 'alice@example.com' })
+    expect(await screen.findByText('A login code has been sent to your email.')).toBeTruthy()
+
+    await fireEvent.update(screen.getByLabelText('Login code'), '123456')
+    await fireEvent.click(screen.getByRole('button', { name: 'Sign in with email code' }))
+
+    expect(authStoreMock.loginWithEmailCode).toHaveBeenCalledWith({
+      email: 'alice@example.com',
+      code: '123456',
+    })
+    expect(pushMock).toHaveBeenCalledWith('/app')
   })
 })

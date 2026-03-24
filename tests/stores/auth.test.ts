@@ -6,6 +6,8 @@ const { authApiMock } = vi.hoisted(() => ({
   authApiMock: {
     login: vi.fn(),
     register: vi.fn(),
+    requestEmailCode: vi.fn(),
+    loginWithEmailCode: vi.fn(),
     logout: vi.fn(),
     status: vi.fn(),
   },
@@ -60,20 +62,28 @@ describe('auth store', () => {
     authApiMock.login.mockResolvedValue({ user: testUser })
     const store = useAuthStore()
 
-    await store.login({ username: 'alice', password: 'secret' })
+    await store.login({ identifier: 'alice@example.com', password: 'secret' })
 
     expect(store.user).toEqual(testUser)
     expect(store.loading).toBe(false)
-    expect(authApiMock.login).toHaveBeenCalledWith({ username: 'alice', password: 'secret' })
+    expect(authApiMock.login).toHaveBeenCalledWith({ identifier: 'alice@example.com', password: 'secret' })
   })
 
-  it('stores the user on register and resets loading afterwards', async () => {
-    authApiMock.register.mockResolvedValue({ user: testUser })
+  it('returns registration verification details without authenticating the user', async () => {
+    authApiMock.register.mockResolvedValue({
+      message: 'Registration successful. Verify your email before logging in.',
+      verificationLink: 'http://localhost:5173/verify-email?token=abc',
+    })
     const store = useAuthStore()
 
-    await store.register({ username: 'alice', password: 'secret' })
+    const response = await store.register({
+      username: 'alice',
+      email: 'alice@example.com',
+      password: 'secret',
+    })
 
-    expect(store.user).toEqual(testUser)
+    expect(response.verificationLink).toContain('verify-email')
+    expect(store.user).toBeNull()
     expect(store.loading).toBe(false)
   })
 
@@ -87,12 +97,37 @@ describe('auth store', () => {
     expect(store.user).toBeNull()
   })
 
+  it('requests an email code and resets loading afterwards', async () => {
+    authApiMock.requestEmailCode.mockResolvedValue({ message: 'A login code has been sent to your email.' })
+    const store = useAuthStore()
+
+    const response = await store.requestEmailCode({ email: 'alice@example.com' })
+
+    expect(response.message).toContain('login code')
+    expect(store.loading).toBe(false)
+    expect(authApiMock.requestEmailCode).toHaveBeenCalledWith({ email: 'alice@example.com' })
+  })
+
+  it('stores the user on email code login', async () => {
+    authApiMock.loginWithEmailCode.mockResolvedValue({ user: testUser })
+    const store = useAuthStore()
+
+    await store.loginWithEmailCode({ email: 'alice@example.com', code: '123456' })
+
+    expect(store.user).toEqual(testUser)
+    expect(store.loading).toBe(false)
+    expect(authApiMock.loginWithEmailCode).toHaveBeenCalledWith({
+      email: 'alice@example.com',
+      code: '123456',
+    })
+  })
+
   it('keeps loading false after a failed login', async () => {
     authApiMock.login.mockRejectedValue(new Error('bad credentials'))
     const store = useAuthStore()
 
     await expect(
-      store.login({ username: 'alice', password: 'wrong' }),
+      store.login({ identifier: 'alice@example.com', password: 'wrong' }),
     ).rejects.toThrow('bad credentials')
 
     expect(store.loading).toBe(false)

@@ -7,6 +7,12 @@ import { request } from './client'
 
 /** Aggregated dashboard statistics returned by the server. */
 export interface DashboardData {
+  /** Whether the current user belongs to an organization. */
+  organizationAssigned: boolean
+  /** Display name of the assigned organization, or null. */
+  organizationName: string | null
+  /** Contextual dashboard message from the backend. */
+  message: string | null
   /** Total number of active checklist templates. */
   totalChecklistTemplates: number
   /** Number of checklists completed today. */
