@@ -73,7 +73,24 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
     return undefined as T
   }
 
-  return response.json()
+  const contentLength = response.headers.get('content-length')
+  const contentType = response.headers.get('content-type')
+
+  if (contentLength === '0') {
+    return undefined as T
+  }
+
+  if (!contentType?.includes('application/json')) {
+    return undefined as T
+  }
+
+  const body = await response.text()
+
+  if (!body.trim()) {
+    return undefined as T
+  }
+
+  return JSON.parse(body) as T
 }
 
 export { request, HttpError }

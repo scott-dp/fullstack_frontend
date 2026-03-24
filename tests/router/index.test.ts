@@ -1,0 +1,100 @@
+import { describe, expect, it, vi } from 'vitest'
+import { applyRouteGuard } from '@/router'
+
+describe('route guard', () => {
+  it('allows public routes', async () => {
+    const auth = {
+      isAuthenticated: false,
+      isAdmin: false,
+      checkAuth: vi.fn().mockResolvedValue(undefined),
+    }
+
+    const result = await applyRouteGuard(
+      {
+        meta: { public: true },
+        fullPath: '/',
+        matched: [],
+      },
+      auth,
+    )
+
+    expect(result).toBeUndefined()
+    expect(auth.checkAuth).toHaveBeenCalledOnce()
+  })
+
+  it('redirects authenticated users away from guest routes', async () => {
+    const auth = {
+      isAuthenticated: true,
+      isAdmin: false,
+      checkAuth: vi.fn(),
+    }
+
+    const result = await applyRouteGuard(
+      {
+        meta: { guest: true },
+        fullPath: '/login',
+        matched: [],
+      },
+      auth,
+    )
+
+    expect(result).toEqual({ name: 'dashboard' })
+  })
+
+  it('redirects unauthenticated users to login for protected routes', async () => {
+    const auth = {
+      isAuthenticated: false,
+      isAdmin: false,
+      checkAuth: vi.fn().mockResolvedValue(undefined),
+    }
+
+    const result = await applyRouteGuard(
+      {
+        meta: {},
+        fullPath: '/app/deviations/5',
+        matched: [{ meta: { requiresAuth: true } }],
+      },
+      auth,
+    )
+
+    expect(result).toEqual({ name: 'login', query: { redirect: '/app/deviations/5' } })
+  })
+
+  it('redirects non-admin users away from admin routes', async () => {
+    const auth = {
+      isAuthenticated: true,
+      isAdmin: false,
+      checkAuth: vi.fn(),
+    }
+
+    const result = await applyRouteGuard(
+      {
+        meta: {},
+        fullPath: '/app/admin',
+        matched: [{ meta: { requiresAuth: true } }, { meta: { requiresAdmin: true } }],
+      },
+      auth,
+    )
+
+    expect(result).toEqual({ name: 'dashboard' })
+  })
+
+  it('allows admin users onto admin routes', async () => {
+    const auth = {
+      isAuthenticated: true,
+      isAdmin: true,
+      checkAuth: vi.fn(),
+    }
+
+    const result = await applyRouteGuard(
+      {
+        meta: {},
+        fullPath: '/app/admin',
+        matched: [{ meta: { requiresAuth: true } }, { meta: { requiresAdmin: true } }],
+      },
+      auth,
+    )
+
+    expect(result).toBeUndefined()
+  })
+})
