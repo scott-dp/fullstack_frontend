@@ -69,7 +69,7 @@ function formatDate(iso: string) {
   <div>
     <div class="page-header">
       <h1>Deviations</h1>
-      <router-link to="/deviations/new" class="btn btn-primary">Report Deviation</router-link>
+      <router-link to="/app/deviations/new" class="btn btn-primary">Report Deviation</router-link>
     </div>
 
     <div class="filter-bar">
@@ -108,7 +108,7 @@ function formatDate(iso: string) {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="d in filtered" :key="d.id" class="clickable-row" @click="$router.push(`/deviations/${d.id}`)">
+          <tr v-for="d in filtered" :key="d.id" class="clickable-row" @click="$router.push(`/app/deviations/${d.id}`)">
             <td><strong>{{ d.title }}</strong></td>
             <td>{{ d.category === 'FOOD' ? 'IK-Mat' : 'IK-Alkohol' }}</td>
             <td><span class="status-badge" :class="severityClass(d.severity)">{{ d.severity }}</span></td>

@@ -120,7 +120,7 @@ function formatDate(iso: string) {
   <div>
     <div class="page-header">
       <h1 v-if="deviation">{{ deviation.title }}</h1>
-      <router-link to="/deviations" class="btn btn-secondary">Back</router-link>
+      <router-link to="/app/deviations" class="btn btn-secondary">Back</router-link>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>

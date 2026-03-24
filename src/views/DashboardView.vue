@@ -65,15 +65,15 @@ onMounted(async () => {
       <div class="quick-actions">
         <h2>Quick Actions</h2>
         <div class="actions-grid">
-          <router-link to="/checklists" class="action-card card">
+          <router-link to="/app/checklists" class="action-card card">
             <h3>Complete Checklist</h3>
             <p class="text-muted text-sm">Complete a daily, weekly, or monthly checklist</p>
           </router-link>
-          <router-link to="/temperature" class="action-card card">
+          <router-link to="/app/temperature" class="action-card card">
             <h3>Log Temperature</h3>
             <p class="text-muted text-sm">Record storage temperature readings</p>
           </router-link>
-          <router-link to="/deviations/new" class="action-card card">
+          <router-link to="/app/deviations/new" class="action-card card">
             <h3>Report Deviation</h3>
             <p class="text-muted text-sm">Report a non-compliance issue</p>
           </router-link>

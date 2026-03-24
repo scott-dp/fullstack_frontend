@@ -202,7 +202,7 @@ function categoryLabel(c: string) {
         <p v-if="template.description" class="text-muted text-sm">{{ template.description }}</p>
         <p class="text-sm text-muted">{{ template.items.length }} items</p>
         <div class="template-actions">
-          <router-link :to="`/checklists/${template.id}/complete`" class="btn btn-primary btn-sm">Complete</router-link>
+          <router-link :to="`/app/checklists/${template.id}/complete`" class="btn btn-primary btn-sm">Complete</router-link>
         </div>
       </div>
     </div>
