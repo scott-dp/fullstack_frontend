@@ -1,11 +1,97 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../components/HelloWorld.vue'
+/**
+ * Vue Router configuration.
+ *
+ * Route meta fields:
+ * - `guest` - Only accessible to unauthenticated users (redirects to dashboard if logged in).
+ * - `requiresAuth` - Requires an authenticated session; redirects to login otherwise.
+ * - `requiresAdmin` - Requires the ADMIN role; redirects to dashboard otherwise.
+ * - `public` - Accessible to everyone regardless of auth state.
+ * @module
+ */
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
-const routes = [
-  { path: '/', component: Home }
+const routes: RouteRecordRaw[] = [
+  {
+    path: '/',
+    name: 'landing',
+    component: () => import('@/views/LandingView.vue'),
+    meta: { public: true },
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/LoginView.vue'),
+    meta: { guest: true },
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import('@/views/RegisterView.vue'),
+    meta: { guest: true },
+  },
+  {
+    path: '/app',
+    component: () => import('@/layouts/AppLayout.vue'),
+    meta: { requiresAuth: true },
+    children: [
+      { path: '', name: 'dashboard', component: () => import('@/views/DashboardView.vue') },
+      { path: 'checklists', name: 'checklists', component: () => import('@/views/ChecklistsView.vue') },
+      { path: 'checklists/:id/complete', name: 'checklist-complete', component: () => import('@/views/ChecklistCompleteView.vue'), props: true },
+      { path: 'checklists/history', name: 'checklist-history', component: () => import('@/views/ChecklistHistoryView.vue') },
+      { path: 'temperature', name: 'temperature', component: () => import('@/views/TemperatureView.vue') },
+      { path: 'deviations', name: 'deviations', component: () => import('@/views/DeviationsView.vue') },
+      { path: 'deviations/new', name: 'deviation-new', component: () => import('@/views/DeviationCreateView.vue') },
+      { path: 'deviations/:id', name: 'deviation-detail', component: () => import('@/views/DeviationDetailView.vue'), props: true },
+      { path: 'notifications', name: 'notifications', component: () => import('@/views/NotificationsView.vue') },
+      { path: 'settings', name: 'settings', component: () => import('@/views/SettingsView.vue') },
+      {
+        path: 'admin',
+        name: 'admin-dashboard',
+        component: () => import('@/views/AdminDashboardView.vue'),
+        meta: { requiresAdmin: true },
+      },
+      {
+        path: 'admin/users',
+        name: 'admin-users',
+        component: () => import('@/views/AdminUsersView.vue'),
+        meta: { requiresAdmin: true },
+      },
+    ],
+  },
 ]
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 })
+
+/**
+ * Global navigation guard.
+ * Checks auth status on first navigation, then enforces route meta rules.
+ */
+router.beforeEach(async (to) => {
+  const auth = useAuthStore()
+
+  if (!auth.isAuthenticated) {
+    await auth.checkAuth()
+  }
+
+  if (to.meta.public) {
+    return
+  }
+
+  if (to.meta.guest && auth.isAuthenticated) {
+    return { name: 'dashboard' }
+  }
+
+  if (to.matched.some((r) => r.meta.requiresAuth) && !auth.isAuthenticated) {
+    return { name: 'login', query: { redirect: to.fullPath } }
+  }
+
+  if (to.matched.some((r) => r.meta.requiresAdmin) && !auth.isAdmin) {
+    return { name: 'dashboard' }
+  }
+})
+
+export default router
