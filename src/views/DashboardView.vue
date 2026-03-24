@@ -1,8 +1,14 @@
 <script setup lang="ts">
+/**
+ * Dashboard view displaying compliance statistics and quick action cards.
+ * Fetches aggregated data from the dashboard API on mount.
+ */
 import { ref, onMounted } from 'vue'
 import { dashboardApi, type DashboardData } from '@/api/dashboard'
 
+/** Aggregated dashboard statistics, null until loaded. */
 const data = ref<DashboardData | null>(null)
+/** Whether the dashboard data is still being fetched. */
 const loading = ref(true)
 
 onMounted(async () => {

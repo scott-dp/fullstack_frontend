@@ -1,4 +1,8 @@
 <script setup lang="ts">
+/**
+ * Registration view presenting a sign-up form with password confirmation.
+ * Registers via the auth store and redirects to the dashboard on success.
+ */
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
@@ -7,11 +11,19 @@ import { HttpError } from '@/api/client'
 const router = useRouter()
 const auth = useAuthStore()
 
+/** Bound username input value. */
 const username = ref('')
+/** Bound password input value. */
 const password = ref('')
+/** Bound password confirmation input value. */
 const confirmPassword = ref('')
+/** Error message displayed on registration failure. */
 const error = ref('')
 
+/**
+ * Handles form submission by validating password match and attempting registration.
+ * On success redirects to the dashboard. On failure displays the error message.
+ */
 async function handleSubmit() {
   error.value = ''
   if (password.value !== confirmPassword.value) {

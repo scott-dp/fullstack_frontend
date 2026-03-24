@@ -1,15 +1,25 @@
 <script setup lang="ts">
+/**
+ * Settings view allowing the user to view and update their profile
+ * (first name, last name, email). Displays read-only username and roles.
+ */
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { userApi } from '@/api/users'
 import { HttpError } from '@/api/client'
 
 const auth = useAuthStore()
+/** Bound first name input value. */
 const firstName = ref('')
+/** Bound last name input value. */
 const lastName = ref('')
+/** Bound email input value. */
 const email = ref('')
+/** Success message displayed after a profile update. */
 const success = ref('')
+/** Error message from the last save attempt. */
 const error = ref('')
+/** Whether the profile is currently being saved. */
 const saving = ref(false)
 
 onMounted(() => {
@@ -20,6 +30,10 @@ onMounted(() => {
   }
 })
 
+/**
+ * Saves the updated profile to the server and refreshes the auth store.
+ * Displays a success or error message based on the result.
+ */
 async function save() {
   error.value = ''
   success.value = ''

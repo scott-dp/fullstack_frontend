@@ -1,4 +1,9 @@
 <script setup lang="ts">
+/**
+ * Deviation detail view showing full information about a single deviation,
+ * including metadata, status management actions (for managers/admins),
+ * user assignment, and a threaded comment section.
+ */
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
@@ -8,14 +13,22 @@ import { HttpError } from '@/api/client'
 
 const route = useRoute()
 const auth = useAuthStore()
+/** Deviation ID parsed from the route params. */
 const deviationId = Number(route.params.id)
 
+/** The loaded deviation, null until fetched. */
 const deviation = ref<Deviation | null>(null)
+/** List of users available for assignment (loaded for managers/admins). */
 const users = ref<UserSummary[]>([])
+/** Whether the deviation data is still being loaded. */
 const loading = ref(true)
+/** Bound textarea value for a new comment. */
 const newComment = ref('')
+/** Error message from a failed comment submission. */
 const commentError = ref('')
+/** Error message from a failed status or assignment update. */
 const updateError = ref('')
+/** Whether a comment is currently being submitted. */
 const submittingComment = ref(false)
 
 onMounted(async () => {
@@ -29,6 +42,10 @@ onMounted(async () => {
   }
 })
 
+/**
+ * Transitions the deviation to a new workflow status.
+ * @param newStatus - Target status (OPEN, IN_PROGRESS, RESOLVED, CLOSED)
+ */
 async function updateStatus(newStatus: string) {
   updateError.value = ''
   try {
@@ -38,6 +55,10 @@ async function updateStatus(newStatus: string) {
   }
 }
 
+/**
+ * Assigns or unassigns the deviation to a user.
+ * @param userId - User ID to assign, or undefined to unassign
+ */
 async function assign(userId: number | undefined) {
   updateError.value = ''
   try {
@@ -47,6 +68,7 @@ async function assign(userId: number | undefined) {
   }
 }
 
+/** Submits a new comment on the deviation and appends it to the local list. */
 async function addComment() {
   if (!newComment.value.trim()) return
   commentError.value = ''
@@ -62,18 +84,33 @@ async function addComment() {
   }
 }
 
+/**
+ * Determines the CSS class for a severity badge.
+ * @param s - Severity level (LOW, MEDIUM, HIGH, CRITICAL)
+ * @returns CSS class name for the severity badge
+ */
 function severityClass(s: string) {
   if (s === 'CRITICAL' || s === 'HIGH') return 'danger'
   if (s === 'MEDIUM') return 'warning'
   return 'info'
 }
 
+/**
+ * Determines the CSS class for a status badge.
+ * @param s - Deviation status (OPEN, IN_PROGRESS, RESOLVED, CLOSED)
+ * @returns CSS class name for the status badge
+ */
 function statusClass(s: string) {
   if (s === 'CLOSED' || s === 'RESOLVED') return 'success'
   if (s === 'IN_PROGRESS') return 'info'
   return 'warning'
 }
 
+/**
+ * Formats an ISO-8601 timestamp to a locale-specific date/time string.
+ * @param iso - ISO-8601 date string
+ * @returns Formatted date/time string
+ */
 function formatDate(iso: string) {
   return new Date(iso).toLocaleString()
 }

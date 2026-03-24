@@ -1,17 +1,30 @@
 <script setup lang="ts">
+/**
+ * Temperature logging view displaying a table of recorded readings
+ * and an inline form for recording new temperature measurements.
+ */
 import { ref, onMounted } from 'vue'
 import { temperatureApi, type TemperatureLog, type CreateTemperatureLogRequest } from '@/api/temperature'
 import { HttpError } from '@/api/client'
 
+/** All temperature log entries loaded from the server. */
 const logs = ref<TemperatureLog[]>([])
+/** Whether logs are still being fetched. */
 const loading = ref(true)
+/** Whether the new temperature recording form is visible. */
 const showForm = ref(false)
+/** Error message from the last submission attempt. */
 const error = ref('')
 
+/** Bound location input value for the recording form. */
 const location = ref('')
+/** Bound temperature input value (degrees Celsius). */
 const temperature = ref<number | null>(null)
+/** Lower acceptable threshold for the recording (degrees Celsius). */
 const minThreshold = ref(-2)
+/** Upper acceptable threshold for the recording (degrees Celsius). */
 const maxThreshold = ref(4)
+/** Optional comment for the recording. */
 const comment = ref('')
 
 onMounted(async () => {
@@ -22,6 +35,10 @@ onMounted(async () => {
   }
 })
 
+/**
+ * Validates and submits the temperature recording form.
+ * On success prepends the new log to the list and resets the form.
+ */
 async function submit() {
   error.value = ''
   if (!location.value || temperature.value === null) {
@@ -47,12 +64,22 @@ async function submit() {
   }
 }
 
+/**
+ * Determines the CSS class for a temperature status badge.
+ * @param status - Temperature status string (NORMAL, WARNING, CRITICAL)
+ * @returns CSS class name for the status badge
+ */
 function statusClass(status: string) {
   if (status === 'NORMAL') return 'success'
   if (status === 'WARNING') return 'warning'
   return 'danger'
 }
 
+/**
+ * Formats an ISO-8601 timestamp to a locale-specific date/time string.
+ * @param iso - ISO-8601 date string
+ * @returns Formatted date/time string
+ */
 function formatDate(iso: string) {
   return new Date(iso).toLocaleString()
 }

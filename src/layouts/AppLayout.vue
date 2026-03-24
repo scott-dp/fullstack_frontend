@@ -1,4 +1,9 @@
 <script setup lang="ts">
+/**
+ * Main application layout wrapping authenticated pages.
+ * Provides the sidebar navigation, top header bar with notification badge
+ * and user info, and a router-view outlet for child views.
+ */
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
@@ -8,10 +13,12 @@ import AppSidebar from '@/components/AppSidebar.vue'
 const auth = useAuthStore()
 const notificationStore = useNotificationStore()
 const router = useRouter()
+/** Whether the mobile sidebar drawer is open. */
 const sidebarOpen = ref(false)
 
 notificationStore.fetchUnreadCount()
 
+/** Logs out the current user and redirects to the login page. */
 async function handleLogout() {
   await auth.logout()
   router.push({ name: 'login' })

@@ -1,8 +1,14 @@
 <script setup lang="ts">
+/**
+ * Admin user management view displaying a table of all users
+ * in the organization with their roles. Accessible only to admins.
+ */
 import { ref, onMounted } from 'vue'
 import { userApi, type UserSummary } from '@/api/users'
 
+/** All users loaded from the server. */
 const users = ref<UserSummary[]>([])
+/** Whether users are still being fetched. */
 const loading = ref(true)
 
 onMounted(async () => {

@@ -1,4 +1,9 @@
 <script setup lang="ts">
+/**
+ * Checklist completion view allowing a user to fill out and submit
+ * a checklist template. Loads the template by route param ID and
+ * initializes an answer record for each item.
+ */
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { checklistApi, type ChecklistTemplate, type ChecklistItem } from '@/api/checklists'
@@ -6,13 +11,20 @@ import { HttpError } from '@/api/client'
 
 const router = useRouter()
 const route = useRoute()
+/** Template ID parsed from the route params. */
 const templateId = Number(route.params.id)
 
+/** The loaded checklist template, null until fetched. */
 const template = ref<ChecklistTemplate | null>(null)
+/** User answers keyed by checklist item ID. */
 const answers = ref<Record<number, { checked: boolean; comment: string }>>({})
+/** Optional overall comment for the completion. */
 const overallComment = ref('')
+/** Whether the template is still being loaded. */
 const loading = ref(true)
+/** Whether the completion is currently being submitted. */
 const submitting = ref(false)
+/** Error message from loading or submission failure. */
 const error = ref('')
 
 onMounted(async () => {
@@ -28,6 +40,10 @@ onMounted(async () => {
   }
 })
 
+/**
+ * Submits the completed checklist to the server.
+ * On success navigates to the checklist history page.
+ */
 async function submit() {
   if (!template.value) return
   submitting.value = true

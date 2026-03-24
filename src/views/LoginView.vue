@@ -1,4 +1,9 @@
 <script setup lang="ts">
+/**
+ * Login view presenting a username/password form.
+ * Authenticates via the auth store and redirects to the originally
+ * requested page (or dashboard) on success.
+ */
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
@@ -8,10 +13,18 @@ const router = useRouter()
 const route = useRoute()
 const auth = useAuthStore()
 
+/** Bound username input value. */
 const username = ref('')
+/** Bound password input value. */
 const password = ref('')
+/** Error message displayed on authentication failure. */
 const error = ref('')
 
+/**
+ * Handles form submission by attempting login.
+ * On success redirects to the originally requested route or dashboard.
+ * On failure displays the error message from the server.
+ */
 async function handleSubmit() {
   error.value = ''
   try {

@@ -1,25 +1,40 @@
 <script setup lang="ts">
+/**
+ * Checklists view listing all checklist templates with category filtering.
+ * Managers and admins can create new templates via an inline form.
+ * Each template card links to its completion page.
+ */
 import { ref, onMounted, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { checklistApi, type ChecklistTemplate, type CreateTemplateRequest } from '@/api/checklists'
 import { HttpError } from '@/api/client'
 
 const auth = useAuthStore()
+/** All checklist templates loaded from the server. */
 const templates = ref<ChecklistTemplate[]>([])
+/** Whether templates are still being fetched. */
 const loading = ref(true)
+/** Currently selected category filter value, empty string for all. */
 const categoryFilter = ref('')
+/** Whether the template creation form is visible. */
 const showCreateForm = ref(false)
+/** Error message from the last create attempt. */
 const error = ref('')
 
-// Create form state
+/** New template title (create form). */
 const newTitle = ref('')
+/** New template description (create form). */
 const newDescription = ref('')
+/** New template frequency (create form). */
 const newFrequency = ref('DAILY')
+/** New template category (create form). */
 const newCategory = ref('FOOD')
+/** New template items list (create form). */
 const newItems = ref<{ description: string; requiresComment: boolean }[]>([
   { description: '', requiresComment: false },
 ])
 
+/** Templates filtered by the selected category. */
 const filtered = computed(() => {
   if (!categoryFilter.value) return templates.value
   return templates.value.filter((t: ChecklistTemplate) => t.category === categoryFilter.value)
@@ -33,16 +48,26 @@ onMounted(async () => {
   }
 })
 
+/** Appends a blank item row to the create form. */
 function addItem() {
   newItems.value.push({ description: '', requiresComment: false })
 }
 
+/**
+ * Removes an item row from the create form by index.
+ * Prevents removal of the last remaining item.
+ * @param index - Zero-based index of the item to remove
+ */
 function removeItem(index: number) {
   if (newItems.value.length > 1) {
     newItems.value.splice(index, 1)
   }
 }
 
+/**
+ * Validates and submits the create template form.
+ * On success prepends the new template to the list and resets the form.
+ */
 async function createTemplate() {
   error.value = ''
   const validItems = newItems.value.filter((i: { description: string; requiresComment: boolean }) => i.description.trim())
@@ -73,10 +98,20 @@ async function createTemplate() {
   }
 }
 
+/**
+ * Converts a frequency enum value to a human-readable label.
+ * @param f - Frequency string (e.g. "DAILY")
+ * @returns Title-cased label (e.g. "Daily")
+ */
 function frequencyLabel(f: string) {
   return f.charAt(0) + f.slice(1).toLowerCase()
 }
 
+/**
+ * Converts a category enum value to its Norwegian display label.
+ * @param c - Category string (FOOD or ALCOHOL)
+ * @returns Display label ("IK-Mat" or "IK-Alkohol")
+ */
 function categoryLabel(c: string) {
   return c === 'FOOD' ? 'IK-Mat' : 'IK-Alkohol'
 }

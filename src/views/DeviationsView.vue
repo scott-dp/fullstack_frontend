@@ -1,12 +1,22 @@
 <script setup lang="ts">
+/**
+ * Deviations list view displaying all deviation reports in a filterable table.
+ * Supports filtering by status and category. Rows are clickable to navigate
+ * to the deviation detail page.
+ */
 import { ref, onMounted, computed } from 'vue'
 import { deviationApi, type Deviation } from '@/api/deviations'
 
+/** All deviation reports loaded from the server. */
 const deviations = ref<Deviation[]>([])
+/** Whether deviations are still being fetched. */
 const loading = ref(true)
+/** Currently selected status filter value, empty string for all. */
 const statusFilter = ref('')
+/** Currently selected category filter value, empty string for all. */
 const categoryFilter = ref('')
 
+/** Deviations filtered by the selected status and category. */
 const filtered = computed(() => {
   return deviations.value.filter((d: Deviation) => {
     if (statusFilter.value && d.status !== statusFilter.value) return false
@@ -23,18 +33,33 @@ onMounted(async () => {
   }
 })
 
+/**
+ * Determines the CSS class for a severity badge.
+ * @param s - Severity level (LOW, MEDIUM, HIGH, CRITICAL)
+ * @returns CSS class name for the severity badge
+ */
 function severityClass(s: string) {
   if (s === 'CRITICAL' || s === 'HIGH') return 'danger'
   if (s === 'MEDIUM') return 'warning'
   return 'info'
 }
 
+/**
+ * Determines the CSS class for a status badge.
+ * @param s - Deviation status (OPEN, IN_PROGRESS, RESOLVED, CLOSED)
+ * @returns CSS class name for the status badge
+ */
 function statusClass(s: string) {
   if (s === 'CLOSED' || s === 'RESOLVED') return 'success'
   if (s === 'IN_PROGRESS') return 'info'
   return 'warning'
 }
 
+/**
+ * Formats an ISO-8601 timestamp to a locale-specific date string.
+ * @param iso - ISO-8601 date string
+ * @returns Formatted date string
+ */
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString()
 }

@@ -1,20 +1,36 @@
 <script setup lang="ts">
+/**
+ * Notifications view displaying all user notifications in a list.
+ * Supports marking individual notifications or all as read.
+ * Fetches the full notification list on mount.
+ */
 import { onMounted, computed } from 'vue'
 import { useNotificationStore } from '@/stores/notifications'
 import type { Notification } from '@/api/notifications'
 
 const store = useNotificationStore()
 
+/** Whether any notification in the list is still unread. */
 const hasUnread = computed(() => store.notifications.some((n: Notification) => !n.read))
 
 onMounted(() => {
   store.fetchNotifications()
 })
 
+/**
+ * Formats an ISO-8601 timestamp to a locale-specific date/time string.
+ * @param iso - ISO-8601 date string
+ * @returns Formatted date/time string
+ */
 function formatDate(iso: string) {
   return new Date(iso).toLocaleString()
 }
 
+/**
+ * Maps a notification type to a CSS badge class for visual styling.
+ * @param type - Notification type string (TEMPERATURE_ALERT, DEVIATION_ASSIGNED, TASK_DUE, GENERAL)
+ * @returns CSS class name for the type badge, or empty string for GENERAL
+ */
 function typeIcon(type: string) {
   if (type === 'TEMPERATURE_ALERT') return 'danger'
   if (type === 'DEVIATION_ASSIGNED') return 'warning'

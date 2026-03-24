@@ -1,17 +1,32 @@
 <script setup lang="ts">
+/**
+ * Deviation creation view presenting a form to report a new
+ * non-compliance deviation with title, description, category, and severity.
+ * Redirects to the deviations list on successful submission.
+ */
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { deviationApi } from '@/api/deviations'
 import { HttpError } from '@/api/client'
 
 const router = useRouter()
+/** Bound title input value. */
 const title = ref('')
+/** Bound description textarea value. */
 const description = ref('')
+/** Selected compliance category (FOOD or ALCOHOL). */
 const category = ref('FOOD')
+/** Selected severity level (LOW, MEDIUM, HIGH, CRITICAL). */
 const severity = ref('MEDIUM')
+/** Error message from the last submission attempt. */
 const error = ref('')
+/** Whether the form is currently being submitted. */
 const submitting = ref(false)
 
+/**
+ * Submits the deviation report to the server.
+ * On success navigates back to the deviations list.
+ */
 async function submit() {
   error.value = ''
   submitting.value = true
