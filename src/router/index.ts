@@ -10,7 +10,6 @@
  * @module
  */
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
 
 /** Application route definitions with lazy-loaded components. */
 const routes: RouteRecordRaw[] = [
