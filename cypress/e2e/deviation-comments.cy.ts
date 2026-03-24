@@ -17,6 +17,11 @@ describe('deviation comments', () => {
       },
     }).as('authStatus')
 
+    cy.intercept('GET', '/api/notifications/unread-count', {
+      statusCode: 200,
+      body: 0,
+    }).as('getUnreadCount')
+
     cy.intercept('GET', '/api/deviations/1', {
       statusCode: 200,
       body: {
@@ -60,7 +65,7 @@ describe('deviation comments', () => {
     }).as('addComment')
 
     cy.visit('/app/deviations/1')
-    cy.wait(['@authStatus', '@getDeviation', '@getUsers'])
+    cy.wait(['@authStatus', '@getUnreadCount', '@getDeviation', '@getUsers'])
 
     cy.get('textarea').type('Technician booked for today.')
     cy.contains('button', 'Post Comment').click()

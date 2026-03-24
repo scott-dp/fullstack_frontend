@@ -9,10 +9,27 @@ describe('auth routing', () => {
     cy.wait('@authStatus')
 
     cy.url().should('include', '/login')
-    cy.url().should('include', 'redirect=%2Fapp')
+    cy.url().should('include', 'redirect=/app')
   })
 
   it('logs in and redirects to the requested page', () => {
+    cy.intercept('GET', '/api/notifications/unread-count', {
+      statusCode: 200,
+      body: 0,
+    }).as('getUnreadCount')
+
+    cy.intercept('GET', '/api/dashboard', {
+      statusCode: 200,
+      body: {
+        totalChecklistTemplates: 0,
+        checklistsCompletedToday: 0,
+        temperatureAlertsToday: 0,
+        openDeviations: 0,
+        inProgressDeviations: 0,
+        unreadNotifications: 0,
+      },
+    }).as('getDashboard')
+
     cy.intercept('POST', '/api/auth/login', {
       statusCode: 200,
       body: {
@@ -36,6 +53,7 @@ describe('auth routing', () => {
     cy.contains('button', 'Sign In').click()
 
     cy.wait('@login')
+    cy.wait(['@getUnreadCount', '@getDashboard'])
     cy.url().should('include', '/app')
   })
 })
