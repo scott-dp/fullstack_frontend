@@ -1,6 +1,18 @@
+/**
+ * Vue Router configuration.
+ * Defines all application routes, lazy-loaded view components,
+ * and the global navigation guard for authentication and authorization.
+ *
+ * Route meta fields:
+ * - `guest` - Route is only accessible to unauthenticated users (login, register).
+ * - `requiresAuth` - Route requires an authenticated session; redirects to login otherwise.
+ * - `requiresAdmin` - Route requires the ADMIN role; redirects to dashboard otherwise.
+ * @module
+ */
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
+/** Application route definitions with lazy-loaded components. */
 const routes: RouteRecordRaw[] = [
   {
     path: '/login',
@@ -44,6 +56,13 @@ const router = createRouter({
   routes,
 })
 
+/**
+ * Global navigation guard.
+ * - Lazily checks auth status on first navigation.
+ * - Redirects unauthenticated users to login (preserving the intended destination).
+ * - Redirects authenticated users away from guest-only pages.
+ * - Redirects non-admin users away from admin-only pages.
+ */
 router.beforeEach(async (to) => {
   const auth = useAuthStore()
 
