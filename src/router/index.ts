@@ -43,6 +43,10 @@ export const routes: RouteRecordRaw[] = [
     meta: { requiresAuth: true },
     children: [
       { path: '', name: 'dashboard', component: () => import('@/views/DashboardView.vue') },
+      { path: 'routines', name: 'routines', component: () => import('@/views/RoutinesListView.vue') },
+      { path: 'routines/new', name: 'routine-new', component: () => import('@/views/RoutineCreateView.vue'), meta: { requiresManageAccess: true } },
+      { path: 'routines/:id', name: 'routine-detail', component: () => import('@/views/RoutineDetailView.vue'), props: true },
+      { path: 'routines/:id/edit', name: 'routine-edit', component: () => import('@/views/RoutineEditView.vue'), meta: { requiresManageAccess: true }, props: true },
       { path: 'checklists', name: 'checklists', component: () => import('@/views/ChecklistsView.vue') },
       { path: 'checklists/:id/complete', name: 'checklist-complete', component: () => import('@/views/ChecklistCompleteView.vue'), props: true },
       { path: 'checklists/history', name: 'checklist-history', component: () => import('@/views/ChecklistHistoryView.vue') },
