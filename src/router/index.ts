@@ -50,6 +50,13 @@ export const routes: RouteRecordRaw[] = [
       { path: 'deviations', name: 'deviations', component: () => import('@/views/DeviationsView.vue') },
       { path: 'deviations/new', name: 'deviation-new', component: () => import('@/views/DeviationCreateView.vue') },
       { path: 'deviations/:id', name: 'deviation-detail', component: () => import('@/views/DeviationDetailView.vue'), props: true },
+      { path: 'suppliers', name: 'suppliers', component: () => import('@/views/SuppliersView.vue') },
+      { path: 'suppliers/new', name: 'supplier-new', component: () => import('@/views/SupplierCreateView.vue') },
+      { path: 'suppliers/:id', name: 'supplier-detail', component: () => import('@/views/SupplierDetailView.vue'), props: true },
+      { path: 'deliveries', name: 'deliveries', component: () => import('@/views/DeliveriesView.vue') },
+      { path: 'deliveries/new', name: 'delivery-new', component: () => import('@/views/DeliveryCreateView.vue') },
+      { path: 'deliveries/:id', name: 'delivery-detail', component: () => import('@/views/DeliveryDetailView.vue'), props: true },
+      { path: 'traceability', name: 'traceability', component: () => import('@/views/TraceabilitySearchView.vue') },
       { path: 'notifications', name: 'notifications', component: () => import('@/views/NotificationsView.vue') },
       { path: 'settings', name: 'settings', component: () => import('@/views/SettingsView.vue') },
       {
