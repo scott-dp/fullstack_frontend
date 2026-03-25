@@ -50,6 +50,11 @@ export const routes: RouteRecordRaw[] = [
       { path: 'deviations', name: 'deviations', component: () => import('@/views/DeviationsView.vue') },
       { path: 'deviations/new', name: 'deviation-new', component: () => import('@/views/DeviationCreateView.vue') },
       { path: 'deviations/:id', name: 'deviation-detail', component: () => import('@/views/DeviationDetailView.vue'), props: true },
+      { path: 'training', name: 'training-templates', component: () => import('@/views/TrainingTemplatesView.vue') },
+      { path: 'training/new', name: 'training-new', component: () => import('@/views/TrainingTemplateCreateView.vue'), meta: { requiresManageAccess: true } },
+      { path: 'training/templates/:id/assign', name: 'training-assign', component: () => import('@/views/TrainingAssignView.vue'), meta: { requiresManageAccess: true }, props: true },
+      { path: 'training/my', name: 'my-training', component: () => import('@/views/MyTrainingView.vue') },
+      { path: 'training/report', name: 'training-report', component: () => import('@/views/TrainingReportView.vue'), meta: { requiresManageAccess: true } },
       { path: 'notifications', name: 'notifications', component: () => import('@/views/NotificationsView.vue') },
       { path: 'settings', name: 'settings', component: () => import('@/views/SettingsView.vue') },
       {
