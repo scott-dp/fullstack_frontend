@@ -5,6 +5,7 @@ describe('route guard', () => {
   it('allows public routes', async () => {
     const auth = {
       isAuthenticated: false,
+      isSuperAdmin: false,
       isAdmin: false,
       hasManageAccess: false,
       checkAuth: vi.fn().mockResolvedValue(undefined),
@@ -26,6 +27,7 @@ describe('route guard', () => {
   it('redirects authenticated users away from guest routes', async () => {
     const auth = {
       isAuthenticated: true,
+      isSuperAdmin: false,
       isAdmin: false,
       hasManageAccess: false,
       checkAuth: vi.fn(),
@@ -46,6 +48,7 @@ describe('route guard', () => {
   it('redirects unauthenticated users to login for protected routes', async () => {
     const auth = {
       isAuthenticated: false,
+      isSuperAdmin: false,
       isAdmin: false,
       hasManageAccess: false,
       checkAuth: vi.fn().mockResolvedValue(undefined),
@@ -66,6 +69,7 @@ describe('route guard', () => {
   it('redirects non-admin users away from admin routes', async () => {
     const auth = {
       isAuthenticated: true,
+      isSuperAdmin: false,
       isAdmin: false,
       hasManageAccess: false,
       checkAuth: vi.fn(),
@@ -86,6 +90,7 @@ describe('route guard', () => {
   it('allows admin users onto admin routes', async () => {
     const auth = {
       isAuthenticated: true,
+      isSuperAdmin: false,
       isAdmin: true,
       hasManageAccess: true,
       checkAuth: vi.fn(),
@@ -106,6 +111,7 @@ describe('route guard', () => {
   it('redirects users without manage access away from management routes', async () => {
     const auth = {
       isAuthenticated: true,
+      isSuperAdmin: false,
       isAdmin: false,
       hasManageAccess: false,
       checkAuth: vi.fn(),
@@ -126,6 +132,7 @@ describe('route guard', () => {
   it('allows managers onto management routes', async () => {
     const auth = {
       isAuthenticated: true,
+      isSuperAdmin: false,
       isAdmin: false,
       hasManageAccess: true,
       checkAuth: vi.fn(),
@@ -136,6 +143,90 @@ describe('route guard', () => {
         meta: {},
         fullPath: '/app/admin/users',
         matched: [{ meta: { requiresAuth: true } }, { meta: { requiresManageAccess: true } }],
+      },
+      auth,
+    )
+
+    expect(result).toBeUndefined()
+  })
+
+  it('redirects superadmins away from guest routes to the superadmin dashboard', async () => {
+    const auth = {
+      isAuthenticated: true,
+      isSuperAdmin: true,
+      isAdmin: false,
+      hasManageAccess: false,
+      checkAuth: vi.fn(),
+    }
+
+    const result = await applyRouteGuard(
+      {
+        meta: { guest: true },
+        fullPath: '/login',
+        matched: [],
+      },
+      auth,
+    )
+
+    expect(result).toEqual({ name: 'superadmin-dashboard' })
+  })
+
+  it('redirects non-superadmins away from superadmin routes', async () => {
+    const auth = {
+      isAuthenticated: true,
+      isSuperAdmin: false,
+      isAdmin: true,
+      hasManageAccess: true,
+      checkAuth: vi.fn(),
+    }
+
+    const result = await applyRouteGuard(
+      {
+        meta: {},
+        fullPath: '/app/superadmin',
+        matched: [{ meta: { requiresAuth: true } }, { meta: { requiresSuperAdmin: true } }],
+      },
+      auth,
+    )
+
+    expect(result).toEqual({ name: 'dashboard' })
+  })
+
+  it('redirects superadmins away from regular app routes', async () => {
+    const auth = {
+      isAuthenticated: true,
+      isSuperAdmin: true,
+      isAdmin: false,
+      hasManageAccess: false,
+      checkAuth: vi.fn(),
+    }
+
+    const result = await applyRouteGuard(
+      {
+        meta: {},
+        fullPath: '/app/deviations',
+        matched: [{ meta: { requiresAuth: true } }],
+      },
+      auth,
+    )
+
+    expect(result).toEqual({ name: 'superadmin-dashboard' })
+  })
+
+  it('allows superadmins onto superadmin routes', async () => {
+    const auth = {
+      isAuthenticated: true,
+      isSuperAdmin: true,
+      isAdmin: false,
+      hasManageAccess: false,
+      checkAuth: vi.fn(),
+    }
+
+    const result = await applyRouteGuard(
+      {
+        meta: {},
+        fullPath: '/app/superadmin',
+        matched: [{ meta: { requiresAuth: true } }, { meta: { requiresSuperAdmin: true } }],
       },
       auth,
     )

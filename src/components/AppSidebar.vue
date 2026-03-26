@@ -41,6 +41,10 @@ const manageNavItems = [
   { to: '/app/ingredients', label: 'Ingredients', icon: 'M11 3a1 1 0 011 1v7.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4A1 1 0 017.707 9.293L10 11.586V4a1 1 0 011-1zM5 19a2 2 0 002 2h8a2 2 0 002-2v-1H5v1z' },
 ]
 
+const superAdminNavItems = [
+  { to: '/app/superadmin', label: 'Superadmin', icon: 'M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7l7-4zm0 6a2 2 0 100 4 2 2 0 000-4zm0-2v1m0 6v1' },
+]
+
 /**
  * Determines whether a navigation item is active based on the current route path.
  * The dashboard ("/") requires an exact match; other items use prefix matching.
@@ -58,11 +62,11 @@ function isActive(to: string) {
   <aside class="sidebar" :class="{ open }">
     <div class="sidebar-header">
       <h1 class="logo">IK System</h1>
-      <span class="org-name">{{ auth.user?.organizationName || t('No organization') }}</span>
+      <span class="org-name">{{ auth.isSuperAdmin ? t('Platform Access') : auth.user?.organizationName || t('No organization') }}</span>
     </div>
     <nav class="sidebar-nav" role="navigation" :aria-label="t('Dashboard')">
       <router-link
-        v-for="item in navItems"
+        v-for="item in auth.isSuperAdmin ? superAdminNavItems : []"
         :key="item.to"
         :to="item.to"
         class="nav-item"
@@ -73,7 +77,7 @@ function isActive(to: string) {
         <span>{{ t(item.label) }}</span>
       </router-link>
       <router-link
-        v-for="item in auth.hasManageAccess ? manageNavItems : []"
+        v-for="item in auth.isSuperAdmin ? [] : navItems"
         :key="item.to"
         :to="item.to"
         class="nav-item"
@@ -83,9 +87,20 @@ function isActive(to: string) {
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path :d="item.icon" /></svg>
         <span>{{ t(item.label) }}</span>
       </router-link>
-      <div v-if="auth.hasManageAccess" class="nav-divider" />
       <router-link
-        v-if="auth.isAdmin"
+        v-for="item in auth.isSuperAdmin ? [] : auth.hasManageAccess ? manageNavItems : []"
+        :key="item.to"
+        :to="item.to"
+        class="nav-item"
+        :class="{ active: isActive(item.to) }"
+        @click="emit('close')"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path :d="item.icon" /></svg>
+        <span>{{ t(item.label) }}</span>
+      </router-link>
+      <div v-if="!auth.isSuperAdmin && auth.hasManageAccess" class="nav-divider" />
+      <router-link
+        v-if="!auth.isSuperAdmin && auth.isAdmin"
         to="/app/admin"
         class="nav-item"
         :class="{ active: route.path === '/app/admin' }"
@@ -95,7 +110,7 @@ function isActive(to: string) {
         <span>{{ t('Admin Panel') }}</span>
       </router-link>
       <router-link
-        v-if="auth.hasManageAccess"
+        v-if="!auth.isSuperAdmin && auth.hasManageAccess"
         to="/app/admin/users"
         class="nav-item"
         :class="{ active: route.path === '/app/admin/users' }"

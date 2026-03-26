@@ -42,6 +42,7 @@ describe('auth store', () => {
 
     expect(store.user).toEqual(testUser)
     expect(store.isAuthenticated).toBe(true)
+    expect(store.isSuperAdmin).toBe(false)
     expect(store.isAdmin).toBe(true)
     expect(store.hasManageAccess).toBe(true)
     expect(store.organizationId).toBe(5)
@@ -131,5 +132,25 @@ describe('auth store', () => {
     ).rejects.toThrow('bad credentials')
 
     expect(store.loading).toBe(false)
+  })
+
+  it('recognizes superadmin users separately from org admins', async () => {
+    authApiMock.status.mockResolvedValue({
+      authenticated: true,
+      user: {
+        ...testUser,
+        roles: ['ROLE_SUPERADMIN'],
+        organizationId: null,
+        organizationName: null,
+      },
+    })
+    const store = useAuthStore()
+
+    await store.checkAuth()
+
+    expect(store.isSuperAdmin).toBe(true)
+    expect(store.isAdmin).toBe(false)
+    expect(store.hasManageAccess).toBe(false)
+    expect(store.organizationId).toBeNull()
   })
 })

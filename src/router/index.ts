@@ -5,6 +5,7 @@
  * - `guest` - Only accessible to unauthenticated users (redirects to dashboard if logged in).
  * - `requiresAuth` - Requires an authenticated session; redirects to login otherwise.
  * - `requiresAdmin` - Requires the ADMIN role; redirects to dashboard otherwise.
+ * - `requiresSuperAdmin` - Requires the SUPERADMIN role; redirects to the correct dashboard otherwise.
  * - `requiresManageAccess` - Requires ADMIN or MANAGER role; redirects to dashboard otherwise.
  * - `public` - Accessible to everyone regardless of auth state.
  * @module
@@ -38,11 +39,18 @@ export const routes: RouteRecordRaw[] = [
     meta: { public: true },
   },
   {
+    path: '/admin-setup',
+    name: 'admin-setup',
+    component: () => import('@/views/AdminSetupView.vue'),
+    meta: { public: true },
+  },
+  {
     path: '/app',
     component: () => import('@/layouts/AppLayout.vue'),
     meta: { requiresAuth: true },
     children: [
       { path: '', name: 'dashboard', component: () => import('@/views/DashboardView.vue') },
+      { path: 'superadmin', name: 'superadmin-dashboard', component: () => import('@/views/SuperAdminDashboardView.vue'), meta: { requiresSuperAdmin: true } },
       { path: 'routines', name: 'routines', component: () => import('@/views/RoutinesListView.vue') },
       { path: 'routines/new', name: 'routine-new', component: () => import('@/views/RoutineCreateView.vue'), meta: { requiresManageAccess: true } },
       { path: 'routines/:id', name: 'routine-detail', component: () => import('@/views/RoutineDetailView.vue'), props: true },
@@ -99,6 +107,7 @@ export const routes: RouteRecordRaw[] = [
 
 type AuthGuardStore = {
   isAuthenticated: boolean
+  isSuperAdmin: boolean
   isAdmin: boolean
   hasManageAccess: boolean
   checkAuth: () => Promise<void>
@@ -124,11 +133,19 @@ export async function applyRouteGuard(
   }
 
   if (to.meta?.guest && auth.isAuthenticated) {
-    return { name: 'dashboard' }
+    return { name: auth.isSuperAdmin ? 'superadmin-dashboard' : 'dashboard' }
   }
 
   if (to.matched.some((r) => r.meta.requiresAuth) && !auth.isAuthenticated) {
     return { name: 'login', query: { redirect: to.fullPath } }
+  }
+
+  if (to.matched.some((r) => r.meta.requiresSuperAdmin) && !auth.isSuperAdmin) {
+    return { name: 'dashboard' }
+  }
+
+  if (auth.isSuperAdmin && to.matched.some((r) => r.meta.requiresAuth) && !to.matched.some((r) => r.meta.requiresSuperAdmin)) {
+    return { name: 'superadmin-dashboard' }
   }
 
   if (to.matched.some((r) => r.meta.requiresAdmin) && !auth.isAdmin) {
