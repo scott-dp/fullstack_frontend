@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { routineApi, type Routine } from '@/api/routines'
-import { checklistApi, type ChecklistTemplate } from '@/api/checklists'
+import { routineApi } from '@/api/routines'
 import { HttpError } from '@/api/client'
 
 const route = useRoute()
@@ -10,7 +9,6 @@ const router = useRouter()
 const error = ref('')
 const saving = ref(false)
 const loading = ref(true)
-const templates = ref<ChecklistTemplate[]>([])
 const id = computed(() => Number(route.params.id))
 
 const form = ref({
@@ -25,7 +23,6 @@ const form = ref({
   whatIsDeviationText: '',
   correctiveActionText: '',
   requiredEvidenceText: '',
-  linkedChecklistTemplateId: null as number | null,
   reviewIntervalDays: null as number | null,
 })
 
@@ -49,11 +46,7 @@ const alkoholCategories = [
 
 onMounted(async () => {
   try {
-    const [routine, tpls] = await Promise.all([
-      routineApi.get(id.value),
-      checklistApi.listTemplates().catch(() => [] as ChecklistTemplate[]),
-    ])
-    templates.value = tpls
+    const routine = await routineApi.get(id.value)
     form.value = {
       name: routine.name,
       moduleType: routine.moduleType,
@@ -66,7 +59,6 @@ onMounted(async () => {
       whatIsDeviationText: routine.whatIsDeviationText || '',
       correctiveActionText: routine.correctiveActionText || '',
       requiredEvidenceText: routine.requiredEvidenceText || '',
-      linkedChecklistTemplateId: routine.linkedChecklistTemplateId,
       reviewIntervalDays: routine.reviewIntervalDays,
     }
   } catch (err: unknown) {
@@ -87,7 +79,6 @@ async function handleSubmit() {
   try {
     await routineApi.update(id.value, {
       ...form.value,
-      linkedChecklistTemplateId: form.value.linkedChecklistTemplateId || undefined,
       reviewIntervalDays: form.value.reviewIntervalDays || undefined,
     })
     router.push(`/app/routines/${id.value}`)
@@ -192,13 +183,6 @@ async function handleSubmit() {
       </div>
 
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Linked Checklist Template</label>
-          <select v-model="form.linkedChecklistTemplateId" class="form-select">
-            <option :value="null">None</option>
-            <option v-for="t in templates" :key="t.id" :value="t.id">{{ t.title }}</option>
-          </select>
-        </div>
         <div class="form-group">
           <label class="form-label">Review Interval (days)</label>
           <input v-model.number="form.reviewIntervalDays" type="number" class="form-input" min="1" max="365" />

@@ -2,13 +2,11 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { routineApi } from '@/api/routines'
-import { checklistApi, type ChecklistTemplate } from '@/api/checklists'
 import { HttpError } from '@/api/client'
 
 const router = useRouter()
 const error = ref('')
 const saving = ref(false)
-const templates = ref<ChecklistTemplate[]>([])
 
 const form = ref({
   name: '',
@@ -22,7 +20,6 @@ const form = ref({
   whatIsDeviationText: '',
   correctiveActionText: '',
   requiredEvidenceText: '',
-  linkedChecklistTemplateId: null as number | null,
   reviewIntervalDays: 30 as number | null,
 })
 
@@ -43,17 +40,6 @@ const alkoholCategories = [
   { value: 'LICENSE_CONDITIONS', label: 'License Conditions' },
   { value: 'SECURITY', label: 'Security' },
 ]
-
-import { onMounted } from 'vue'
-
-onMounted(async () => {
-  try {
-    templates.value = await checklistApi.listTemplates()
-  } catch {
-    // not critical
-  }
-})
-
 async function handleSubmit() {
   error.value = ''
   if (!form.value.name.trim()) {
@@ -65,7 +51,6 @@ async function handleSubmit() {
   try {
     const routine = await routineApi.create({
       ...form.value,
-      linkedChecklistTemplateId: form.value.linkedChecklistTemplateId || undefined,
       reviewIntervalDays: form.value.reviewIntervalDays || undefined,
     })
     router.push(`/app/routines/${routine.id}`)
@@ -170,14 +155,6 @@ async function handleSubmit() {
       </div>
 
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Linked Checklist Template</label>
-          <select v-model="form.linkedChecklistTemplateId" class="form-select">
-            <option :value="null">None</option>
-            <option v-for="t in templates" :key="t.id" :value="t.id">{{ t.title }}</option>
-          </select>
-        </div>
-
         <div class="form-group">
           <label class="form-label">Review Interval (days)</label>
           <input v-model.number="form.reviewIntervalDays" type="number" class="form-input" min="1" max="365" placeholder="e.g. 30" />

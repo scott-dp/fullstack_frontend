@@ -99,6 +99,10 @@ export const allergenApi = {
   updateIngredient: (id: number, data: { name?: string; notes?: string; allergenIds?: number[] }) =>
     request<Ingredient>(`/ingredients/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
 
+  /** Deletes an ingredient. */
+  deleteIngredient: (id: number) =>
+    request<void>(`/ingredients/${id}`, { method: 'DELETE' }),
+
   /** Lists all dishes. */
   listDishes: () => request<Dish[]>('/dishes'),
 
@@ -112,6 +116,10 @@ export const allergenApi = {
   /** Updates an existing dish. */
   updateDish: (id: number, data: { name?: string; description?: string; notes?: string; ingredientIds?: DishIngredientEntry[] }) =>
     request<Dish>(`/dishes/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+
+  /** Deletes a dish. */
+  deleteDish: (id: number) =>
+    request<void>(`/dishes/${id}`, { method: 'DELETE' }),
 
   /** Approves the current allergen configuration of a dish. */
   approveDish: (id: number) => request<Dish>(`/dishes/${id}/approve`, { method: 'POST' }),

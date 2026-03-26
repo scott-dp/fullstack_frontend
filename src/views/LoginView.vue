@@ -127,10 +127,15 @@ async function handleEmailCodeLogin() {
             id="email-code"
             v-model="emailCode"
             type="text"
+            name="one-time-code"
             inputmode="numeric"
             maxlength="6"
             class="form-input"
             placeholder="6-digit code"
+            autocomplete="one-time-code"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
           />
         </div>
         <button type="submit" class="btn btn-primary btn-full" :disabled="auth.loading || !emailForCode || !emailCode">

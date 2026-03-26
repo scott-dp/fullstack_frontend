@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { allergenApi, type Dish, type Allergen } from '@/api/allergens'
 import { useAuthStore } from '@/stores/auth'
 import { HttpError } from '@/api/client'
 
 const route = useRoute()
+const router = useRouter()
 const auth = useAuthStore()
 const id = computed(() => Number(route.params.id))
 const dish = ref<Dish | null>(null)
@@ -17,6 +18,7 @@ const overrideAllergenId = ref<number | null>(null)
 const overrideIncluded = ref(true)
 const overrideReason = ref('')
 const addingOverride = ref(false)
+const deleting = ref(false)
 
 onMounted(async () => {
   try {
@@ -51,6 +53,19 @@ async function handleRemoveOverride(overrideId: number) {
   catch (err: unknown) { error.value = err instanceof HttpError ? err.message : 'Failed to remove override' }
 }
 
+async function handleDelete() {
+  if (!window.confirm('Delete this dish? This cannot be undone.')) return
+  deleting.value = true
+  try {
+    await allergenApi.deleteDish(id.value)
+    router.push('/app/dishes')
+  } catch (err: unknown) {
+    error.value = err instanceof HttpError ? err.message : 'Failed to delete dish'
+  } finally {
+    deleting.value = false
+  }
+}
+
 function formatDate(iso: string) { return new Date(iso).toLocaleDateString() }
 </script>
 
@@ -61,6 +76,9 @@ function formatDate(iso: string) { return new Date(iso).toLocaleDateString() }
       <div v-if="dish && auth.hasManageAccess" style="display: flex; gap: 8px;">
         <router-link :to="`/app/dishes/${id}/edit`" class="btn btn-secondary">Edit</router-link>
         <button class="btn btn-primary" :disabled="approving" @click="handleApprove">{{ approving ? 'Approving...' : 'Approve Allergens' }}</button>
+        <button class="btn btn-danger" :disabled="deleting" @click="handleDelete">
+          {{ deleting ? 'Deleting...' : 'Delete' }}
+        </button>
       </div>
     </div>
     <div v-if="loading" class="loading"><div class="spinner" /></div>
@@ -113,5 +131,7 @@ function formatDate(iso: string) { return new Date(iso).toLocaleDateString() }
 .allergen-badges { display: flex; flex-wrap: wrap; gap: 6px; }
 .override-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
 .override-form { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.btn-danger { background: var(--danger); color: white; border: none; }
+.btn-danger:hover { opacity: 0.9; }
 @media (max-width: 768px) { .detail-grid { grid-template-columns: 1fr; } }
 </style>

@@ -32,6 +32,7 @@ const selectedAllergenIds = ref<Set<number>>(new Set())
 const error = ref('')
 /** Whether the form is currently being submitted. */
 const submitting = ref(false)
+const deleting = ref(false)
 /** Whether data is still being loaded. */
 const loading = ref(true)
 
@@ -86,13 +87,39 @@ async function submit() {
     submitting.value = false
   }
 }
+
+async function handleDelete() {
+  if (!isEdit.value || !ingredientId.value) return
+  if (!window.confirm('Delete this ingredient? This cannot be undone.')) return
+  deleting.value = true
+  error.value = ''
+  try {
+    await allergenApi.deleteIngredient(ingredientId.value)
+    router.push('/app/ingredients')
+  } catch (err: unknown) {
+    error.value = err instanceof HttpError ? err.message : 'Failed to delete ingredient'
+  } finally {
+    deleting.value = false
+  }
+}
 </script>
 
 <template>
   <div>
     <div class="page-header">
       <h1>{{ isEdit ? 'Edit Ingredient' : 'New Ingredient' }}</h1>
-      <router-link to="/app/ingredients" class="btn btn-secondary">Back</router-link>
+      <div style="display: flex; gap: 8px;">
+        <button
+          v-if="isEdit"
+          type="button"
+          class="btn btn-danger"
+          :disabled="deleting"
+          @click="handleDelete"
+        >
+          {{ deleting ? 'Deleting...' : 'Delete' }}
+        </button>
+        <router-link to="/app/ingredients" class="btn btn-secondary">Back</router-link>
+      </div>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
@@ -168,5 +195,13 @@ async function submit() {
 }
 .allergen-name {
   color: var(--text);
+}
+.btn-danger {
+  background: var(--danger);
+  color: white;
+  border: none;
+}
+.btn-danger:hover {
+  opacity: 0.9;
 }
 </style>

@@ -16,6 +16,7 @@ const error = ref('')
 const reviewNotes = ref('')
 const reviewing = ref(false)
 const archiving = ref(false)
+const deleting = ref(false)
 
 const id = computed(() => Number(route.params.id))
 
@@ -68,6 +69,30 @@ async function handleArchive() {
   }
 }
 
+async function handleUnarchive() {
+  archiving.value = true
+  try {
+    routine.value = await routineApi.unarchive(id.value)
+  } catch (err: unknown) {
+    error.value = err instanceof HttpError ? err.message : 'Failed to unarchive routine'
+  } finally {
+    archiving.value = false
+  }
+}
+
+async function handleDelete() {
+  if (!window.confirm('Delete this routine? This cannot be undone.')) return
+  deleting.value = true
+  try {
+    await routineApi.delete(id.value)
+    router.push('/app/routines')
+  } catch (err: unknown) {
+    error.value = err instanceof HttpError ? err.message : 'Failed to delete routine'
+  } finally {
+    deleting.value = false
+  }
+}
+
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString()
 }
@@ -89,8 +114,14 @@ function moduleLabel(mt: string) {
       <h1>Routine Details</h1>
       <div v-if="routine && auth.hasManageAccess" style="display: flex; gap: 8px;">
         <router-link :to="`/app/routines/${id}/edit`" class="btn btn-secondary">Edit</router-link>
-        <button v-if="routine.active" class="btn btn-danger" :disabled="archiving" @click="handleArchive">
+        <button v-if="routine.active" class="btn btn-warning" :disabled="archiving" @click="handleArchive">
           {{ archiving ? 'Archiving...' : 'Archive' }}
+        </button>
+        <button v-else class="btn btn-primary" :disabled="archiving" @click="handleUnarchive">
+          {{ archiving ? 'Restoring...' : 'Unarchive' }}
+        </button>
+        <button class="btn btn-danger" :disabled="deleting" @click="handleDelete">
+          {{ deleting ? 'Deleting...' : 'Delete' }}
         </button>
       </div>
     </div>
@@ -140,11 +171,6 @@ function moduleLabel(mt: string) {
               <span class="field-label">Created</span>
               <span>{{ formatDate(routine.createdAt) }}</span>
             </div>
-          </div>
-
-          <div v-if="routine.linkedChecklistTemplateName" class="detail-section">
-            <h3>Linked Checklist</h3>
-            <p>{{ routine.linkedChecklistTemplateName }}</p>
           </div>
 
           <div v-if="routine.description" class="detail-section">
@@ -280,7 +306,15 @@ function moduleLabel(mt: string) {
   color: white;
   border: none;
 }
+.btn-warning {
+  background: var(--warning, #b45309);
+  color: white;
+  border: none;
+}
 .btn-danger:hover {
+  opacity: 0.9;
+}
+.btn-warning:hover {
   opacity: 0.9;
 }
 @media (max-width: 768px) {

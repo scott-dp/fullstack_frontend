@@ -44,4 +44,7 @@ export const userApi = {
 
   /** Lists all users in the organization (admin only). */
   list: () => request<UserSummary[]>('/users'),
+
+  /** Deletes a non-admin user account (admin only). */
+  delete: (id: number) => request<void>(`/users/${id}`, { method: 'DELETE' }),
 }

@@ -86,6 +86,12 @@ export const routineApi = {
   archive: (id: number) =>
     request<Routine>(`/routines/${id}/archive`, { method: 'POST' }),
 
+  unarchive: (id: number) =>
+    request<Routine>(`/routines/${id}/unarchive`, { method: 'POST' }),
+
+  delete: (id: number) =>
+    request<void>(`/routines/${id}`, { method: 'DELETE' }),
+
   review: (id: number, notes?: string) =>
     request<RoutineReview>(`/routines/${id}/review`, {
       method: 'POST',

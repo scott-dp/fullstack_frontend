@@ -18,7 +18,6 @@ const form = ref({
   isMandatory: false,
   validityDays: null as number | null,
   acknowledgmentRequired: true,
-  linkedRoutineId: null as number | null,
 })
 
 const categories = [
@@ -43,7 +42,6 @@ async function handleSubmit() {
     await trainingApi.createTemplate({
       ...form.value,
       validityDays: form.value.validityDays || undefined,
-      linkedRoutineId: form.value.linkedRoutineId || undefined,
     })
     router.push('/app/training')
   } catch (err: unknown) {
