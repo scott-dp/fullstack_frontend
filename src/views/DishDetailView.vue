@@ -90,7 +90,7 @@ function formatDate(iso: string) { return new Date(iso).toLocaleDateString() }
       <div v-if="auth.hasManageAccess" class="card" style="margin-top: 16px;">
         <h3>Allergen Overrides</h3>
         <div v-for="ov in dish.overrides" :key="ov.id" class="override-item">
-          <span class="status-badge" :class="ov.included ? 'danger' : 'success'">{{ ov.allergenNameEn }}: {{ ov.included ? 'Included' : 'Excluded' }}</span>
+          <span class="status-badge" :class="ov.included ? 'danger' : 'success'">{{ ov.allergen.nameEn }}: {{ ov.included ? 'Included' : 'Excluded' }}</span>
           <span class="text-sm text-muted">{{ ov.reason }}</span>
           <button class="btn btn-sm btn-secondary" @click="handleRemoveOverride(ov.id)">Remove</button>
         </div>
