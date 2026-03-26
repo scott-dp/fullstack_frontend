@@ -21,6 +21,8 @@ describe('authApi', () => {
     authApi.logout()
     authApi.status()
     authApi.verifyEmail('token-123')
+    authApi.getAdminSetupInfo('setup-123')
+    authApi.completeAdminSetup({ token: 'setup-123', password: 'superSecret123' })
 
     expect(requestMock).toHaveBeenNthCalledWith(
       1,
@@ -49,5 +51,14 @@ describe('authApi', () => {
     )
     expect(requestMock).toHaveBeenNthCalledWith(6, '/auth/status')
     expect(requestMock).toHaveBeenNthCalledWith(7, '/auth/verify?token=token-123')
+    expect(requestMock).toHaveBeenNthCalledWith(8, '/auth/admin-setup?token=setup-123')
+    expect(requestMock).toHaveBeenNthCalledWith(
+      9,
+      '/auth/admin-setup',
+      expect.objectContaining({
+        method: 'POST',
+        body: JSON.stringify({ token: 'setup-123', password: 'superSecret123' }),
+      }),
+    )
   })
 })

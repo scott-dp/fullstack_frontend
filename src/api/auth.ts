@@ -32,6 +32,18 @@ export interface EmailCodeLoginRequest {
   code: string
 }
 
+export interface AdminSetupInfo {
+  email: string
+  firstName: string | null
+  lastName: string | null
+  organizationName: string | null
+}
+
+export interface CompleteAdminSetupRequest {
+  token: string
+  password: string
+}
+
 /** Authenticated user profile returned from the server. */
 export interface CurrentUser {
   /** Unique user identifier. */
@@ -102,6 +114,14 @@ export const authApi = {
 
   /** Verifies a registration token and activates the account. */
   verifyEmail: (token: string) => request<VerificationResponse>(`/auth/verify?token=${encodeURIComponent(token)}`),
+
+  /** Returns the details for a pending admin setup token. */
+  getAdminSetupInfo: (token: string) =>
+    request<AdminSetupInfo>(`/auth/admin-setup?token=${encodeURIComponent(token)}`),
+
+  /** Completes invited admin account setup. */
+  completeAdminSetup: (data: CompleteAdminSetupRequest) =>
+    request<MessageResponse>('/auth/admin-setup', { method: 'POST', body: JSON.stringify(data) }),
 
   /** Requests a one-time login code by email. */
   requestEmailCode: (data: EmailCodeRequest) =>

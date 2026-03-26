@@ -29,6 +29,9 @@ export const useAuthStore = defineStore('auth', () => {
   /** Whether the current user holds the ADMIN role. */
   const isAdmin = computed(() => user.value?.roles.includes('ROLE_ADMIN') ?? false)
 
+  /** Whether the current user holds the SUPERADMIN role. */
+  const isSuperAdmin = computed(() => user.value?.roles.includes('ROLE_SUPERADMIN') ?? false)
+
   /** Whether the current user holds the MANAGER role. */
   const isManager = computed(() => user.value?.roles.includes('ROLE_MANAGER') ?? false)
 
@@ -113,6 +116,7 @@ export const useAuthStore = defineStore('auth', () => {
     user,
     loading,
     isAuthenticated,
+    isSuperAdmin,
     isAdmin,
     isManager,
     hasManageAccess,

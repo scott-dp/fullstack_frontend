@@ -31,7 +31,7 @@ onMounted(async () => {
     const [loadedUsers, loadedInvites, loadedOrganizations] = await Promise.all([
       userApi.list(),
       organizationInviteApi.list(),
-      auth.isAdmin ? organizationApi.list() : Promise.resolve([]),
+      auth.isSuperAdmin ? organizationApi.list() : Promise.resolve([]),
     ])
     users.value = loadedUsers
     invites.value = loadedInvites
@@ -50,7 +50,7 @@ async function createInvite() {
   try {
     const invite = await organizationInviteApi.create({
       role: role.value,
-      organizationId: auth.isAdmin ? organizationId.value ?? undefined : undefined,
+      organizationId: auth.isSuperAdmin ? organizationId.value ?? undefined : undefined,
       expiresInDays: expiresInDays.value,
     })
     invites.value = [invite, ...invites.value]
@@ -90,19 +90,19 @@ async function deleteUser(userId: number) {
       <div class="card invite-card">
         <h2>Create Invitation</h2>
         <p class="text-muted">
-          {{ auth.isAdmin ? 'Admins can create manager or staff invites for any restaurant.' : 'Managers can invite staff users into their own restaurant.' }}
+          {{ auth.isSuperAdmin ? 'Superadmins can create manager or staff invites for any restaurant.' : auth.isAdmin ? 'Admins can create manager or staff invites for their restaurant.' : 'Managers can invite staff users into their own restaurant.' }}
         </p>
         <div v-if="createInviteSuccess" class="alert-success">{{ createInviteSuccess }}</div>
         <div v-if="createInviteError" class="alert-error">{{ createInviteError }}</div>
         <form class="invite-grid" @submit.prevent="createInvite">
           <div class="form-group">
             <label class="form-label">Role</label>
-            <select v-model="role" class="form-input" :disabled="!auth.isAdmin || creatingInvite">
-              <option v-if="auth.isAdmin" value="ROLE_MANAGER">Manager</option>
+            <select v-model="role" class="form-input" :disabled="!auth.hasManageAccess || creatingInvite">
+              <option v-if="auth.isAdmin || auth.isSuperAdmin" value="ROLE_MANAGER">Manager</option>
               <option value="ROLE_STAFF">Staff</option>
             </select>
           </div>
-          <div class="form-group" v-if="auth.isAdmin">
+          <div class="form-group" v-if="auth.isSuperAdmin">
             <label class="form-label">Restaurant</label>
             <select v-model="organizationId" class="form-input" :disabled="creatingInvite">
               <option :value="null" disabled>Select restaurant</option>
@@ -119,7 +119,7 @@ async function deleteUser(userId: number) {
             <button
               type="submit"
               class="btn btn-primary"
-              :disabled="creatingInvite || (auth.isAdmin && !organizationId)"
+              :disabled="creatingInvite || (auth.isSuperAdmin && !organizationId)"
             >
               {{ creatingInvite ? 'Creating invite...' : 'Create invite' }}
             </button>
