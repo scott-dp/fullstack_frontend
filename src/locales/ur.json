@@ -61,7 +61,13 @@
   "History": "تاریخ",
   "Temperature": "درجہ حرارت",
   "Deviations": "انحرافات",
+<<<<<<< HEAD
   "Incidents": "واقعات",
+=======
+  "Suppliers": "سپلائرز",
+  "Deliveries": "ترسیلات",
+  "Traceability": "ٹریس ایبلٹی",
+>>>>>>> 0136aa2 (add supplier, delivery, and traceability frontend)
   "Notifications": "اطلاعات",
   "Settings": "ترتیبات",
   "Admin Panel": "ایڈمن پینل",

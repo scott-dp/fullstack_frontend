@@ -61,7 +61,13 @@
   "History": "इतिहास",
   "Temperature": "तापक्रम",
   "Deviations": "विचलनहरू",
+<<<<<<< HEAD
   "Incidents": "घटनाहरू",
+=======
+  "Suppliers": "आपूर्तिकर्ताहरू",
+  "Deliveries": "डेलिभरीहरू",
+  "Traceability": "ट्रेसेबिलिटी",
+>>>>>>> 0136aa2 (add supplier, delivery, and traceability frontend)
   "Notifications": "सूचनाहरू",
   "Settings": "सेटिङहरू",
   "Admin Panel": "प्रशासन प्यानल",
