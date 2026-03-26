@@ -11,7 +11,6 @@ export interface TrainingTemplate {
   isMandatory: boolean
   validityDays: number | null
   acknowledgmentRequired: boolean
-  linkedRoutineId: number | null
   active: boolean
   createdAt: string
   updatedAt: string
@@ -56,7 +55,6 @@ export interface CreateTrainingTemplateRequest {
   isMandatory?: boolean
   validityDays?: number | null
   acknowledgmentRequired?: boolean
-  linkedRoutineId?: number | null
 }
 
 function normalizeDueAt(dueAt?: string) {
@@ -87,6 +85,9 @@ export const trainingApi = {
       method: 'PUT',
       body: JSON.stringify(data),
     }),
+
+  deleteTemplate: (id: number) =>
+    request<void>(`/trainings/templates/${id}`, { method: 'DELETE' }),
 
   assign: (templateId: number, assigneeUserIds: number[], dueAt?: string) =>
     request<TrainingAssignment[]>(`/trainings/templates/${templateId}/assign`, {

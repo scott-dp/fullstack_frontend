@@ -24,6 +24,7 @@ const creatingInvite = ref(false)
 const createInviteError = ref('')
 const createInviteSuccess = ref('')
 const latestInviteToken = ref('')
+const deletingUserId = ref<number | null>(null)
 
 onMounted(async () => {
   try {
@@ -59,6 +60,20 @@ async function createInvite() {
     createInviteError.value = err instanceof HttpError ? err.message : 'Failed to create invite'
   } finally {
     creatingInvite.value = false
+  }
+}
+
+async function deleteUser(userId: number) {
+  if (!window.confirm('Delete this user? This will remove their access.')) return
+  deletingUserId.value = userId
+  createInviteError.value = ''
+  try {
+    await userApi.delete(userId)
+    users.value = users.value.filter((user) => user.id !== userId)
+  } catch (err: unknown) {
+    createInviteError.value = err instanceof HttpError ? err.message : 'Failed to delete user'
+  } finally {
+    deletingUserId.value = null
   }
 }
 </script>
@@ -129,6 +144,7 @@ async function createInvite() {
               <th>Username</th>
               <th>Name</th>
               <th>Roles</th>
+              <th v-if="auth.isAdmin">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -140,6 +156,16 @@ async function createInvite() {
                 <span v-for="role in u.roles" :key="role" class="status-badge info role-badge">
                   {{ role.replace('ROLE_', '') }}
                 </span>
+              </td>
+              <td v-if="auth.isAdmin">
+                <button
+                  v-if="!u.roles.includes('ROLE_ADMIN') && u.id !== auth.user?.id"
+                  class="btn btn-danger btn-sm"
+                  :disabled="deletingUserId === u.id"
+                  @click="deleteUser(u.id)"
+                >
+                  {{ deletingUserId === u.id ? 'Deleting...' : 'Delete' }}
+                </button>
               </td>
             </tr>
           </tbody>
@@ -220,6 +246,14 @@ async function createInvite() {
 }
 .role-badge {
   margin-right: 4px;
+}
+.btn-danger {
+  background: var(--danger);
+  color: white;
+  border: none;
+}
+.btn-danger:hover {
+  opacity: 0.9;
 }
 .compact-empty {
   padding: 12px 0 0;

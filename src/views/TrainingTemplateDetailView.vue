@@ -12,6 +12,7 @@ const auth = useAuthStore()
 const template = ref<TrainingTemplate | null>(null)
 const loading = ref(true)
 const error = ref('')
+const deleting = ref(false)
 
 const templateId = computed(() => Number(route.params.id))
 
@@ -34,6 +35,19 @@ function moduleLabel(mt: string) {
 function prettyEnum(value: string) {
   return value.replace(/_/g, ' ')
 }
+
+async function handleDelete() {
+  if (!window.confirm('Delete this training template? This will also remove its assignments.')) return
+  deleting.value = true
+  try {
+    await trainingApi.deleteTemplate(templateId.value)
+    router.push('/app/training')
+  } catch (err: unknown) {
+    error.value = err instanceof HttpError ? err.message : 'Failed to delete training template'
+  } finally {
+    deleting.value = false
+  }
+}
 </script>
 
 <template>
@@ -54,6 +68,15 @@ function prettyEnum(value: string) {
         >
           Assign Training
         </router-link>
+        <button
+          v-if="auth.hasManageAccess && template"
+          type="button"
+          class="btn btn-danger"
+          :disabled="deleting"
+          @click="handleDelete"
+        >
+          {{ deleting ? 'Deleting...' : 'Delete' }}
+        </button>
       </div>
     </div>
 
@@ -99,10 +122,6 @@ function prettyEnum(value: string) {
           <div>
             <dt>Acknowledgment</dt>
             <dd>{{ template.acknowledgmentRequired ? 'Required' : 'Not required' }}</dd>
-          </div>
-          <div>
-            <dt>Linked Routine</dt>
-            <dd>{{ template.linkedRoutineId ?? 'None' }}</dd>
           </div>
           <div>
             <dt>Created</dt>
@@ -172,6 +191,14 @@ function prettyEnum(value: string) {
   background: var(--danger-bg);
   color: var(--danger);
   border-radius: var(--radius);
+}
+.btn-danger {
+  background: var(--danger);
+  color: white;
+  border: none;
+}
+.btn-danger:hover {
+  opacity: 0.9;
 }
 
 @media (max-width: 900px) {
