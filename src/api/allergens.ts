@@ -40,9 +40,7 @@ export interface DishIngredientEntry {
 /** An allergen override on a dish (manual include/exclude). */
 export interface DishAllergenOverride {
   id: number
-  allergenId: number
-  allergenCode: string
-  allergenNameEn: string
+  allergen: Allergen
   included: boolean
   reason: string
 }

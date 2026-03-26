@@ -32,11 +32,11 @@ function getAllergenCodes(dish: Dish): string[] {
   const codes = new Set<string>()
   for (const a of dish.derivedAllergens) codes.add(a.code)
   for (const o of dish.overrides) {
-    if (o.included) codes.add(o.allergenCode)
+    if (o.included) codes.add(o.allergen.code)
   }
   // Remove excluded overrides
   for (const o of dish.overrides) {
-    if (!o.included) codes.delete(o.allergenCode)
+    if (!o.included) codes.delete(o.allergen.code)
   }
   return Array.from(codes).sort()
 }
