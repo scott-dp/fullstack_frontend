@@ -1,6 +1,15 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { authApi, type CurrentUser, type AuthRequest } from '@/api/auth'
+import {
+  authApi,
+  type CurrentUser,
+  type EmailCodeLoginRequest,
+  type EmailCodeRequest,
+  type LoginRequest,
+  type MessageResponse,
+  type RegisterRequest,
+  type RegistrationResponse,
+} from '@/api/auth'
 
 /**
  * Authentication store managing the current user session.
@@ -19,6 +28,9 @@ export const useAuthStore = defineStore('auth', () => {
 
   /** Whether the current user holds the ADMIN role. */
   const isAdmin = computed(() => user.value?.roles.includes('ROLE_ADMIN') ?? false)
+
+  /** Whether the current user holds the SUPERADMIN role. */
+  const isSuperAdmin = computed(() => user.value?.roles.includes('ROLE_SUPERADMIN') ?? false)
 
   /** Whether the current user holds the MANAGER role. */
   const isManager = computed(() => user.value?.roles.includes('ROLE_MANAGER') ?? false)
@@ -48,7 +60,7 @@ export const useAuthStore = defineStore('auth', () => {
    * @param data - Username and password payload
    * @throws {HttpError} When credentials are invalid
    */
-  async function login(data: AuthRequest) {
+  async function login(data: LoginRequest) {
     loading.value = true
     try {
       const res = await authApi.login(data)
@@ -63,11 +75,10 @@ export const useAuthStore = defineStore('auth', () => {
    * @param data - Username and password payload
    * @throws {HttpError} When registration fails (e.g. duplicate username)
    */
-  async function register(data: AuthRequest) {
+  async function register(data: RegisterRequest): Promise<RegistrationResponse> {
     loading.value = true
     try {
-      const res = await authApi.register(data)
-      user.value = res.user
+      return await authApi.register(data)
     } finally {
       loading.value = false
     }
@@ -82,5 +93,39 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = null
   }
 
-  return { user, loading, isAuthenticated, isAdmin, isManager, hasManageAccess, organizationId, checkAuth, login, register, logout }
+  async function requestEmailCode(data: EmailCodeRequest): Promise<MessageResponse> {
+    loading.value = true
+    try {
+      return await authApi.requestEmailCode(data)
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function loginWithEmailCode(data: EmailCodeLoginRequest) {
+    loading.value = true
+    try {
+      const res = await authApi.loginWithEmailCode(data)
+      user.value = res.user
+    } finally {
+      loading.value = false
+    }
+  }
+
+  return {
+    user,
+    loading,
+    isAuthenticated,
+    isSuperAdmin,
+    isAdmin,
+    isManager,
+    hasManageAccess,
+    organizationId,
+    checkAuth,
+    login,
+    register,
+    logout,
+    requestEmailCode,
+    loginWithEmailCode,
+  }
 })

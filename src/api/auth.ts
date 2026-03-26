@@ -5,11 +5,42 @@
  */
 import { request } from './client'
 
-/** Credentials payload for login and registration. */
-export interface AuthRequest {
+/** Credentials payload for login. */
+export interface LoginRequest {
+  /** Username or email. */
+  identifier: string
+  /** User password. */
+  password: string
+}
+
+/** Registration payload. */
+export interface RegisterRequest {
   /** Unique username. */
   username: string
+  /** Email used for verification and login. */
+  email: string
   /** User password. */
+  password: string
+}
+
+export interface EmailCodeRequest {
+  email: string
+}
+
+export interface EmailCodeLoginRequest {
+  email: string
+  code: string
+}
+
+export interface AdminSetupInfo {
+  email: string
+  firstName: string | null
+  lastName: string | null
+  organizationName: string | null
+}
+
+export interface CompleteAdminSetupRequest {
+  token: string
   password: string
 }
 
@@ -41,6 +72,22 @@ export interface AuthResponse {
   user: CurrentUser
 }
 
+/** Response body for successful registration. */
+export interface RegistrationResponse {
+  /** Server confirmation message. */
+  message: string
+}
+
+/** Response body for successful email verification. */
+export interface VerificationResponse {
+  /** Server confirmation message. */
+  message: string
+}
+
+export interface MessageResponse {
+  message: string
+}
+
 /** Response body for the session status check. */
 export interface AuthStatusResponse {
   /** Whether the current session is authenticated. */
@@ -56,14 +103,33 @@ export const authApi = {
    * @param data - Login credentials
    * @returns The auth response containing the user profile
    */
-  login: (data: AuthRequest) => request<AuthResponse>('/auth/login', { method: 'POST', body: JSON.stringify(data) }),
+  login: (data: LoginRequest) => request<AuthResponse>('/auth/login', { method: 'POST', body: JSON.stringify(data) }),
 
   /**
    * Registers a new user account.
    * @param data - Registration credentials
    * @returns The auth response containing the new user profile
    */
-  register: (data: AuthRequest) => request<AuthResponse>('/auth/register', { method: 'POST', body: JSON.stringify(data) }),
+  register: (data: RegisterRequest) => request<RegistrationResponse>('/auth/register', { method: 'POST', body: JSON.stringify(data) }),
+
+  /** Verifies a registration token and activates the account. */
+  verifyEmail: (token: string) => request<VerificationResponse>(`/auth/verify?token=${encodeURIComponent(token)}`),
+
+  /** Returns the details for a pending admin setup token. */
+  getAdminSetupInfo: (token: string) =>
+    request<AdminSetupInfo>(`/auth/admin-setup?token=${encodeURIComponent(token)}`),
+
+  /** Completes invited admin account setup. */
+  completeAdminSetup: (data: CompleteAdminSetupRequest) =>
+    request<MessageResponse>('/auth/admin-setup', { method: 'POST', body: JSON.stringify(data) }),
+
+  /** Requests a one-time login code by email. */
+  requestEmailCode: (data: EmailCodeRequest) =>
+    request<MessageResponse>('/auth/email-code/request', { method: 'POST', body: JSON.stringify(data) }),
+
+  /** Authenticates with email and one-time code. */
+  loginWithEmailCode: (data: EmailCodeLoginRequest) =>
+    request<AuthResponse>('/auth/email-code/login', { method: 'POST', body: JSON.stringify(data) }),
 
   /** Logs out the current user and invalidates the session cookie. */
   logout: () => request<void>('/auth/logout', { method: 'POST' }),

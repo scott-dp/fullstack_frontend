@@ -6,22 +6,31 @@
  */
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { useNotificationStore } from '@/stores/notifications'
 import AppSidebar from '@/components/AppSidebar.vue'
+import { setI18nLocale, type AppLocale } from '@/i18n'
 
 const auth = useAuthStore()
 const notificationStore = useNotificationStore()
 const router = useRouter()
+const { t, locale } = useI18n()
 /** Whether the mobile sidebar drawer is open. */
 const sidebarOpen = ref(false)
 
-notificationStore.fetchUnreadCount()
+if (!auth.isSuperAdmin) {
+  notificationStore.fetchUnreadCount()
+}
 
 /** Logs out the current user and redirects to the login page. */
 async function handleLogout() {
   await auth.logout()
   router.push({ name: 'login' })
+}
+
+function changeLocale(event: Event) {
+  setI18nLocale((event.target as HTMLSelectElement).value as AppLocale)
 }
 </script>
 
@@ -30,17 +39,27 @@ async function handleLogout() {
     <AppSidebar :open="sidebarOpen" @close="sidebarOpen = false" />
     <div class="app-main">
       <header class="app-header">
-        <button class="menu-toggle" @click="sidebarOpen = !sidebarOpen" aria-label="Toggle menu">
+        <button class="menu-toggle" @click="sidebarOpen = !sidebarOpen" :aria-label="t('Toggle menu')">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
         </button>
         <div class="header-right">
-          <router-link to="/app/notifications" class="notification-badge" aria-label="Notifications">
+          <label class="locale-switcher">
+            <span>{{ t('Language') }}</span>
+            <select :value="locale" @change="changeLocale">
+              <option value="en">{{ t('English') }}</option>
+              <option value="es">{{ t('Spanish') }}</option>
+              <option value="no">{{ t('Norwegian') }}</option>
+              <option value="ne">{{ t('Nepali') }}</option>
+              <option value="ur">{{ t('Urdu') }}</option>
+            </select>
+          </label>
+          <router-link v-if="!auth.isSuperAdmin" to="/app/notifications" class="notification-badge" :aria-label="t('Notifications')">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
             <span v-if="notificationStore.unreadCount > 0" class="badge">{{ notificationStore.unreadCount }}</span>
           </router-link>
           <div class="user-info">
             <span class="username">{{ auth.user?.firstName || auth.user?.username }}</span>
-            <button class="btn-link" @click="handleLogout">Log out</button>
+            <button class="btn-link" @click="handleLogout">{{ t('Log out') }}</button>
           </div>
         </div>
       </header>
@@ -92,6 +111,20 @@ async function handleLogout() {
   position: relative;
   color: var(--text);
   text-decoration: none;
+}
+.locale-switcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text);
+}
+.locale-switcher select {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text-h);
+  padding: 6px 10px;
 }
 .badge {
   position: absolute;
