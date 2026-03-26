@@ -9,6 +9,7 @@ import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { alcoholIncidentApi, type AlcoholIncident } from '@/api/alcoholIncidents'
 import { HttpError } from '@/api/client'
+import { userApi, type UserSummary } from '@/api/users'
 
 const route = useRoute()
 const auth = useAuthStore()
@@ -17,10 +18,14 @@ const incidentId = Number(route.params.id)
 
 /** The loaded incident, null until fetched. */
 const incident = ref<AlcoholIncident | null>(null)
+/** Available assignees for managers/admins. */
+const assignees = ref<UserSummary[]>([])
 /** Whether the incident data is still being loaded. */
 const loading = ref(true)
 /** Error message from a failed status update. */
 const updateError = ref('')
+/** Selected assignee ID in the manager/admin form. */
+const selectedAssignedToId = ref<number | null>(null)
 /** Whether the close dialog is visible. */
 const showCloseDialog = ref(false)
 /** Bound close notes textarea value. */
@@ -30,7 +35,13 @@ const closing = ref(false)
 
 onMounted(async () => {
   try {
-    incident.value = await alcoholIncidentApi.get(incidentId)
+    const [loadedIncident, loadedAssignees] = await Promise.all([
+      alcoholIncidentApi.get(incidentId),
+      auth.hasManageAccess ? userApi.list() : Promise.resolve([]),
+    ])
+    incident.value = loadedIncident
+    assignees.value = loadedAssignees
+    selectedAssignedToId.value = loadedIncident.assignedToId
   } finally {
     loading.value = false
   }
@@ -44,8 +55,22 @@ async function updateStatus(newStatus: string) {
   updateError.value = ''
   try {
     incident.value = await alcoholIncidentApi.update(incidentId, { status: newStatus })
+    selectedAssignedToId.value = incident.value.assignedToId
   } catch (err: unknown) {
     updateError.value = err instanceof HttpError ? err.message : 'Update failed'
+  }
+}
+
+async function updateAssignment() {
+  updateError.value = ''
+
+  try {
+    incident.value = await alcoholIncidentApi.update(incidentId, {
+      assignedToId: selectedAssignedToId.value ?? undefined,
+    })
+    selectedAssignedToId.value = incident.value.assignedToId
+  } catch (err: unknown) {
+    updateError.value = err instanceof HttpError ? err.message : 'Assignment failed'
   }
 }
 
@@ -55,6 +80,7 @@ async function closeIncident() {
   closing.value = true
   try {
     incident.value = await alcoholIncidentApi.close(incidentId, closeNotes.value)
+    selectedAssignedToId.value = incident.value.assignedToId
     showCloseDialog.value = false
     closeNotes.value = ''
   } catch (err: unknown) {
@@ -149,6 +175,18 @@ function formatDate(iso: string) {
           <!-- Manager/Admin actions -->
           <div v-if="auth.hasManageAccess && incident.status !== 'CLOSED'" class="actions-section">
             <div v-if="updateError" class="alert-error">{{ updateError }}</div>
+            <div class="action-row">
+              <label class="form-label" for="assigned-user">Assign To</label>
+              <div class="assignment-row">
+                <select id="assigned-user" v-model="selectedAssignedToId" class="form-select">
+                  <option :value="null">Unassigned</option>
+                  <option v-for="user in assignees" :key="user.id" :value="user.id">
+                    {{ [user.firstName, user.lastName].filter(Boolean).join(' ') || user.username }}
+                  </option>
+                </select>
+                <button class="btn btn-sm btn-secondary" @click="updateAssignment">Save Assignment</button>
+              </div>
+            </div>
             <div class="action-row">
               <label class="form-label">Update Status</label>
               <div class="action-buttons">
@@ -246,6 +284,16 @@ function formatDate(iso: string) {
 }
 .action-row {
   margin-bottom: 12px;
+}
+.assignment-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.assignment-row .form-select {
+  min-width: 220px;
+  flex: 1;
 }
 .action-buttons {
   display: flex;

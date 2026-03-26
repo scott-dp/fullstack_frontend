@@ -14,6 +14,8 @@ export interface AlcoholIncident {
   occurredAt: string
   /** Username of the person who reported the incident. */
   reportedByUsername: string
+  /** User ID the incident is assigned to, or null if unassigned. */
+  assignedToId: number | null
   /** Username the incident is assigned to, or null if unassigned. */
   assignedToUsername: string | null
   /** Shift label. */

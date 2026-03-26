@@ -4,12 +4,15 @@
  * alcohol-related incident with type, severity, description, and other details.
  * Redirects to the incidents list on successful submission.
  */
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { alcoholIncidentApi } from '@/api/alcoholIncidents'
 import { HttpError } from '@/api/client'
+import { userApi, type UserSummary } from '@/api/users'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const auth = useAuthStore()
 /** Bound occurred-at datetime input value. */
 const occurredAt = ref(new Date().toISOString().slice(0, 16))
 /** Bound shift label input value. */
@@ -26,10 +29,26 @@ const description = ref('')
 const immediateActionTaken = ref('')
 /** Whether follow-up is required. */
 const followUpRequired = ref(false)
+/** Available assignees for managers/admins. */
+const assignees = ref<UserSummary[]>([])
+/** Selected assignee ID. */
+const assignedToId = ref<number | null>(null)
 /** Error message from the last submission attempt. */
 const error = ref('')
 /** Whether the form is currently being submitted. */
 const submitting = ref(false)
+
+onMounted(async () => {
+  if (!auth.hasManageAccess) {
+    return
+  }
+
+  try {
+    assignees.value = await userApi.list()
+  } catch {
+    assignees.value = []
+  }
+})
 
 /**
  * Submits the incident report to the server.
@@ -48,6 +67,7 @@ async function submit() {
       description: description.value,
       immediateActionTaken: immediateActionTaken.value || undefined,
       followUpRequired: followUpRequired.value,
+      assignedToId: assignedToId.value ?? undefined,
     })
     router.push('/app/alcohol-incidents')
   } catch (err: unknown) {
@@ -120,6 +140,15 @@ async function submit() {
             <input v-model="followUpRequired" type="checkbox" />
             Follow-up required
           </label>
+        </div>
+        <div v-if="auth.hasManageAccess" class="form-group">
+          <label class="form-label">Assign To</label>
+          <select v-model="assignedToId" class="form-select">
+            <option :value="null">Unassigned</option>
+            <option v-for="user in assignees" :key="user.id" :value="user.id">
+              {{ [user.firstName, user.lastName].filter(Boolean).join(' ') || user.username }}
+            </option>
+          </select>
         </div>
         <button type="submit" class="btn btn-primary" :disabled="submitting">
           {{ submitting ? 'Submitting...' : 'Report Incident' }}
