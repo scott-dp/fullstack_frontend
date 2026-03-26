@@ -61,13 +61,10 @@
   "History": "History",
   "Temperature": "Temperature",
   "Deviations": "Deviations",
-<<<<<<< HEAD
   "Incidents": "Incidents",
-=======
   "Suppliers": "Suppliers",
   "Deliveries": "Deliveries",
   "Traceability": "Traceability",
->>>>>>> 0136aa2 (add supplier, delivery, and traceability frontend)
   "Notifications": "Notifications",
   "Settings": "Settings",
   "Admin Panel": "Admin Panel",

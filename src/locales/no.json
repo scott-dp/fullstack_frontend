@@ -61,13 +61,10 @@
   "History": "Historikk",
   "Temperature": "Temperatur",
   "Deviations": "Avvik",
-<<<<<<< HEAD
   "Incidents": "Hendelser",
-=======
   "Suppliers": "Leverandører",
   "Deliveries": "Leveranser",
   "Traceability": "Sporbarhet",
->>>>>>> 0136aa2 (add supplier, delivery, and traceability frontend)
   "Notifications": "Varsler",
   "Settings": "Innstillinger",
   "Admin Panel": "Adminpanel",

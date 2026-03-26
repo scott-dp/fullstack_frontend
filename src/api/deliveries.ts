@@ -124,6 +124,6 @@ export const deliveryApi = {
     if (params.productName) query.set('productName', params.productName)
     if (params.batchLot) query.set('batchLot', params.batchLot)
     const qs = query.toString()
-    return request<TraceabilityResult[]>(`/deliveries/traceability${qs ? '?' + qs : ''}`)
+    return request<TraceabilityResult[]>(`/deliveries/search/traceability${qs ? '?' + qs : ''}`)
   },
 }

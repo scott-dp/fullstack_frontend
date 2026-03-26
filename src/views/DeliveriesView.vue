@@ -4,10 +4,7 @@
  * Rows are clickable to navigate to the delivery detail page.
  */
 import { ref, onMounted } from 'vue'
-import { useAuthStore } from '@/stores/auth'
 import { deliveryApi, type DeliveryRecord } from '@/api/deliveries'
-
-const auth = useAuthStore()
 
 /** All delivery records loaded from the server. */
 const deliveries = ref<DeliveryRecord[]>([])

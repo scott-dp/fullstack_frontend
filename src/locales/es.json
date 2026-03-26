@@ -61,13 +61,10 @@
   "History": "Historial",
   "Temperature": "Temperatura",
   "Deviations": "Desviaciones",
-<<<<<<< HEAD
   "Incidents": "Incidentes",
-=======
   "Suppliers": "Proveedores",
   "Deliveries": "Entregas",
   "Traceability": "Trazabilidad",
->>>>>>> 0136aa2 (add supplier, delivery, and traceability frontend)
   "Notifications": "Notificaciones",
   "Settings": "Configuración",
   "Admin Panel": "Panel de administración",
