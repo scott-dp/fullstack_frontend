@@ -19,7 +19,7 @@ function changeLocale(event: Event) {
   <div class="landing">
     <header class="landing-header">
       <div class="landing-container">
-        <span class="landing-logo">{{ t('IK System') }}</span>
+        <span class="landing-logo">CheckMate</span>
         <nav class="landing-nav">
           <label class="landing-locale">
             <span>{{ t('Language') }}</span>
