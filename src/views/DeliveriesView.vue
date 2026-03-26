@@ -5,7 +5,6 @@
  */
 import { ref, onMounted } from 'vue'
 import { deliveryApi, type DeliveryRecord } from '@/api/deliveries'
-
 /** All delivery records loaded from the server. */
 const deliveries = ref<DeliveryRecord[]>([])
 /** Whether deliveries are still being fetched. */
