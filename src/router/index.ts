@@ -50,6 +50,10 @@ export const routes: RouteRecordRaw[] = [
       { path: 'deviations', name: 'deviations', component: () => import('@/views/DeviationsView.vue') },
       { path: 'deviations/new', name: 'deviation-new', component: () => import('@/views/DeviationCreateView.vue') },
       { path: 'deviations/:id', name: 'deviation-detail', component: () => import('@/views/DeviationDetailView.vue'), props: true },
+      { path: 'alcohol-incidents', name: 'alcohol-incidents', component: () => import('@/views/AlcoholIncidentsView.vue') },
+      { path: 'alcohol-incidents/new', name: 'alcohol-incident-new', component: () => import('@/views/AlcoholIncidentCreateView.vue') },
+      { path: 'alcohol-incidents/report', name: 'alcohol-incident-report', component: () => import('@/views/AlcoholIncidentReportView.vue'), meta: { requiresManageAccess: true } },
+      { path: 'alcohol-incidents/:id', name: 'alcohol-incident-detail', component: () => import('@/views/AlcoholIncidentDetailView.vue'), props: true },
       { path: 'notifications', name: 'notifications', component: () => import('@/views/NotificationsView.vue') },
       { path: 'settings', name: 'settings', component: () => import('@/views/SettingsView.vue') },
       {
