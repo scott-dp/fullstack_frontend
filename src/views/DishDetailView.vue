@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { allergenApi, type Dish, type Allergen } from '@/api/allergens'
 import { useAuthStore } from '@/stores/auth'
 import { HttpError } from '@/api/client'
 
 const route = useRoute()
-const router = useRouter()
 const auth = useAuthStore()
 const id = computed(() => Number(route.params.id))
 const dish = ref<Dish | null>(null)

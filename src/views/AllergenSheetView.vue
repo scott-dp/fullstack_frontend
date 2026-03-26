@@ -12,6 +12,10 @@ const dishNames = computed(() => {
   return Array.from(names).sort()
 })
 
+function printPage() {
+  window.print()
+}
+
 function isPresent(dishName: string, allergenCode: string) {
   return entries.value.some(e => e.dishName === dishName && e.allergenCode === allergenCode && e.present)
 }
@@ -27,7 +31,7 @@ onMounted(async () => {
 
 <template>
   <div>
-    <div class="page-header no-print"><h1>Allergen Sheet</h1><button class="btn btn-primary" @click="(window as any).print()">Print</button></div>
+    <div class="page-header no-print"><h1>Allergen Sheet</h1><button class="btn btn-primary" @click="printPage">Print</button></div>
     <div v-if="loading" class="loading"><div class="spinner" /></div>
     <div v-else-if="dishNames.length === 0" class="empty-state"><h3>No dishes</h3><p>Add dishes to generate the allergen sheet.</p></div>
     <div v-else class="sheet-wrapper">
