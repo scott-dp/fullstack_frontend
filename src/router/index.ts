@@ -87,6 +87,10 @@ export const routes: RouteRecordRaw[] = [
       { path: 'training/templates/:id/assign', name: 'training-assign', component: () => import('@/views/TrainingAssignView.vue'), meta: { requiresManageAccess: true }, props: true },
       { path: 'training/my', name: 'my-training', component: () => import('@/views/MyTrainingView.vue') },
       { path: 'training/report', name: 'training-report', component: () => import('@/views/TrainingReportView.vue'), meta: { requiresManageAccess: true } },
+      { path: 'bevilling', name: 'bevilling', component: () => import('@/views/BevillingView.vue') },
+      { path: 'bevilling/new', name: 'bevilling-new', component: () => import('@/views/BevillingEditView.vue'), meta: { requiresManageAccess: true } },
+      { path: 'bevilling/:id/edit', name: 'bevilling-edit', component: () => import('@/views/BevillingEditView.vue'), meta: { requiresManageAccess: true }, props: true },
+      { path: 'bevilling/:id/conditions', name: 'bevilling-conditions', component: () => import('@/views/BevillingConditionsView.vue'), meta: { requiresManageAccess: true }, props: true },
       { path: 'notifications', name: 'notifications', component: () => import('@/views/NotificationsView.vue') },
       { path: 'settings', name: 'settings', component: () => import('@/views/SettingsView.vue') },
       {
