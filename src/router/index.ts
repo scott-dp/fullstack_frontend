@@ -71,6 +71,7 @@ export const routes: RouteRecordRaw[] = [
       { path: 'traceability', name: 'traceability', component: () => import('@/views/TraceabilitySearchView.vue') },
       { path: 'training', name: 'training-templates', component: () => import('@/views/TrainingTemplatesView.vue') },
       { path: 'training/new', name: 'training-new', component: () => import('@/views/TrainingTemplateCreateView.vue'), meta: { requiresManageAccess: true } },
+      { path: 'training/templates/:id', name: 'training-detail', component: () => import('@/views/TrainingTemplateDetailView.vue'), props: true },
       { path: 'training/templates/:id/assign', name: 'training-assign', component: () => import('@/views/TrainingAssignView.vue'), meta: { requiresManageAccess: true }, props: true },
       { path: 'training/my', name: 'my-training', component: () => import('@/views/MyTrainingView.vue') },
       { path: 'training/report', name: 'training-report', component: () => import('@/views/TrainingReportView.vue'), meta: { requiresManageAccess: true } },

@@ -59,6 +59,14 @@ export interface CreateTrainingTemplateRequest {
   linkedRoutineId?: number | null
 }
 
+function normalizeDueAt(dueAt?: string) {
+  if (!dueAt) {
+    return undefined
+  }
+
+  return dueAt.includes('T') ? dueAt : `${dueAt}T00:00:00`
+}
+
 export const trainingApi = {
   listTemplates: (moduleType?: string) => {
     const params = moduleType ? `?moduleType=${moduleType}` : ''
@@ -83,7 +91,7 @@ export const trainingApi = {
   assign: (templateId: number, assigneeUserIds: number[], dueAt?: string) =>
     request<TrainingAssignment[]>(`/trainings/templates/${templateId}/assign`, {
       method: 'POST',
-      body: JSON.stringify({ assigneeUserIds, dueAt }),
+      body: JSON.stringify({ assigneeUserIds, dueAt: normalizeDueAt(dueAt) }),
     }),
 
   myAssignments: () =>
