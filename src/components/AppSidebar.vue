@@ -62,7 +62,7 @@ function isActive(to: string) {
   <div class="sidebar-overlay" :class="{ visible: open }" @click="emit('close')" />
   <aside class="sidebar" :class="{ open }">
     <div class="sidebar-header">
-      <h1 class="logo">IK System</h1>
+      <h1 class="logo">CheckMate</h1>
       <span class="org-name">{{ auth.isSuperAdmin ? t('Platform Access') : auth.user?.organizationName || t('No organization') }}</span>
     </div>
     <nav class="sidebar-nav" role="navigation" :aria-label="t('Dashboard')">
