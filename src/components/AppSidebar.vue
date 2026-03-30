@@ -137,7 +137,7 @@ function handleNavClick() {
       <h1 class="logo">CheckMate</h1>
       <span class="org-name">{{ auth.isSuperAdmin ? t('Platform Access') : auth.user?.organizationName || t('No organization') }}</span>
     </div>
-    <nav class="sidebar-nav" role="navigation" :aria-label="t('Dashboard')">
+    <nav class="sidebar-nav" role="navigation" :aria-label="t('Primary navigation')">
       <router-link
         v-if="!auth.isSuperAdmin"
         :to="dashboardItem.to"
@@ -170,6 +170,8 @@ function handleNavClick() {
           type="button"
           class="nav-group-toggle"
           :class="{ active: isGroupActive(group.items) }"
+          :aria-expanded="groupState[group.key] ? 'true' : 'false'"
+          :aria-controls="`sidebar-group-${group.key}`"
           @click="toggleGroup(group.key)"
         >
           <span class="nav-group-main">
@@ -192,7 +194,11 @@ function handleNavClick() {
           </svg>
         </button>
 
-        <div v-if="groupState[group.key]" class="nav-subitems">
+        <div
+          v-if="groupState[group.key]"
+          :id="`sidebar-group-${group.key}`"
+          class="nav-subitems"
+        >
           <router-link
             v-for="item in group.items"
             :key="item.to"

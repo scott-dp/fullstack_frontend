@@ -70,8 +70,8 @@ async function save() {
 
     <div class="card" style="max-width: 500px;">
       <h2>{{ t('Profile') }}</h2>
-      <div v-if="success" class="alert-success">{{ success }}</div>
-      <div v-if="error" class="alert-error">{{ error }}</div>
+      <div v-if="success" class="alert-success" aria-live="polite">{{ success }}</div>
+      <div v-if="error" class="alert-error" role="alert" aria-live="assertive">{{ error }}</div>
       <form @submit.prevent="save">
         <div class="form-group">
           <label class="form-label">{{ t('Username') }}</label>

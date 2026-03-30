@@ -61,10 +61,10 @@ async function handleSubmit() {
       <h1>{{ t('Register') }}</h1>
       <p class="text-muted">{{ t('Create your account.') }}</p>
       <form @submit.prevent="handleSubmit" class="auth-form">
-        <div v-if="success" class="alert-success">
+        <div v-if="success" class="alert-success" aria-live="polite">
           <p>{{ success }}</p>
         </div>
-        <div v-if="error" class="alert-error">{{ error }}</div>
+        <div v-if="error" class="alert-error" role="alert" aria-live="assertive">{{ error }}</div>
         <div class="form-group">
           <label for="username" class="form-label">{{ t('Username') }}</label>
           <input id="username" v-model="username" type="text" class="form-input" required minlength="3" maxlength="50" autocomplete="username" autofocus />

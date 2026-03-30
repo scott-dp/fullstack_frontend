@@ -152,7 +152,15 @@ function followUpLabel(value: boolean) {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="i in filtered" :key="i.id" class="clickable-row" @click="$router.push(`/app/alcohol-incidents/${i.id}`)">
+          <tr
+            v-for="i in filtered"
+            :key="i.id"
+            class="clickable-row"
+            tabindex="0"
+            @click="$router.push(`/app/alcohol-incidents/${i.id}`)"
+            @keydown.enter="$router.push(`/app/alcohol-incidents/${i.id}`)"
+            @keydown.space.prevent="$router.push(`/app/alcohol-incidents/${i.id}`)"
+          >
             <td><strong>{{ t(formatType(i.incidentType)) }}</strong></td>
             <td><span class="status-badge" :class="severityClass(i.severity)">{{ severityLabel(i.severity) }}</span></td>
             <td><span class="status-badge" :class="statusClass(i.status)">{{ statusLabel(i.status) }}</span></td>

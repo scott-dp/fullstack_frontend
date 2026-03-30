@@ -114,8 +114,8 @@ async function archiveAdmin(adminId: number) {
     <div v-if="loading" class="loading"><div class="spinner" /></div>
 
     <template v-else>
-      <div v-if="error" class="alert-error">{{ error }}</div>
-      <div v-if="success" class="alert-success">{{ success }}</div>
+      <div v-if="error" class="alert-error" role="alert" aria-live="assertive">{{ error }}</div>
+      <div v-if="success" class="alert-success" aria-live="polite">{{ success }}</div>
 
       <div class="stats-grid">
         <div class="stat-card card">

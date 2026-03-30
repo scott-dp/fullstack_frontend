@@ -135,7 +135,15 @@ function statusLabel(status: string) {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="d in filtered" :key="d.id" class="clickable-row" @click="$router.push(`/app/deviations/${d.id}`)">
+          <tr
+            v-for="d in filtered"
+            :key="d.id"
+            class="clickable-row"
+            tabindex="0"
+            @click="$router.push(`/app/deviations/${d.id}`)"
+            @keydown.enter="$router.push(`/app/deviations/${d.id}`)"
+            @keydown.space.prevent="$router.push(`/app/deviations/${d.id}`)"
+          >
             <td><strong>{{ d.title }}</strong></td>
             <td>{{ categoryLabel(d.category) }}</td>
             <td><span class="status-badge" :class="severityClass(d.severity)">{{ severityLabel(d.severity) }}</span></td>
