@@ -24,10 +24,8 @@ vi.mock('vue-router', async () => {
   }
 })
 
-vi.mock('@/api/auth', async () => {
-  const actual = await vi.importActual<typeof import('../../src/api/auth/auth')>('@/api/auth')
+vi.mock('@/api/auth/auth.ts', () => {
   return {
-    ...actual,
     authApi: authApiMock,
   }
 })

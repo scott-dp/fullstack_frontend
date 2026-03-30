@@ -11,7 +11,7 @@ const { notificationApiMock } = vi.hoisted(() => ({
   },
 }))
 
-vi.mock('@/api/notifications', () => ({
+vi.mock('@/api/operations/notifications.ts', () => ({
   notificationApi: notificationApiMock,
 }))
 

@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 const requestMock = vi.fn()
 
-vi.mock('@/api/client', () => ({
+vi.mock('@/api/core/client.ts', () => ({
   request: requestMock,
 }))
 

@@ -24,13 +24,13 @@ const {
   },
 }))
 
-vi.mock('@/api/dashboard', () => ({
+vi.mock('@/api/operations/dashboard.ts', () => ({
   dashboardApi: {
     get: dashboardGetMock,
   },
 }))
 
-vi.mock('@/api/organizationInvites', () => ({
+vi.mock('@/api/auth/organizationInvites.ts', () => ({
   organizationInviteApi: {
     accept: inviteAcceptMock,
   },
