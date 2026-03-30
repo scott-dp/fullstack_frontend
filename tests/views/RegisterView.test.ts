@@ -82,7 +82,7 @@ describe('RegisterView', () => {
     expect(screen.queryByText('Open verification link')).toBeNull()
   })
 
-  it('shows the API error message on failed registration', async () => {
+  it('shows a safe frontend error message on failed registration', async () => {
     authStoreMock.register.mockRejectedValue(
       new HttpError({
         timestamp: new Date().toISOString(),
@@ -107,6 +107,6 @@ describe('RegisterView', () => {
     await fireEvent.update(screen.getByLabelText('Confirm Password'), 'secret123')
     await fireEvent.click(screen.getByRole('button', { name: 'Register' }))
 
-    expect(await screen.findByText('Username already exists')).toBeTruthy()
+    expect(await screen.findByText('Registration failed')).toBeTruthy()
   })
 })

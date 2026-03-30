@@ -36,7 +36,7 @@ describe('LandingView', () => {
       }),
     ).toBeTruthy()
     expect(screen.getByText('Sign In')).toBeTruthy()
-    expect(screen.getByText('Get Started')).toBeTruthy()
+    expect(screen.getAllByText('Get Started')).toHaveLength(2)
   })
 
   it('shows dashboard actions for authenticated users', () => {
