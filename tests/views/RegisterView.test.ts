@@ -1,3 +1,6 @@
+/**
+ * View tests for registration validation and result messaging.
+ */
 import { fireEvent, render, screen } from '@testing-library/vue'
 import { describe, expect, it, vi } from 'vitest'
 import RegisterView from '../../src/views/auth/RegisterView.vue'

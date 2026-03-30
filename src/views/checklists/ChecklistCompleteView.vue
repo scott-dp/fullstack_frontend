@@ -1,3 +1,4 @@
+<!-- Checklist completion screen for filling out and submitting one checklist template instance. -->
 <script setup lang="ts">
 /**
  * Checklist completion view allowing a user to fill out and submit

@@ -1,3 +1,4 @@
+<!-- Main authenticated layout combining the sidebar, header actions, and routed content. -->
 <script setup lang="ts">
 /**
  * Main application layout wrapping authenticated pages.

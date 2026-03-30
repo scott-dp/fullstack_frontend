@@ -1,3 +1,4 @@
+<!-- Traceability search page for finding deliveries by product name or batch number. -->
 <script setup lang="ts">
 /**
  * Traceability search view allowing users to search delivery items

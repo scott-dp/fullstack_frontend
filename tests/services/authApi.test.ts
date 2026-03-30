@@ -1,3 +1,6 @@
+/**
+ * Compatibility tests for the legacy auth service wrapper.
+ */
 import { describe, expect, it, vi } from 'vitest'
 
 const httpClientMock = {

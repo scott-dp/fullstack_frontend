@@ -1,3 +1,4 @@
+<!-- Deviation overview page with filtering across status and compliance category. -->
 <script setup lang="ts">
 /**
  * Deviations list view displaying all deviation reports in a filterable table.

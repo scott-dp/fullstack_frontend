@@ -1,3 +1,6 @@
+/**
+ * Superadmin API helpers for provisioning organizations and their admin accounts.
+ */
 import { request } from '../core/client.ts'
 
 export interface OrganizationAdminSummary {

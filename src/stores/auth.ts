@@ -1,3 +1,6 @@
+/**
+ * Pinia store for session state, current-user loading, and role-based helpers.
+ */
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import {

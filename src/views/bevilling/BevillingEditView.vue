@@ -1,3 +1,4 @@
+<!-- Create and edit form for an organization's alcohol license record. -->
 <script setup lang="ts">
 /**
  * Bevilling create/edit view presenting a form to register or update

@@ -1,3 +1,4 @@
+<!-- Create and edit form for ingredients and their linked allergen metadata. -->
 <script setup lang="ts">
 /**
  * Ingredient create/edit view with name, notes, and multi-select allergen checkboxes.

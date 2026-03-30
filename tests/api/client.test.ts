@@ -1,3 +1,6 @@
+/**
+ * Unit tests for the shared API client and error normalization behavior.
+ */
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { HttpError, request } from '../../src/api/core/client'
 

@@ -1,3 +1,4 @@
+<!-- Form for recording a supplier delivery with item-level batch and date details. -->
 <script setup lang="ts">
 /**
  * Delivery creation view presenting a form to record a new delivery

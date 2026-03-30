@@ -1,3 +1,4 @@
+<!-- Temperature log view for recording readings and reviewing threshold breaches. -->
 <script setup lang="ts">
 /**
  * Temperature logging view displaying a table of recorded readings

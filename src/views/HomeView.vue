@@ -1,7 +1,9 @@
+<!-- Lightweight home wrapper that currently reuses the public app shell. -->
 <script setup lang="ts">
 import AppShell from '../components/layout/AppShell.vue'
 </script>
 
+<!-- Minimal home route that redirects authenticated users into the application shell. -->
 <template>
   <AppShell>
     <section class="panel home-view">

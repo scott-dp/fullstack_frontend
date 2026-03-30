@@ -1,3 +1,6 @@
+/**
+ * View tests for the invited-admin account setup flow.
+ */
 import { render, fireEvent, screen } from '@testing-library/vue'
 import { describe, expect, it, vi } from 'vitest'
 import AdminSetupView from '../../src/views/admin/AdminSetupView.vue'

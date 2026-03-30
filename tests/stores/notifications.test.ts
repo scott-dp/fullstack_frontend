@@ -1,3 +1,6 @@
+/**
+ * Store tests for notification loading, marking read, and unread counts.
+ */
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useNotificationStore } from '@/stores/notifications'

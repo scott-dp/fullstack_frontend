@@ -1,3 +1,4 @@
+<!-- Dish register listing menu items together with allergen review indicators. -->
 <script setup lang="ts">
 /**
  * Dishes list view displaying all dishes in a table with allergen badges,

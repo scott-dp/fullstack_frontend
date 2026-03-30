@@ -1,3 +1,4 @@
+<!-- Supplier detail page with edit controls and delivery history context. -->
 <script setup lang="ts">
 /**
  * Supplier detail view showing full information about a single supplier,

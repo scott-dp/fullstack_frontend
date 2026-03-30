@@ -1,3 +1,6 @@
+/**
+ * Backward-compatible auth service wrapper preserved for older imports and tests.
+ */
 import { httpClient } from './httpClient'
 import type { AuthRequest, AuthResponse, AuthStatusResponse, CurrentUser } from '../types/auth'
 

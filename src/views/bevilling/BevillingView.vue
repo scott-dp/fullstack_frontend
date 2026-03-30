@@ -1,3 +1,4 @@
+<!-- Overview page for the active alcohol license, serving hours, and renewal status. -->
 <script setup lang="ts">
 /**
  * Bevilling (alcohol license) overview view showing the current active license,

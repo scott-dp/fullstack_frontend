@@ -1,3 +1,4 @@
+<!-- Create and edit form for dishes, ingredient composition, and allergen overrides. -->
 <script setup lang="ts">
 /**
  * Dish create/edit view with name, description, notes, and an ingredient

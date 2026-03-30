@@ -1,3 +1,4 @@
+<!-- Checklist template management page with creation form and template listing. -->
 <script setup lang="ts">
 /**
  * Checklists view listing all checklist templates with category filtering.

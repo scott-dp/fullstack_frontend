@@ -1,3 +1,4 @@
+<!-- Invite-based first-login screen where an invited organization admin sets a password. -->
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'

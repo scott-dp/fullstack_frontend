@@ -1,3 +1,6 @@
+/**
+ * Training API types and helpers for templates, assignments, completions, and reports.
+ */
 import { request } from '../core/client.ts'
 
 export interface TrainingTemplate {

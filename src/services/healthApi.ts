@@ -1,3 +1,6 @@
+/**
+ * Health check service wrapper used by smoke tests and diagnostics.
+ */
 import { httpClient } from './httpClient'
 
 export interface HealthResponse {

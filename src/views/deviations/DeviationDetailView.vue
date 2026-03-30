@@ -1,3 +1,4 @@
+<!-- Deviation detail page for comments, assignment, and lifecycle updates. -->
 <script setup lang="ts">
 /**
  * Deviation detail view showing full information about a single deviation,

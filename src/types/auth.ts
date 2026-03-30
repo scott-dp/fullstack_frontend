@@ -1,3 +1,6 @@
+/**
+ * Shared authentication-related frontend types consumed across views and stores.
+ */
 export interface AuthRequest {
   username: string
   password: string

@@ -1,3 +1,4 @@
+<!-- Delivery register showing recorded inbound deliveries for traceability work. -->
 <script setup lang="ts">
 /**
  * Deliveries list view displaying all delivery records in a table.

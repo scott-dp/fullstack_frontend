@@ -1,3 +1,4 @@
+<!-- Starter example component kept from the original Vite scaffold. -->
 <script setup lang="ts">
 import { ref } from 'vue'
 import viteLogo from '../assets/vite.svg'

@@ -1,3 +1,6 @@
+/**
+ * Organization administration API helpers used by superadmin flows.
+ */
 import { request } from '../core/client.ts'
 
 export interface OrganizationSummary {

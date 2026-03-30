@@ -1,3 +1,4 @@
+<!-- Ingredient catalog view used as the source data for dish allergen derivation. -->
 <script setup lang="ts">
 /**
  * Ingredients list view displaying all ingredients in a filterable table.

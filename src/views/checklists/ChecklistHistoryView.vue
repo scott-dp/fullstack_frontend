@@ -1,3 +1,4 @@
+<!-- Historical list of completed checklists for audit and review purposes. -->
 <script setup lang="ts">
 /**
  * Checklist history view showing a table of all past checklist completions.

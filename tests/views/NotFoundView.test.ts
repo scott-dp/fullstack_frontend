@@ -1,3 +1,6 @@
+/**
+ * View tests for the not-found page.
+ */
 import { render, screen } from '@testing-library/vue'
 import { describe, expect, it, vi } from 'vitest'
 import NotFoundView from '@/views/NotFoundView.vue'

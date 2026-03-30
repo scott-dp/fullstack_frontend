@@ -1,3 +1,6 @@
+/**
+ * View tests for the authenticated dashboard.
+ */
 import { fireEvent, render, screen, waitFor } from '@testing-library/vue'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import DashboardView from '../../src/views/dashboard/DashboardView.vue'

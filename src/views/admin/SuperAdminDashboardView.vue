@@ -1,3 +1,4 @@
+<!-- Platform-level dashboard for superadmins provisioning organizations and org admins. -->
 <script setup lang="ts">
 import { onMounted, ref, computed } from 'vue'
 import { superAdminApi, type OrganizationAdminSummary } from '@/api/admin/superAdmin.ts'

@@ -1,3 +1,4 @@
+<!-- Dish detail page showing derived allergens, overrides, and approval status. -->
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'

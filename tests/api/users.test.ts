@@ -1,3 +1,6 @@
+/**
+ * Contract tests for user API helpers.
+ */
 import { describe, expect, it, vi } from 'vitest'
 
 const requestMock = vi.fn()

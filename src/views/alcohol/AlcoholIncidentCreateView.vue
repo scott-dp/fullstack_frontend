@@ -1,3 +1,4 @@
+<!-- Form for reporting a new alcohol-related incident and optionally assigning follow-up. -->
 <script setup lang="ts">
 /**
  * Alcohol Incident creation view presenting a form to report a new
