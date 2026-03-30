@@ -7,7 +7,7 @@ import { ref, onMounted } from 'vue'
 import { dashboardApi, type DashboardData } from '@/api/dashboard'
 import { organizationInviteApi } from '@/api/organizationInvites'
 import { useAuthStore } from '@/stores/auth'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 import { useI18n } from 'vue-i18n'
 
 /** Aggregated dashboard statistics, null until loaded. */
@@ -41,7 +41,12 @@ async function acceptInvite() {
     inviteToken.value = ''
     joinSuccess.value = t('Invitation accepted. Your organization dashboard is now ready.')
   } catch (err: unknown) {
-    joinError.value = err instanceof HttpError ? err.message : t('Failed to accept invitation')
+    joinError.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to accept invitation'),
+      byStatus: {
+        400: t('This invitation is invalid, expired, already used, or cannot be accepted by your account.'),
+      },
+    })
   } finally {
     joining.value = false
   }

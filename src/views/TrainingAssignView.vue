@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { trainingApi, type TrainingTemplate } from '@/api/trainings'
 import { userApi, type UserSummary } from '@/api/users'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const route = useRoute()
 const router = useRouter()
@@ -29,7 +29,13 @@ onMounted(async () => {
     template.value = t
     users.value = u
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to load data')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to load data'),
+      byStatus: {
+        400: t('The training template could not be loaded.'),
+        403: t('You do not have permission to assign training.'),
+      },
+    })
   } finally {
     loading.value = false
   }
@@ -65,7 +71,13 @@ async function handleAssign() {
     success.value = t('Training assigned to {count} user(s)', { count: selectedUserIds.value.length })
     selectedUserIds.value = []
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to assign training')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to assign training'),
+      byStatus: {
+        400: t('Training could not be assigned. Check the selected users and due date.'),
+        403: t('You do not have permission to assign training.'),
+      },
+    })
   } finally {
     assigning.value = false
   }
