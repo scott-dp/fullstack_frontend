@@ -2,10 +2,12 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { authApi, type AdminSetupInfo } from '@/api/auth'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
+import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
 const router = useRouter()
+const { t } = useI18n()
 
 const token = computed(() => String(route.query.token || ''))
 const loading = ref(true)
@@ -18,7 +20,7 @@ const success = ref('')
 
 onMounted(async () => {
   if (!token.value) {
-    error.value = 'Setup token is missing'
+    error.value = t('Setup token is missing')
     loading.value = false
     return
   }
@@ -26,7 +28,12 @@ onMounted(async () => {
   try {
     info.value = await authApi.getAdminSetupInfo(token.value)
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to load setup invitation'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to load setup invitation'),
+      byStatus: {
+        400: t('This setup link is invalid or has expired. Ask for a new admin invitation.'),
+      },
+    })
   } finally {
     loading.value = false
   }
@@ -37,11 +44,11 @@ async function handleSubmit() {
   success.value = ''
 
   if (password.value.length < 8) {
-    error.value = 'Password must be at least 8 characters'
+    error.value = t('Password must be at least 8 characters')
     return
   }
   if (password.value !== confirmPassword.value) {
-    error.value = 'Passwords do not match'
+    error.value = t('Passwords do not match')
     return
   }
 
@@ -51,7 +58,12 @@ async function handleSubmit() {
     success.value = response.message
     setTimeout(() => router.push({ name: 'login' }), 1200)
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to complete account setup'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to complete account setup'),
+      byStatus: {
+        400: t('This setup link is invalid or has expired. Ask for a new admin invitation.'),
+      },
+    })
   } finally {
     saving.value = false
   }
@@ -61,7 +73,7 @@ async function handleSubmit() {
 <template>
   <div class="auth-page">
     <div class="auth-card card">
-      <h1>Set Up Admin Account</h1>
+      <h1>{{ t('Set Up Admin Account') }}</h1>
       <div v-if="loading" class="loading"><div class="spinner" /></div>
       <template v-else>
         <div v-if="error" class="alert-error">{{ error }}</div>
@@ -72,19 +84,19 @@ async function handleSubmit() {
           </p>
           <form class="auth-form" @submit.prevent="handleSubmit">
             <div class="form-group">
-              <label class="form-label">Email</label>
+              <label class="form-label">{{ t('Email') }}</label>
               <input :value="info.email" class="form-input" type="email" disabled />
             </div>
             <div class="form-group">
-              <label class="form-label">Password</label>
+              <label class="form-label">{{ t('Password') }}</label>
               <input v-model="password" class="form-input" type="password" required minlength="8" autocomplete="new-password" />
             </div>
             <div class="form-group">
-              <label class="form-label">Confirm password</label>
+              <label class="form-label">{{ t('Confirm Password') }}</label>
               <input v-model="confirmPassword" class="form-input" type="password" required minlength="8" autocomplete="new-password" />
             </div>
             <button type="submit" class="btn btn-primary btn-full" :disabled="saving">
-              {{ saving ? 'Saving...' : 'Activate account' }}
+              {{ saving ? t('Saving...') : t('Activate account') }}
             </button>
           </form>
         </template>

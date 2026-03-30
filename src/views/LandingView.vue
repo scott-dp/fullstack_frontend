@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /**
  * Public landing page shown to unauthenticated visitors.
- * Showcases the IK System features and encourages login or registration.
+ * Showcases the CheckMate features and encourages login or registration.
  */
 import { useAuthStore } from '@/stores/auth'
 import { useI18n } from 'vue-i18n'
@@ -44,14 +44,13 @@ function changeLocale(event: Event) {
 
     <section class="hero">
       <div class="landing-container">
-        <span class="hero-badge">IK-Mat &amp; IK-Alkohol</span>
         <h1>{{ t('Digital Internal Control') }}<br />{{ t('for Food & Alcohol Compliance') }}</h1>
         <p class="hero-sub">
           {{ t('Replace paper checklists and manual routines with a structured digital solution. Monitor daily operations, ensure proper documentation, and pass inspections with confidence.') }}
         </p>
         <div class="hero-actions">
           <router-link v-if="!auth.isAuthenticated" to="/register" class="btn btn-primary btn-lg">
-            {{ t('Start Free Trial') }}
+            {{ t('Get Started') }}
           </router-link>
           <router-link v-else to="/app" class="btn btn-primary btn-lg">
             {{ t('Open Dashboard') }}
@@ -63,56 +62,56 @@ function changeLocale(event: Event) {
 
     <section id="features" class="features">
       <div class="landing-container">
-        <h2 class="section-title">{{ t('Everything you need for compliance') }}</h2>
-        <p class="section-sub">{{ t('Two integrated services covering food and alcohol regulations') }}</p>
+        <h2 class="section-title">{{ t('Built for daily compliance work') }}</h2>
+        <p class="section-sub">{{ t('Operational tools for food safety, alcohol compliance, and staff follow-up') }}</p>
 
         <div class="features-grid">
           <div class="feature-card">
             <div class="feature-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
             </div>
-            <h3>{{ t('Digital Checklists') }}</h3>
-            <p>{{ t('Daily, weekly, and monthly task lists for hygiene, cleaning, and safety procedures. Never miss a routine.') }}</p>
+            <h3>{{ t('Routine Library') }}</h3>
+            <p>{{ t('Create, review, archive, and organize food and alcohol routines with clear responsibilities and evidence requirements.') }}</p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             </div>
-            <h3>{{ t('Temperature Logging') }}</h3>
-            <p>{{ t('Record storage temperatures with automatic alerts when readings go outside safe thresholds.') }}</p>
+            <h3>{{ t('Digital Checklists') }}</h3>
+            <p>{{ t('Run recurring operational checklists, complete tasks by shift, and keep a searchable history of completed controls.') }}</p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
             </div>
-            <h3>{{ t('Deviation Management') }}</h3>
-            <p>{{ t('Report, track, and resolve non-compliance incidents with full audit trails and comment threads.') }}</p>
+            <h3>{{ t('Incidents and Deviations') }}</h3>
+            <p>{{ t('Track deviations, alcohol incidents, comments, assignments, and follow-up actions in one place.') }}</p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" /></svg>
             </div>
-            <h3>{{ t('Role-Based Access') }}</h3>
-            <p>{{ t('Staff, managers, and administrators each see exactly what they need. Full control over permissions.') }}</p>
+            <h3>{{ t('Training and Onboarding') }}</h3>
+            <p>{{ t('Assign training templates, track completion, and notify staff when new learning is assigned to them.') }}</p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
             </div>
-            <h3>{{ t('Smart Notifications') }}</h3>
-            <p>{{ t('Alerts for overdue tasks, temperature deviations, and assigned issues so nothing slips through.') }}</p>
+            <h3>{{ t('Suppliers and Traceability') }}</h3>
+            <p>{{ t('Register suppliers, log deliveries, and search batch and lot information when you need traceability fast.') }}</p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1" /></svg>
             </div>
-            <h3>{{ t('Compliance Dashboard') }}</h3>
-            <p>{{ t('Real-time overview of your compliance status with analytics on checklists, temperatures, and deviations.') }}</p>
+            <h3>{{ t('Allergens, Dishes, and Bevilling') }}</h3>
+            <p>{{ t('Manage ingredients, dishes, allergen sheets, and alcohol license information in the same system.') }}</p>
           </div>
         </div>
       </div>
@@ -148,7 +147,7 @@ function changeLocale(event: Event) {
     <section class="cta-section">
       <div class="landing-container">
         <h2>{{ t('Ready to simplify compliance?') }}</h2>
-        <p>{{ t('Join restaurants, bars, and cafes already using IK System to stay audit-ready.') }}</p>
+        <p>{{ t('Join restaurants, bars, and cafes already using CheckMate to stay audit-ready.') }}</p>
         <router-link v-if="!auth.isAuthenticated" to="/register" class="btn btn-primary btn-lg">
           {{ t('Create your account') }}
         </router-link>
@@ -160,7 +159,7 @@ function changeLocale(event: Event) {
 
     <footer class="landing-footer">
       <div class="landing-container">
-        <p>{{ t('IK System') }} &mdash; {{ t('Digital Internal Control for Food & Alcohol Compliance') }}</p>
+        <p>{{ t('IK System') }}: {{ t('Digital Internal Control for Food & Alcohol Compliance') }}</p>
         <p class="text-sm">{{ t('Sponsored by Everest Sushi & Fusion AS (org. 937 219 997)') }}</p>
       </div>
     </footer>

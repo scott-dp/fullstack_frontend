@@ -13,7 +13,7 @@
   "Error:": "Feil:",
   "You have no listings yet.": "Du har ingen annonser ennå.",
   "Error loading user": "Feil ved lasting av bruker",
-  "IK System": "IK System",
+  "IK System": "CheckMate",
   "Go to Dashboard": "Gå til dashbord",
   "Sign In": "Logg inn",
   "Get Started": "Kom i gang",
@@ -22,6 +22,19 @@
   "See Features": "Se funksjoner",
   "Everything you need for compliance": "Alt du trenger for etterlevelse",
   "Two integrated services covering food and alcohol regulations": "To integrerte tjenester som dekker regelverk for mat og alkohol",
+  "Built for daily compliance work": "Bygget for daglig etterlevelsesarbeid",
+  "Operational tools for food safety, alcohol compliance, and staff follow-up": "Operative verktøy for matsikkerhet, alkoholetterlevelse og oppfølging av ansatte",
+  "Routine Library": "Rutinebibliotek",
+  "Create, review, archive, and organize food and alcohol routines with clear responsibilities and evidence requirements.": "Opprett, gjennomgå, arkiver og organiser rutiner for mat og alkohol med tydelige ansvar og krav til dokumentasjon.",
+  "Run recurring operational checklists, complete tasks by shift, and keep a searchable history of completed controls.": "Kjør gjentakende operative sjekklister, fullfør oppgaver per skift og behold en søkbar historikk over gjennomførte kontroller.",
+  "Incidents and Deviations": "Hendelser og avvik",
+  "Track deviations, alcohol incidents, comments, assignments, and follow-up actions in one place.": "Følg avvik, alkoholhendelser, kommentarer, tildelinger og oppfølgingstiltak på ett sted.",
+  "Training and Onboarding": "Opplæring og onboarding",
+  "Assign training templates, track completion, and notify staff when new learning is assigned to them.": "Tildel opplæringsmaler, følg gjennomføring og varsle ansatte når ny opplæring blir tildelt.",
+  "Suppliers and Traceability": "Leverandører og sporbarhet",
+  "Register suppliers, log deliveries, and search batch and lot information when you need traceability fast.": "Registrer leverandører, logg leveranser og søk i batch- og lot-informasjon når du trenger sporbarhet raskt.",
+  "Allergens, Dishes, and Bevilling": "Allergener, retter og bevilling",
+  "Manage ingredients, dishes, allergen sheets, and alcohol license information in the same system.": "Administrer ingredienser, retter, allergenark og bevillingsinformasjon i samme system.",
   "Digital Checklists": "Digitale sjekklister",
   "Daily, weekly, and monthly task lists for hygiene, cleaning, and safety procedures. Never miss a routine.": "Daglige, ukentlige og månedlige oppgavelister for hygiene, rengjøring og sikkerhetsrutiner. Gå aldri glipp av en rutine.",
   "Temperature Logging": "Temperaturlogging",
@@ -45,7 +58,7 @@
   "Staff training records": "Opplæringsregistre for ansatte",
   "Serving practice audits": "Revisjoner av serveringspraksis",
   "Ready to simplify compliance?": "Klar til å forenkle etterlevelse?",
-  "Join restaurants, bars, and cafes already using IK System to stay audit-ready.": "Bli med restauranter, barer og kafeer som allerede bruker IK System for å være klare for revisjon.",
+  "Join restaurants, bars, and cafes already using IK System to stay audit-ready.": "Bli med restauranter, barer og kafeer som allerede bruker CheckMate for å være klare for revisjon.",
   "Create your account": "Opprett kontoen din",
   "Digital Internal Control for Food & Alcohol Compliance": "Digital internkontroll for etterlevelse av mat og alkohol",
   "Sponsored by Everest Sushi & Fusion AS (org. 937 219 997)": "Sponset av Everest Sushi & Fusion AS (org. 937 219 997)",
@@ -84,11 +97,552 @@
   "Already have an account?": "Har du allerede en konto?",
   "Passwords do not match": "Passordene stemmer ikke",
   "Registration failed": "Registrering mislyktes",
-  "IK System - Internal Control": "IK System - Internkontroll",
+  "IK System - Internal Control": "CheckMate - Internkontroll",
   "Signing in...": "Logger inn...",
   "Don't have an account?": "Har du ikke en konto?",
   "Login failed": "Innlogging mislyktes",
   "Digital Internal Control": "Digital internkontroll",
   "for Food & Alcohol Compliance": "for etterlevelse av mat og alkohol",
-  "Replace paper checklists and manual routines with a structured digital solution. Monitor daily operations, ensure proper documentation, and pass inspections with confidence.": "Erstatt papirsjekklister og manuelle rutiner med en strukturert digital løsning. Overvåk daglig drift, sørg for riktig dokumentasjon og bestå inspeksjoner med trygghet."
+  "Replace paper checklists and manual routines with a structured digital solution. Monitor daily operations, ensure proper documentation, and pass inspections with confidence.": "Erstatt papirsjekklister og manuelle rutiner med en strukturert digital løsning. Overvåk daglig drift, sørg for riktig dokumentasjon og bestå inspeksjoner med trygghet.",
+  "Invitation accepted. Your organization dashboard is now ready.": "Invitasjonen er godtatt. Organisasjonsdashbordet ditt er nå klart.",
+  "Failed to accept invitation": "Kunne ikke godta invitasjonen",
+  "You need an invitation from an admin or restaurant manager before you can access restaurant data.": "Du trenger en invitasjon fra en administrator eller restaurantleder før du får tilgang til restaurantdata.",
+  "Checklist Templates": "Sjekklistemaler",
+  "Active templates": "Aktive maler",
+  "Completed Today": "Fullført i dag",
+  "Checklists finished": "Ferdige sjekklister",
+  "Temperature Alerts": "Temperaturalarmer",
+  "Alerts today": "Alarmer i dag",
+  "Open Deviations": "Åpne avvik",
+  "Needing attention": "Trenger oppfølging",
+  "In Progress": "Pågår",
+  "Being resolved": "Blir løst",
+  "Unread": "Uleste",
+  "Quick Actions": "Hurtighandlinger",
+  "Complete Checklist": "Fullfør sjekkliste",
+  "Complete a daily, weekly, or monthly checklist": "Fullfør en daglig, ukentlig eller månedlig sjekkliste",
+  "Log Temperature": "Registrer temperatur",
+  "Record storage temperature readings": "Registrer temperaturmålinger for lagring",
+  "Report Deviation": "Rapporter avvik",
+  "Report a non-compliance issue": "Rapporter et avvik eller brudd på rutiner",
+  "Dishes": "Retter",
+  "Ingredients": "Ingredienser",
+  "Allergen Sheet": "Allergenark",
+  "New Dish": "Ny rett",
+  "No dishes found": "Fant ingen retter",
+  "Add your first dish to get started.": "Legg til din første rett for å komme i gang.",
+  "Status": "Status",
+  "Approval": "Godkjenning",
+  "None": "Ingen",
+  "Active": "Aktiv",
+  "Inactive": "Inaktiv",
+  "Needs approval": "Trenger godkjenning",
+  "Approved": "Godkjent",
+  "Not approved": "Ikke godkjent",
+  "Failed to load dish": "Kunne ikke laste retten",
+  "Failed to approve": "Kunne ikke godkjenne",
+  "Failed to add override": "Kunne ikke legge til overstyring",
+  "Failed to remove override": "Kunne ikke fjerne overstyring",
+  "Delete this dish? This cannot be undone.": "Slette denne retten? Dette kan ikke angres.",
+  "Failed to delete dish": "Kunne ikke slette retten",
+  "Dish Details": "Rettdetaljer",
+  "Edit": "Rediger",
+  "Approving...": "Godkjenner...",
+  "Approve Allergens": "Godkjenn allergener",
+  "Deleting...": "Sletter...",
+  "Delete": "Slett",
+  "Never approved": "Aldri godkjent",
+  "Last approved:": "Sist godkjent:",
+  "by": "av",
+  "No ingredients.": "Ingen ingredienser.",
+  "Derived Allergens": "Utledede allergener",
+  "No allergens.": "Ingen allergener.",
+  "Allergen Overrides": "Allergenoverstyringer",
+  "Included": "Inkludert",
+  "Excluded": "Ekskludert",
+  "Remove": "Fjern",
+  "No overrides.": "Ingen overstyringer.",
+  "Add Override": "Legg til overstyring",
+  "Select allergen...": "Velg allergen...",
+  "Include": "Inkluder",
+  "Exclude": "Ekskluder",
+  "Reason...": "Begrunnelse...",
+  "Add": "Legg til",
+  "Unknown": "Ukjent",
+  "Failed to save dish": "Kunne ikke lagre retten",
+  "Edit Dish": "Rediger rett",
+  "Back": "Tilbake",
+  "Dish name": "Navn på rett",
+  "Description": "Beskrivelse",
+  "Optional description": "Valgfri beskrivelse",
+  "Notes": "Notater",
+  "Internal notes": "Interne notater",
+  "Add an ingredient...": "Legg til en ingrediens...",
+  "Quantity (optional)": "Mengde (valgfritt)",
+  "No ingredients added yet.": "Ingen ingredienser lagt til ennå.",
+  "Derived Allergens (from ingredients)": "Utledede allergener (fra ingredienser)",
+  "No allergens detected from selected ingredients.": "Ingen allergener oppdaget fra valgte ingredienser.",
+  "Saving...": "Lagrer...",
+  "Update Dish": "Oppdater rett",
+  "Create Dish": "Opprett rett",
+  "New Ingredient": "Ny ingrediens",
+  "No ingredients found": "Fant ingen ingredienser",
+  "Add your first ingredient to get started.": "Legg til din første ingrediens for å komme i gang.",
+  "Updated": "Oppdatert",
+  "Failed to save ingredient": "Kunne ikke lagre ingrediensen",
+  "Delete this ingredient? This cannot be undone.": "Slette denne ingrediensen? Dette kan ikke angres.",
+  "Failed to delete ingredient": "Kunne ikke slette ingrediensen",
+  "Edit Ingredient": "Rediger ingrediens",
+  "Ingredient name": "Navn på ingrediens",
+  "Optional notes about this ingredient": "Valgfrie notater om denne ingrediensen",
+  "Update Ingredient": "Oppdater ingrediens",
+  "Create Ingredient": "Opprett ingrediens",
+  "Print": "Skriv ut",
+  "No dishes": "Ingen retter",
+  "Add dishes to generate the allergen sheet.": "Legg til retter for å lage allergenarket.",
+  "Allergen Information": "Allergeninformasjon",
+  "Dish": "Rett",
+  "X = contains allergen, - = not present": "X = inneholder allergen, - = ikke til stede",
+  "Mark all as read": "Marker alle som lest",
+  "No notifications": "Ingen varsler",
+  "You're all caught up.": "Du er oppdatert.",
+  "Temperature Alert": "Temperaturalarm",
+  "Deviation Assigned": "Avvik tildelt",
+  "Training Assigned": "Opplæring tildelt",
+  "Task Due": "Oppgave forfalt",
+  "General": "Generelt",
+  "Profile": "Profil",
+  "First Name": "Fornavn",
+  "Last Name": "Etternavn",
+  "Email": "E-post",
+  "Roles": "Roller",
+  "Profile updated successfully": "Profilen ble oppdatert",
+  "Failed to update profile": "Kunne ikke oppdatere profil",
+  "Save Changes": "Lagre endringer",
+  "Admin Dashboard": "Adminpanel",
+  "Total Users": "Totalt antall brukere",
+  "In organization": "I organisasjonen",
+  "Admins": "Administratorer",
+  "Managers": "Ledere",
+  "Staff": "Ansatte",
+  "System administrators": "Systemadministratorer",
+  "Compliance managers": "Internkontrollledere",
+  "Operational staff": "Driftsansatte",
+  "Compliance Overview": "Oversikt over internkontroll",
+  "Active Templates": "Aktive maler",
+  "Checklist templates": "Sjekklistemaler",
+  "Temp Alerts": "Temperaturalarmer",
+  "Today": "I dag",
+  "Administration": "Administrasjon",
+  "View and manage user accounts and roles": "Se og administrer brukerkontoer og roller",
+  "Create and manage compliance checklists": "Opprett og administrer sjekklister",
+  "Review and assign open deviations": "Se gjennom og tildel åpne avvik",
+  "Audit History": "Revisjonshistorikk",
+  "View checklist completion history": "Se historikk for fullførte sjekklister",
+  "Create Invitation": "Opprett invitasjon",
+  "Superadmins can create manager or staff invites for any restaurant.": "Superadministratorer kan opprette invitasjoner for ledere eller ansatte til alle restauranter.",
+  "Admins can create manager or staff invites for their restaurant.": "Administratorer kan opprette invitasjoner for ledere eller ansatte til sin restaurant.",
+  "Managers can invite staff users into their own restaurant.": "Ledere kan invitere ansatte til sin egen restaurant.",
+  "Role": "Rolle",
+  "Manager": "Leder",
+  "Admin": "Administrator",
+  "Superadmin": "Superadministrator",
+  "Restaurant": "Restaurant",
+  "Select restaurant": "Velg restaurant",
+  "Expires in days": "Utløper om dager",
+  "Creating invite...": "Oppretter invitasjon...",
+  "Create invite": "Opprett invitasjon",
+  "Latest invite token": "Siste invitasjonstoken",
+  "No users found": "Fant ingen brukere",
+  "Name": "Navn",
+  "Actions": "Handlinger",
+  "Invitations": "Invitasjoner",
+  "Token": "Token",
+  "Expires": "Utløper",
+  "Pending": "Venter",
+  "Accepted by {username}": "Akseptert av {username}",
+  "No invitations created yet": "Ingen invitasjoner er opprettet ennå",
+  "Invite created for {organizationName}. Share the token below with the user.": "Invitasjon opprettet for {organizationName}. Del tokenet under med brukeren.",
+  "Failed to create invite": "Kunne ikke opprette invitasjon",
+  "Delete this user? This will remove their access.": "Slette denne brukeren? Dette vil fjerne tilgangen deres.",
+  "Failed to delete user": "Kunne ikke slette bruker"
+  ,"New Routine": "Ny rutine"
+  ,"All Modules": "Alle moduler"
+  ,"Shared": "Delt"
+  ,"All Categories": "Alle kategorier"
+  ,"Other": "Annet"
+  ,"All Status": "Alle statuser"
+  ,"No routines found": "Fant ingen rutiner"
+  ,"No routines match your filters.": "Ingen rutiner matcher filtrene dine."
+  ,"Module": "Modul"
+  ,"Category": "Kategori"
+  ,"Responsible": "Ansvarlig"
+  ,"Last Review": "Siste gjennomgang"
+  ,"Review overdue": "Gjennomgang forfalt"
+  ,"Routine Details": "Rutinedetaljer"
+  ,"Archiving...": "Arkiverer..."
+  ,"Archive": "Arkiver"
+  ,"Restoring...": "Gjenoppretter..."
+  ,"Unarchive": "Gjenåpne"
+  ,"Failed to load routine": "Kunne ikke laste rutinen"
+  ,"Failed to review routine": "Kunne ikke gjennomgå rutinen"
+  ,"Failed to archive routine": "Kunne ikke arkivere rutinen"
+  ,"Failed to unarchive routine": "Kunne ikke gjenåpne rutinen"
+  ,"Delete this routine? This cannot be undone.": "Slette denne rutinen? Dette kan ikke angres."
+  ,"Failed to delete routine": "Kunne ikke slette rutinen"
+  ,"Review Interval": "Gjennomgangsintervall"
+  ,"days": "dager"
+  ,"Not set": "Ikke satt"
+  ,"Last Reviewed": "Sist gjennomgått"
+  ,"Created By": "Opprettet av"
+  ,"Created": "Opprettet"
+  ,"Steps": "Steg"
+  ,"What Counts as a Deviation": "Hva regnes som et avvik"
+  ,"Corrective Action": "Korrigerende tiltak"
+  ,"Required Evidence": "Krevd dokumentasjon"
+  ,"Review Routine": "Gjennomgå rutine"
+  ,"Review notes (optional)...": "Notater til gjennomgang (valgfritt)..."
+  ,"Submitting...": "Sender inn..."
+  ,"Submit Review": "Send inn gjennomgang"
+  ,"Review History": "Gjennomgangshistorikk"
+  ,"No reviews yet.": "Ingen gjennomganger ennå."
+  ,"Next review:": "Neste gjennomgang:"
+  ,"Name is required": "Navn er påkrevd"
+  ,"Failed to create routine": "Kunne ikke opprette rutinen"
+  ,"IK-Mat": "IK-Mat"
+  ,"Hygiene": "Hygiene"
+  ,"Cleaning": "Renhold"
+  ,"Traceability": "Sporbarhet"
+  ,"Allergens": "Allergener"
+  ,"Age Control": "Alderskontroll"
+  ,"Intoxication": "Beruselse"
+  ,"Closing": "Stenging"
+  ,"BYO Control": "BYO-kontroll"
+  ,"License Conditions": "Vilkår for bevilling"
+  ,"Security": "Sikkerhet"
+  ,"Responsible Role": "Ansvarlig rolle"
+  ,"Daily": "Daglig"
+  ,"Weekly": "Ukentlig"
+  ,"Monthly": "Månedlig"
+  ,"Shift-Based": "Skiftbasert"
+  ,"Event-Based": "Hendelsesbasert"
+  ,"What this routine covers...": "Hva denne rutinen dekker..."
+  ,"Why this routine exists...": "Hvorfor denne rutinen finnes..."
+  ,"Step-by-step instructions...": "Trinnvise instruksjoner..."
+  ,"What counts as a deviation?": "Hva regnes som et avvik?"
+  ,"Corrective action": "Korrigerende tiltak"
+  ,"Required evidence": "Påkrevd dokumentasjon"
+  ,"Review Interval (days)": "Gjennomgangsintervall (dager)"
+  ,"e.g. 30": "f.eks. 30"
+  ,"Create Routine": "Opprett rutine"
+  ,"Failed to update routine": "Kunne ikke oppdatere rutinen"
+  ,"Edit Routine": "Rediger rutine"
+  ,"New Template": "Ny mal"
+  ,"Create Checklist Template": "Opprett sjekklistemal"
+  ,"Title": "Tittel"
+  ,"Description (optional)": "Beskrivelse (valgfritt)"
+  ,"Checklist Items": "Sjekklistens punkter"
+  ,"Item": "Punkt"
+  ,"Comment required": "Kommentar påkrevd"
+  ,"Add Item": "Legg til punkt"
+  ,"Create Template": "Opprett mal"
+  ,"Title and at least one item are required": "Tittel og minst ett punkt er påkrevd"
+  ,"Failed to create template": "Kunne ikke opprette malen"
+  ,"No checklists found": "Fant ingen sjekklister"
+  ,"Create your first checklist template to get started.": "Opprett din første sjekklistemal for å komme i gang."
+  ,"No checklists have been created yet.": "Ingen sjekklister er opprettet ennå."
+  ,"items": "punkter"
+  ,"Checklist History": "Sjekklistelogg"
+  ,"No completions yet": "Ingen fullføringer ennå"
+  ,"Complete your first checklist to see it here.": "Fullfør din første sjekkliste for å se den her."
+  ,"Checklist": "Sjekkliste"
+  ,"Completed By": "Fullført av"
+  ,"Date": "Dato"
+  ,"Comment": "Kommentar"
+  ,"Deviation Found": "Avvik funnet"
+  ,"Incomplete": "Ikke fullført"
+  ,"Location and temperature are required": "Lokasjon og temperatur er påkrevd"
+  ,"Failed to log temperature": "Kunne ikke registrere temperatur"
+  ,"Normal": "Normal"
+  ,"Warning": "Advarsel"
+  ,"Critical": "Kritisk"
+  ,"Temperature Logs": "Temperaturlogger"
+  ,"Record Temperature": "Registrer temperatur"
+  ,"Location": "Lokasjon"
+  ,"e.g., Fridge A, Freezer 1": "f.eks. Kjøleskap A, Fryser 1"
+  ,"Temperature (&deg;C)": "Temperatur (°C)"
+  ,"Min Threshold (&deg;C)": "Min grense (°C)"
+  ,"Max Threshold (&deg;C)": "Maks grense (°C)"
+  ,"Comment (optional)": "Kommentar (valgfritt)"
+  ,"Record": "Registrer"
+  ,"No temperature logs": "Ingen temperaturlogger"
+  ,"Start logging temperatures to track compliance.": "Begynn å loggføre temperaturer for å følge opp etterlevelse."
+  ,"Temp (&deg;C)": "Temp (°C)"
+  ,"Range": "Intervall"
+  ,"Recorded By": "Registrert av"
+  ,"All Statuses": "Alle statuser"
+  ,"Open": "Åpen"
+  ,"Resolved": "Løst"
+  ,"Closed": "Lukket"
+  ,"Severity": "Alvorlighetsgrad"
+  ,"Reported By": "Rapportert av"
+  ,"Assigned To": "Tildelt til"
+  ,"No deviations found": "Fant ingen avvik"
+  ,"No deviations match your filters.": "Ingen avvik matcher filtrene dine."
+  ,"Low": "Lav"
+  ,"Medium": "Middels"
+  ,"High": "Høy"
+  ,"Failed to create deviation": "Kunne ikke opprette avvik"
+  ,"Brief description of the issue": "Kort beskrivelse av problemet"
+  ,"Detailed description of what happened, where, and any immediate actions taken": "Detaljert beskrivelse av hva som skjedde, hvor det skjedde, og eventuelle umiddelbare tiltak"
+  ,"Update failed": "Oppdatering mislyktes"
+  ,"Assignment failed": "Tildeling mislyktes"
+  ,"Failed to add comment": "Kunne ikke legge til kommentar"
+  ,"Reported by": "Rapportert av"
+  ,"Assigned to": "Tildelt til"
+  ,"Update Status": "Oppdater status"
+  ,"Resolve": "Marker som løst"
+  ,"Close": "Lukk"
+  ,"Reopen": "Gjenåpne"
+  ,"No comments yet.": "Ingen kommentarer ennå."
+  ,"Add a comment...": "Legg til en kommentar..."
+  ,"Posting...": "Publiserer..."
+  ,"Post Comment": "Publiser kommentar"
+  ,"Alcohol Incidents": "Alkoholhendelser"
+  ,"View Report": "Vis rapport"
+  ,"Report Incident": "Rapporter hendelse"
+  ,"All Types": "Alle typer"
+  ,"Age Doubt Refusal": "Avslag ved tvil om alder"
+  ,"Underage Attempt": "Forsøk fra mindreårig"
+  ,"Intoxication Refusal": "Avslag på grunn av beruselse"
+  ,"Guest Removed": "Gjest bortvist"
+  ,"Suspected Fake ID": "Mistanke om falsk ID"
+  ,"Brought In Alcohol": "Medbrakt alkohol"
+  ,"Outside Licensed Area": "Utenfor skjenkeområdet"
+  ,"Alcohol Taken Outside Licensed Area": "Alkohol tatt utenfor skjenkeområdet"
+  ,"Service After Closing Risk": "Risiko for servering etter stengetid"
+  ,"No incidents found": "Fant ingen hendelser"
+  ,"No alcohol incidents match your filters.": "Ingen alkoholhendelser matcher filtrene dine."
+  ,"Type": "Type"
+  ,"Occurred": "Skjedde"
+  ,"Follow-up": "Oppfølging"
+  ,"Yes": "Ja"
+  ,"No": "Nei"
+  ,"Failed to create incident": "Kunne ikke opprette hendelsen"
+  ,"Report Alcohol Incident": "Rapporter alkoholhendelse"
+  ,"When did it occur?": "Når skjedde det?"
+  ,"Shift": "Skift"
+  ,"e.g. Evening Shift": "f.eks. Kveldsskift"
+  ,"Location / Area": "Lokasjon / område"
+  ,"e.g. Bar Area": "f.eks. Barområde"
+  ,"Incident Type": "Hendelsestype"
+  ,"Describe what happened, where, and the circumstances": "Beskriv hva som skjedde, hvor det skjedde, og omstendighetene"
+  ,"Immediate Action Taken": "Umiddelbar handling"
+  ,"What was done immediately in response?": "Hva ble gjort umiddelbart som respons?"
+  ,"Follow-up required": "Oppfølging kreves"
+  ,"Unassigned": "Ikke tildelt"
+  ,"Follow-up Required": "Oppfølging kreves"
+  ,"Occurred At": "Tidspunkt"
+  ,"Linked Deviation": "Koblet avvik"
+  ,"Save Assignment": "Lagre tildeling"
+  ,"Under Review": "Under vurdering"
+  ,"Close Incident": "Lukk hendelse"
+  ,"Closing Notes (optional)": "Avslutningsnotat (valgfritt)"
+  ,"Any final notes or summary...": "Eventuelle avsluttende notater eller oppsummering..."
+  ,"Closing...": "Lukker..."
+  ,"Confirm Close": "Bekreft lukking"
+  ,"Failed to close incident": "Kunne ikke lukke hendelsen"
+  ,"Incident Report": "Hendelsesrapport"
+  ,"Failed to load report. You may not have access.": "Kunne ikke laste rapporten. Du har kanskje ikke tilgang."
+  ,"Total Incidents": "Totalt antall hendelser"
+  ,"Incidents by Type": "Hendelser etter type"
+  ,"No incidents recorded yet.": "Ingen hendelser registrert ennå."
+  ,"New Supplier": "Ny leverandør"
+  ,"All Suppliers": "Alle leverandører"
+  ,"No suppliers found": "Fant ingen leverandører"
+  ,"No suppliers match your filters.": "Ingen leverandører matcher filtrene dine."
+  ,"Org. Number": "Org.nr."
+  ,"Contact": "Kontakt"
+  ,"Organization Number": "Organisasjonsnummer"
+  ,"Contact Name": "Kontaktperson"
+  ,"Supplier company name": "Navn på leverandørfirma"
+  ,"e.g. 123 456 789": "f.eks. 123 456 789"
+  ,"Primary contact person": "Primær kontaktperson"
+  ,"contact@supplier.com": "kontakt@leverandor.no"
+  ,"+47 123 45 678": "+47 123 45 678"
+  ,"Address": "Adresse"
+  ,"Street address, city": "Gateadresse, by"
+  ,"Internal notes about this supplier": "Interne notater om denne leverandøren"
+  ,"Creating...": "Oppretter..."
+  ,"Create Supplier": "Opprett leverandør"
+  ,"Failed to create supplier": "Kunne ikke opprette leverandør"
+  ,"Edit Supplier": "Rediger leverandør"
+  ,"Failed to update supplier": "Kunne ikke oppdatere leverandør"
+  ,"Save": "Lagre"
+  ,"Deactivate": "Deaktiver"
+  ,"Activate": "Aktiver"
+  ,"No deliveries from this supplier yet.": "Ingen leveranser fra denne leverandøren ennå."
+  ,"New Delivery": "Ny levering"
+  ,"No deliveries found": "Fant ingen leveranser"
+  ,"No delivery records have been created yet.": "Ingen leveranser er registrert ennå."
+  ,"Document #": "Dokumentnr."
+  ,"Received By": "Mottatt av"
+  ,"Document Number": "Dokumentnummer"
+  ,"Invoice or delivery note number": "Faktura- eller følgeseddelnummer"
+  ,"Optional notes about this delivery": "Valgfrie notater om denne leveransen"
+  ,"Please select a supplier": "Velg en leverandør"
+  ,"Please enter a delivery date": "Oppgi leveringsdato"
+  ,"Please add at least one item with a product name": "Legg til minst én vare med produktnavn"
+  ,"Select a supplier": "Velg en leverandør"
+  ,"Delivery Date": "Leveringsdato"
+  ,"Product Name": "Produktnavn"
+  ,"Product name": "Produktnavn"
+  ,"Quantity": "Mengde"
+  ,"Qty": "Ant."
+  ,"Unit": "Enhet"
+  ,"kg, pcs, L": "kg, stk, L"
+  ,"Batch/Lot": "Batch/Lot"
+  ,"Batch / Lot Number": "Batch-/lotnummer"
+  ,"Batch or lot number": "Batch- eller lotnummer"
+  ,"Expiry Date": "Utløpsdato"
+  ,"Create Delivery": "Opprett levering"
+  ,"Failed to create delivery": "Kunne ikke opprette levering"
+  ,"Delivery Detail": "Leveringsdetaljer"
+  ,"No items recorded.": "Ingen varer registrert."
+  ,"Traceability Search": "Sporbarhetssøk"
+  ,"Search by product name": "Søk etter produktnavn"
+  ,"Search by batch or lot number": "Søk etter batch- eller lotnummer"
+  ,"Please enter a product name or batch/lot number to search": "Skriv inn et produktnavn eller batch-/lotnummer for å søke"
+  ,"Search failed": "Søket mislyktes"
+  ,"No results found": "Ingen resultater funnet"
+  ,"No delivery items match your search criteria.": "Ingen leveringsvarer matcher søkekriteriene dine."
+  ,"View Delivery": "Vis levering"
+  ,"Training Templates": "Opplæringsmaler"
+  ,"No training templates found": "Fant ingen opplæringsmaler"
+  ,"Create your first training template to get started.": "Opprett din første opplæringsmal for å komme i gang."
+  ,"Mandatory": "Obligatorisk"
+  ,"Valid for {days} days": "Gyldig i {days} dager"
+  ,"Acknowledgment required": "Bekreftelse kreves"
+  ,"All Staff": "Alle ansatte"
+  ,"IK-Alkohol": "IK-Alkohol"
+  ,"Food Hygiene": "Mathygiene"
+  ,"HACCP Awareness": "HACCP-kunnskap"
+  ,"Intoxication Handling": "Håndtering av beruselse"
+  ,"License Rules": "Regler for bevilling"
+  ,"Responsible Hosting": "Ansvarlig vertskap"
+  ,"Custom": "Tilpasset"
+  ,"New Training Template": "Ny opplæringsmal"
+  ,"Title is required": "Tittel er påkrevd"
+  ,"e.g. Basic food hygiene": "f.eks. Grunnleggende mathygiene"
+  ,"Training Content": "Opplæringsinnhold"
+  ,"Full training material text...": "Full tekst for opplæringsmateriell..."
+  ,"Required For": "Kreves for"
+  ,"Validity (days)": "Gyldighet (dager)"
+  ,"e.g. 365": "f.eks. 365"
+  ,"Mandatory training": "Obligatorisk opplæring"
+  ,"Requires acknowledgment": "Krever bekreftelse"
+  ,"Training Template": "Opplæringsmal"
+  ,"Failed to load training template": "Kunne ikke laste opplæringsmal"
+  ,"Delete this training template? This will also remove its assignments.": "Slette denne opplæringsmalen? Dette vil også fjerne tilhørende tildelinger."
+  ,"Failed to delete training template": "Kunne ikke slette opplæringsmal"
+  ,"No description provided.": "Ingen beskrivelse oppgitt."
+  ,"No training content added yet.": "Ingen opplæringsinnhold lagt til ennå."
+  ,"Template Details": "Maldetaljer"
+  ,"Validity": "Gyldighet"
+  ,"No expiry": "Ingen utløp"
+  ,"Acknowledgment": "Bekreftelse"
+  ,"Required": "Påkrevd"
+  ,"Not required": "Ikke påkrevd"
+  ,"Assign Training": "Tildel opplæring"
+  ,"Failed to load data": "Kunne ikke laste data"
+  ,"Select at least one user": "Velg minst én bruker"
+  ,"Training assigned to {count} user(s)": "Opplæring tildelt til {count} bruker(e)"
+  ,"Failed to assign training": "Kunne ikke tildele opplæring"
+  ,"Select Users": "Velg brukere"
+  ,"Select All": "Velg alle"
+  ,"Deselect All": "Fjern alle valg"
+  ,"{count} selected": "{count} valgt"
+  ,"Due Date (optional)": "Frist (valgfritt)"
+  ,"Assigning...": "Tildeler..."
+  ,"Assign to {count} user(s)": "Tildel til {count} bruker(e)"
+  ,"No training assignments": "Ingen opplæringstildelinger"
+  ,"You have no training assigned to you.": "Du har ingen opplæring tildelt."
+  ,"Assigned": "Tildelt"
+  ,"Overdue": "Forfalt"
+  ,"Assigned by {username} on {date}": "Tildelt av {username} den {date}"
+  ,"Due: {date}": "Frist: {date}"
+  ,"Mark as Completed": "Marker som fullført"
+  ,"I have read and understood this training": "Jeg har lest og forstått denne opplæringen"
+  ,"Comments (optional)...": "Kommentarer (valgfritt)..."
+  ,"Completing...": "Fullfører..."
+  ,"Confirm Completion": "Bekreft fullføring"
+  ,"Failed to complete training": "Kunne ikke fullføre opplæringen"
+  ,"Training Report": "Opplæringsrapport"
+  ,"Templates": "Maler"
+  ,"Active training templates": "Aktive opplæringsmaler"
+  ,"Total Assignments": "Totale tildelinger"
+  ,"All time": "Totalt"
+  ,"Training completed": "Opplæring fullført"
+  ,"Completion Rate": "Fullføringsgrad"
+  ,"Overall": "Totalt"
+  ,"Failed to load bevilling information.": "Kunne ikke laste bevillingsinformasjon."
+  ,"Edit License": "Rediger bevilling"
+  ,"Manage Conditions": "Administrer vilkår"
+  ,"No active bevilling": "Ingen aktiv bevilling"
+  ,"No active alcohol license has been registered for your organization.": "Ingen aktiv alkohollisens er registrert for organisasjonen din."
+  ,"Register License": "Registrer bevilling"
+  ,"This license expired {days} days ago. Please renew immediately.": "Denne bevillingen utløp for {days} dager siden. Forny den umiddelbart."
+  ,"This license expires in {days} days. Consider starting the renewal process.": "Denne bevillingen utløper om {days} dager. Vurder å starte fornyelsesprosessen."
+  ,"Municipality": "Kommune"
+  ,"License Number": "Bevillingsnummer"
+  ,"Valid From": "Gyldig fra"
+  ,"Valid To": "Gyldig til"
+  ,"Indefinite": "Ubegrenset"
+  ,"License Manager": "Styrer"
+  ,"Deputy": "Stedfortreder"
+  ,"Indoor": "Innendørs"
+  ,"Outdoor": "Utendørs"
+  ,"Serving Area": "Skjenkeområde"
+  ,"Alcohol Groups Allowed": "Tillatte alkoholgrupper"
+  ,"Conditions": "Vilkår"
+  ,"No conditions registered.": "Ingen vilkår registrert."
+  ,"No serving hours configured.": "Ingen skjenketider konfigurert."
+  ,"Monday": "Mandag"
+  ,"Tuesday": "Tirsdag"
+  ,"Wednesday": "Onsdag"
+  ,"Thursday": "Torsdag"
+  ,"Friday": "Fredag"
+  ,"Saturday": "Lørdag"
+  ,"Sunday": "Søndag"
+  ,"On-premises License": "Skjenkebevilling"
+  ,"Off-premises License": "Salgsbevilling"
+  ,"Combined License": "Kombinert bevilling"
+  ,"Edit Bevilling": "Rediger bevilling"
+  ,"Register Bevilling": "Registrer bevilling"
+  ,"License Type": "Bevillingstype"
+  ,"Combined": "Kombinert"
+  ,"Valid To (optional)": "Gyldig til (valgfritt)"
+  ,"Full name": "Fullt navn"
+  ,"Indoor serving allowed": "Innendørs servering tillatt"
+  ,"Outdoor serving allowed": "Utendørs servering tillatt"
+  ,"Serving Area Description": "Beskrivelse av skjenkeområde"
+  ,"Describe the serving area": "Beskriv skjenkeområdet"
+  ,"Any additional notes": "Eventuelle ekstra notater"
+  ,"to": "til"
+  ,"Update Bevilling": "Oppdater bevilling"
+  ,"Failed to save bevilling": "Kunne ikke lagre bevilling"
+  ,"Bevilling Conditions": "Bevillingsvilkår"
+  ,"Failed to load bevilling.": "Kunne ikke laste bevilling."
+  ,"Failed to add condition": "Kunne ikke legge til vilkår"
+  ,"Failed to update condition": "Kunne ikke oppdatere vilkår"
+  ,"Security Guard": "Vakt"
+  ,"Food Requirement": "Matkrav"
+  ,"Area Limitation": "Arealbegrensning"
+  ,"Event Limitation": "Arrangementsbegrensning"
+  ,"Training Requirement": "Opplæringskrav"
+  ,"Condition title": "Tittel på vilkår"
+  ,"Detailed description (optional)": "Detaljert beskrivelse (valgfritt)"
+  ,"Adding...": "Legger til..."
+  ,"Add Condition": "Legg til vilkår"
+  ,"No conditions registered yet.": "Ingen vilkår registrert ennå."
 }

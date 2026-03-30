@@ -7,8 +7,10 @@
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { allergenApi, type Dish } from '@/api/allergens'
+import { useI18n } from 'vue-i18n'
 
 const auth = useAuthStore()
+const { t } = useI18n()
 
 /** All dishes loaded from the server. */
 const dishes = ref<Dish[]>([])
@@ -45,25 +47,25 @@ function getAllergenCodes(dish: Dish): string[] {
 <template>
   <div>
     <div class="page-header">
-      <h1>Dishes</h1>
-      <router-link v-if="auth.hasManageAccess" to="/app/dishes/new" class="btn btn-primary">New Dish</router-link>
+      <h1>{{ t('Dishes') }}</h1>
+      <router-link v-if="auth.hasManageAccess" to="/app/dishes/new" class="btn btn-primary">{{ t('New Dish') }}</router-link>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
 
     <div v-else-if="dishes.length === 0" class="empty-state">
-      <h3>No dishes found</h3>
-      <p>Add your first dish to get started.</p>
+      <h3>{{ t('No dishes found') }}</h3>
+      <p>{{ t('Add your first dish to get started.') }}</p>
     </div>
 
     <div v-else class="card table-wrapper">
       <table>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Allergens</th>
-            <th>Status</th>
-            <th>Approval</th>
+            <th>{{ t('Name') }}</th>
+            <th>{{ t('Allergens') }}</th>
+            <th>{{ t('Status') }}</th>
+            <th>{{ t('Approval') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -76,17 +78,17 @@ function getAllergenCodes(dish: Dish): string[] {
             <td><strong>{{ dish.name }}</strong></td>
             <td>
               <span v-for="code in getAllergenCodes(dish)" :key="code" class="allergen-badge">{{ code }}</span>
-              <span v-if="getAllergenCodes(dish).length === 0" class="text-muted">None</span>
+              <span v-if="getAllergenCodes(dish).length === 0" class="text-muted">{{ t('None') }}</span>
             </td>
             <td>
               <span class="status-badge" :class="dish.active ? 'success' : 'warning'">
-                {{ dish.active ? 'Active' : 'Inactive' }}
+                {{ dish.active ? t('Active') : t('Inactive') }}
               </span>
             </td>
             <td>
-              <span v-if="dish.changedSinceApproval" class="status-badge warning">Needs approval</span>
-              <span v-else-if="dish.lastApprovedAt" class="status-badge success">Approved</span>
-              <span v-else class="status-badge info">Not approved</span>
+              <span v-if="dish.changedSinceApproval" class="status-badge warning">{{ t('Needs approval') }}</span>
+              <span v-else-if="dish.lastApprovedAt" class="status-badge success">{{ t('Approved') }}</span>
+              <span v-else class="status-badge info">{{ t('Not approved') }}</span>
             </td>
           </tr>
         </tbody>

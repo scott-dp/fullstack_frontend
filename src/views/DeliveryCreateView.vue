@@ -6,10 +6,11 @@
  * Redirects to the deliveries list on successful submission.
  */
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { supplierApi, type Supplier } from '@/api/suppliers'
 import { deliveryApi, type CreateDeliveryItemRequest } from '@/api/deliveries'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const router = useRouter()
 
@@ -33,6 +34,7 @@ const items = ref<CreateDeliveryItemRequest[]>([
 const error = ref('')
 /** Whether the form is currently being submitted. */
 const submitting = ref(false)
+const { t } = useI18n()
 
 onMounted(async () => {
   try {
@@ -63,16 +65,16 @@ function removeItem(index: number) {
  */
 async function submit() {
   if (!supplierId.value) {
-    error.value = 'Please select a supplier'
+    error.value = t('Please select a supplier')
     return
   }
   if (!deliveryDate.value) {
-    error.value = 'Please enter a delivery date'
+    error.value = t('Please enter a delivery date')
     return
   }
   const validItems = items.value.filter((i) => i.productName.trim())
   if (validItems.length === 0) {
-    error.value = 'Please add at least one item with a product name'
+    error.value = t('Please add at least one item with a product name')
     return
   }
 
@@ -95,7 +97,13 @@ async function submit() {
     })
     router.push('/app/deliveries')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to create delivery'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to create delivery'),
+      byStatus: {
+        400: t('Please check the delivery details and try again'),
+        403: t('You do not have permission to create deliveries'),
+      },
+    })
   } finally {
     submitting.value = false
   }
@@ -105,8 +113,8 @@ async function submit() {
 <template>
   <div>
     <div class="page-header">
-      <h1>New Delivery</h1>
-      <router-link to="/app/deliveries" class="btn btn-secondary">Back</router-link>
+      <h1>{{ t('New Delivery') }}</h1>
+      <router-link to="/app/deliveries" class="btn btn-secondary">{{ t('Back') }}</router-link>
     </div>
 
     <div class="card">
@@ -114,65 +122,65 @@ async function submit() {
       <form @submit.prevent="submit">
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Supplier</label>
+            <label class="form-label">{{ t('Supplier') }}</label>
             <select v-model="supplierId" class="form-select" required>
-              <option value="" disabled>Select a supplier</option>
+              <option value="" disabled>{{ t('Select a supplier') }}</option>
               <option v-for="s in suppliers" :key="s.id" :value="s.id">{{ s.name }}</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Delivery Date</label>
+            <label class="form-label">{{ t('Delivery Date') }}</label>
             <input v-model="deliveryDate" type="date" class="form-input" required />
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Document Number</label>
-            <input v-model="documentNumber" class="form-input" maxlength="100" placeholder="Invoice or delivery note number" />
+            <label class="form-label">{{ t('Document Number') }}</label>
+            <input v-model="documentNumber" class="form-input" maxlength="100" :placeholder="t('Invoice or delivery note number')" />
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Notes</label>
-          <textarea v-model="notes" class="form-textarea" rows="2" maxlength="2000" placeholder="Optional notes about this delivery" />
+          <label class="form-label">{{ t('Notes') }}</label>
+          <textarea v-model="notes" class="form-textarea" rows="2" maxlength="2000" :placeholder="t('Optional notes about this delivery')" />
         </div>
 
         <div class="items-section">
           <div class="items-header">
-            <h3>Items</h3>
-            <button type="button" class="btn btn-secondary btn-sm" @click="addItem">+ Add Item</button>
+            <h3>{{ t('Items') }}</h3>
+            <button type="button" class="btn btn-secondary btn-sm" @click="addItem">+ {{ t('Add Item') }}</button>
           </div>
 
           <div v-for="(item, index) in items" :key="index" class="item-row">
             <div class="item-fields">
               <div class="form-group">
-                <label class="form-label">Product Name</label>
-                <input v-model="item.productName" class="form-input" placeholder="Product name" required />
+                <label class="form-label">{{ t('Product Name') }}</label>
+                <input v-model="item.productName" class="form-input" :placeholder="t('Product name')" required />
               </div>
               <div class="form-group form-group-sm">
-                <label class="form-label">Quantity</label>
-                <input v-model.number="item.quantity" type="number" class="form-input" min="0" step="any" placeholder="Qty" />
+                <label class="form-label">{{ t('Quantity') }}</label>
+                <input v-model.number="item.quantity" type="number" class="form-input" min="0" step="any" :placeholder="t('Qty')" />
               </div>
               <div class="form-group form-group-sm">
-                <label class="form-label">Unit</label>
-                <input v-model="item.unit" class="form-input" placeholder="kg, pcs, L" maxlength="20" />
+                <label class="form-label">{{ t('Unit') }}</label>
+                <input v-model="item.unit" class="form-input" :placeholder="t('kg, pcs, L')" maxlength="20" />
               </div>
               <div class="form-group">
-                <label class="form-label">Batch/Lot</label>
-                <input v-model="item.batchLot" class="form-input" placeholder="Batch or lot number" maxlength="100" />
+                <label class="form-label">{{ t('Batch/Lot') }}</label>
+                <input v-model="item.batchLot" class="form-input" :placeholder="t('Batch or lot number')" maxlength="100" />
               </div>
               <div class="form-group">
-                <label class="form-label">Expiry Date</label>
+                <label class="form-label">{{ t('Expiry Date') }}</label>
                 <input v-model="item.expiryDate" type="date" class="form-input" />
               </div>
               <div class="form-group form-group-action">
-                <button v-if="items.length > 1" type="button" class="btn btn-danger btn-sm" @click="removeItem(index)">Remove</button>
+                <button v-if="items.length > 1" type="button" class="btn btn-danger btn-sm" @click="removeItem(index)">{{ t('Remove') }}</button>
               </div>
             </div>
           </div>
         </div>
 
         <button type="submit" class="btn btn-primary" :disabled="submitting" style="margin-top: 16px;">
-          {{ submitting ? 'Creating...' : 'Create Delivery' }}
+          {{ submitting ? t('Creating...') : t('Create Delivery') }}
         </button>
       </form>
     </div>

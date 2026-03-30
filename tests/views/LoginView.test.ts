@@ -55,7 +55,7 @@ describe('LoginView', () => {
     expect(pushMock).toHaveBeenCalledWith('/app')
   })
 
-  it('shows the API error message on failed login', async () => {
+  it('shows a safe frontend error message on failed login', async () => {
     routeMock.query = {}
     authStoreMock.login.mockRejectedValue(
       new HttpError({
@@ -79,7 +79,7 @@ describe('LoginView', () => {
     await fireEvent.update(screen.getByLabelText('Password'), 'wrong')
     await fireEvent.click(screen.getByRole('button', { name: 'Sign In' }))
 
-    expect(await screen.findByText('Invalid credentials')).toBeTruthy()
+    expect(await screen.findByText('Invalid username, email, or password')).toBeTruthy()
   })
 
   it('requests an email login code and logs in with it', async () => {

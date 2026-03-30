@@ -4,6 +4,7 @@
  * record including its metadata and an items table.
  */
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { deliveryApi, type DeliveryRecord } from '@/api/deliveries'
 
@@ -15,6 +16,7 @@ const deliveryId = Number(route.params.id)
 const delivery = ref<DeliveryRecord | null>(null)
 /** Whether the delivery data is still being loaded. */
 const loading = ref(true)
+const { t, locale } = useI18n()
 
 onMounted(async () => {
   try {
@@ -30,15 +32,15 @@ onMounted(async () => {
  * @returns Formatted date string
  */
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString()
+  return new Date(iso).toLocaleDateString(locale.value)
 }
 </script>
 
 <template>
   <div>
     <div class="page-header">
-      <h1>Delivery Detail</h1>
-      <router-link to="/app/deliveries" class="btn btn-secondary">Back</router-link>
+      <h1>{{ t('Delivery Detail') }}</h1>
+      <router-link to="/app/deliveries" class="btn btn-secondary">{{ t('Back') }}</router-link>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
@@ -46,30 +48,30 @@ function formatDate(iso: string) {
     <template v-else-if="delivery">
       <div class="card detail-main">
         <div class="info-grid">
-          <div><span class="info-label">Supplier</span><span>{{ delivery.supplierName }}</span></div>
-          <div><span class="info-label">Delivery Date</span><span>{{ formatDate(delivery.deliveryDate) }}</span></div>
-          <div><span class="info-label">Document #</span><span>{{ delivery.documentNumber || '-' }}</span></div>
-          <div><span class="info-label">Received By</span><span>{{ delivery.receivedByUsername }}</span></div>
-          <div><span class="info-label">Created</span><span>{{ formatDate(delivery.createdAt) }}</span></div>
+          <div><span class="info-label">{{ t('Supplier') }}</span><span>{{ delivery.supplierName }}</span></div>
+          <div><span class="info-label">{{ t('Delivery Date') }}</span><span>{{ formatDate(delivery.deliveryDate) }}</span></div>
+          <div><span class="info-label">{{ t('Document #') }}</span><span>{{ delivery.documentNumber || '-' }}</span></div>
+          <div><span class="info-label">{{ t('Received By') }}</span><span>{{ delivery.receivedByUsername }}</span></div>
+          <div><span class="info-label">{{ t('Created') }}</span><span>{{ formatDate(delivery.createdAt) }}</span></div>
         </div>
         <div v-if="delivery.notes" class="notes-section">
-          <span class="info-label">Notes</span>
+          <span class="info-label">{{ t('Notes') }}</span>
           <p class="description">{{ delivery.notes }}</p>
         </div>
       </div>
 
       <div class="card" style="margin-top: 16px;">
-        <h2>Items ({{ delivery.items.length }})</h2>
-        <div v-if="delivery.items.length === 0" class="text-muted text-sm">No items recorded.</div>
+        <h2>{{ t('Items') }} ({{ delivery.items.length }})</h2>
+        <div v-if="delivery.items.length === 0" class="text-muted text-sm">{{ t('No items recorded.') }}</div>
         <div v-else class="table-wrapper">
           <table>
             <thead>
               <tr>
-                <th>Product Name</th>
-                <th>Quantity</th>
-                <th>Unit</th>
-                <th>Batch/Lot</th>
-                <th>Expiry Date</th>
+                <th>{{ t('Product Name') }}</th>
+                <th>{{ t('Quantity') }}</th>
+                <th>{{ t('Unit') }}</th>
+                <th>{{ t('Batch/Lot') }}</th>
+                <th>{{ t('Expiry Date') }}</th>
               </tr>
             </thead>
             <tbody>

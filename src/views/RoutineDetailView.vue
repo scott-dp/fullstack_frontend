@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { routineApi, type Routine, type RoutineReview } from '@/api/routines'
 import { useAuthStore } from '@/stores/auth'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const route = useRoute()
 const router = useRouter()
@@ -17,6 +18,7 @@ const reviewNotes = ref('')
 const reviewing = ref(false)
 const archiving = ref(false)
 const deleting = ref(false)
+const { t, locale } = useI18n()
 
 const id = computed(() => Number(route.params.id))
 
@@ -37,7 +39,12 @@ onMounted(async () => {
     routine.value = r
     reviews.value = h
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to load routine'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to load routine'),
+      byStatus: {
+        400: t('The routine could not be loaded.'),
+      },
+    })
   } finally {
     loading.value = false
   }
@@ -52,7 +59,13 @@ async function handleReview() {
     routine.value = await routineApi.get(id.value)
     reviewNotes.value = ''
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to review routine'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to review routine'),
+      byStatus: {
+        400: t('The routine review could not be submitted.'),
+        403: t('You do not have permission to review this routine.'),
+      },
+    })
   } finally {
     reviewing.value = false
   }
@@ -63,7 +76,13 @@ async function handleArchive() {
   try {
     routine.value = await routineApi.archive(id.value)
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to archive routine'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to archive routine'),
+      byStatus: {
+        400: t('The routine could not be archived.'),
+        403: t('You do not have permission to archive this routine.'),
+      },
+    })
   } finally {
     archiving.value = false
   }
@@ -74,54 +93,107 @@ async function handleUnarchive() {
   try {
     routine.value = await routineApi.unarchive(id.value)
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to unarchive routine'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to unarchive routine'),
+      byStatus: {
+        400: t('The routine could not be restored.'),
+        403: t('You do not have permission to restore this routine.'),
+      },
+    })
   } finally {
     archiving.value = false
   }
 }
 
 async function handleDelete() {
-  if (!window.confirm('Delete this routine? This cannot be undone.')) return
+  if (!window.confirm(t('Delete this routine? This cannot be undone.'))) return
   deleting.value = true
   try {
     await routineApi.delete(id.value)
     router.push('/app/routines')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to delete routine'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to delete routine'),
+      byStatus: {
+        400: t('The routine could not be deleted.'),
+        403: t('You do not have permission to delete this routine.'),
+      },
+    })
   } finally {
     deleting.value = false
   }
 }
 
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString()
+  return new Date(iso).toLocaleDateString(locale.value)
 }
 
 function formatDateTime(iso: string) {
-  return new Date(iso).toLocaleString()
+  return new Date(iso).toLocaleString(locale.value)
 }
 
 function moduleLabel(mt: string) {
-  if (mt === 'IK_MAT') return 'IK-Mat'
-  if (mt === 'IK_ALKOHOL') return 'IK-Alkohol'
-  return 'Shared'
+  if (mt === 'IK_MAT') return t('IK-Mat')
+  if (mt === 'IK_ALKOHOL') return t('IK-Alkohol')
+  return t('Shared')
+}
+
+function categoryLabel(category: string) {
+  const labels: Record<string, string> = {
+    HYGIENE: t('Hygiene'),
+    CLEANING: t('Cleaning'),
+    TEMPERATURE: t('Temperature'),
+    TRACEABILITY: t('Traceability'),
+    ALLERGENS: t('Allergens'),
+    HACCP: t('HACCP'),
+    AGE_CONTROL: t('Age Control'),
+    INTOXICATION: t('Intoxication'),
+    CLOSING: t('Closing'),
+    BYO_CONTROL: t('BYO Control'),
+    LICENSE_CONDITIONS: t('License Conditions'),
+    SECURITY: t('Security'),
+    OTHER: t('Other'),
+  }
+  return labels[category] ?? category.replace(/_/g, ' ')
+}
+
+function responsibleLabel(role: string) {
+  const labels: Record<string, string> = {
+    ADMIN: t('Admin'),
+    MANAGER: t('Manager'),
+    STAFF: t('Staff'),
+    ALL: t('All'),
+  }
+  return labels[role] ?? role
+}
+
+function frequencyLabel(frequency: string) {
+  const labels: Record<string, string> = {
+    NONE: t('None'),
+    DAILY: t('Daily'),
+    WEEKLY: t('Weekly'),
+    MONTHLY: t('Monthly'),
+    SHIFT_BASED: t('Shift-Based'),
+    EVENT_BASED: t('Event-Based'),
+  }
+  return labels[frequency] ?? frequency.replace(/_/g, ' ')
 }
 </script>
 
 <template>
   <div>
     <div class="page-header">
-      <h1>Routine Details</h1>
+      <h1>{{ t('Routine Details') }}</h1>
       <div v-if="routine && auth.hasManageAccess" style="display: flex; gap: 8px;">
-        <router-link :to="`/app/routines/${id}/edit`" class="btn btn-secondary">Edit</router-link>
+        <router-link :to="`/app/routines/${id}/edit`" class="btn btn-secondary">{{ t('Edit') }}</router-link>
         <button v-if="routine.active" class="btn btn-warning" :disabled="archiving" @click="handleArchive">
-          {{ archiving ? 'Archiving...' : 'Archive' }}
+          {{ archiving ? t('Archiving...') : t('Archive') }}
         </button>
         <button v-else class="btn btn-primary" :disabled="archiving" @click="handleUnarchive">
-          {{ archiving ? 'Restoring...' : 'Unarchive' }}
+          {{ archiving ? t('Restoring...') : t('Unarchive') }}
         </button>
         <button class="btn btn-danger" :disabled="deleting" @click="handleDelete">
-          {{ deleting ? 'Deleting...' : 'Delete' }}
+          {{ deleting ? t('Deleting...') : t('Delete') }}
         </button>
       </div>
     </div>
@@ -138,87 +210,87 @@ function moduleLabel(mt: string) {
           <h2>{{ routine.name }}</h2>
           <div class="meta-badges">
             <span class="status-badge info">{{ moduleLabel(routine.moduleType) }}</span>
-            <span class="status-badge">{{ routine.category.replace(/_/g, ' ') }}</span>
+            <span class="status-badge">{{ categoryLabel(routine.category) }}</span>
             <span class="status-badge" :class="routine.active ? 'success' : 'warning'">
-              {{ routine.active ? 'Active' : 'Archived' }}
+              {{ routine.active ? t('Active') : t('Archived') }}
             </span>
-            <span v-if="isOverdueForReview" class="status-badge danger">Review overdue</span>
+            <span v-if="isOverdueForReview" class="status-badge danger">{{ t('Review overdue') }}</span>
             <span class="text-muted text-sm">v{{ routine.versionNumber }}</span>
           </div>
 
           <div class="detail-fields">
             <div class="detail-field">
-              <span class="field-label">Responsible</span>
-              <span>{{ routine.responsibleRole }}</span>
+              <span class="field-label">{{ t('Responsible') }}</span>
+              <span>{{ responsibleLabel(routine.responsibleRole) }}</span>
             </div>
             <div class="detail-field">
-              <span class="field-label">Frequency</span>
-              <span>{{ routine.frequencyType.replace(/_/g, ' ') }}</span>
+              <span class="field-label">{{ t('Frequency') }}</span>
+              <span>{{ frequencyLabel(routine.frequencyType) }}</span>
             </div>
             <div class="detail-field">
-              <span class="field-label">Review Interval</span>
-              <span>{{ routine.reviewIntervalDays ? routine.reviewIntervalDays + ' days' : 'Not set' }}</span>
+              <span class="field-label">{{ t('Review Interval') }}</span>
+              <span>{{ routine.reviewIntervalDays ? routine.reviewIntervalDays + ' ' + t('days') : t('Not set') }}</span>
             </div>
             <div class="detail-field">
-              <span class="field-label">Last Reviewed</span>
-              <span>{{ routine.lastReviewedAt ? formatDate(routine.lastReviewedAt) : 'Never' }}</span>
+              <span class="field-label">{{ t('Last Reviewed') }}</span>
+              <span>{{ routine.lastReviewedAt ? formatDate(routine.lastReviewedAt) : t('Never') }}</span>
             </div>
             <div class="detail-field">
-              <span class="field-label">Created By</span>
+              <span class="field-label">{{ t('Created By') }}</span>
               <span>{{ routine.createdByUsername || '-' }}</span>
             </div>
             <div class="detail-field">
-              <span class="field-label">Created</span>
+              <span class="field-label">{{ t('Created') }}</span>
               <span>{{ formatDate(routine.createdAt) }}</span>
             </div>
           </div>
 
           <div v-if="routine.description" class="detail-section">
-            <h3>Description</h3>
+            <h3>{{ t('Description') }}</h3>
             <p class="preformatted">{{ routine.description }}</p>
           </div>
 
           <div v-if="routine.purpose" class="detail-section">
-            <h3>Purpose</h3>
+            <h3>{{ t('Purpose') }}</h3>
             <p class="preformatted">{{ routine.purpose }}</p>
           </div>
 
           <div v-if="routine.stepsText" class="detail-section">
-            <h3>Steps</h3>
+            <h3>{{ t('Steps') }}</h3>
             <p class="preformatted">{{ routine.stepsText }}</p>
           </div>
 
           <div v-if="routine.whatIsDeviationText" class="detail-section">
-            <h3>What Counts as a Deviation</h3>
+            <h3>{{ t('What Counts as a Deviation') }}</h3>
             <p class="preformatted">{{ routine.whatIsDeviationText }}</p>
           </div>
 
           <div v-if="routine.correctiveActionText" class="detail-section">
-            <h3>Corrective Action</h3>
+            <h3>{{ t('Corrective Action') }}</h3>
             <p class="preformatted">{{ routine.correctiveActionText }}</p>
           </div>
 
           <div v-if="routine.requiredEvidenceText" class="detail-section">
-            <h3>Required Evidence</h3>
+            <h3>{{ t('Required Evidence') }}</h3>
             <p class="preformatted">{{ routine.requiredEvidenceText }}</p>
           </div>
         </div>
 
         <div class="sidebar-panel">
           <div v-if="auth.hasManageAccess && routine.active" class="card review-card">
-            <h3>Review Routine</h3>
+            <h3>{{ t('Review Routine') }}</h3>
             <div class="form-group">
-              <textarea v-model="reviewNotes" class="form-textarea" rows="3" placeholder="Review notes (optional)..." />
+              <textarea v-model="reviewNotes" class="form-textarea" rows="3" :placeholder="t('Review notes (optional)...')" />
             </div>
             <button class="btn btn-primary" :disabled="reviewing" @click="handleReview">
-              {{ reviewing ? 'Submitting...' : 'Submit Review' }}
+              {{ reviewing ? t('Submitting...') : t('Submit Review') }}
             </button>
           </div>
 
           <div class="card">
-            <h3>Review History</h3>
+            <h3>{{ t('Review History') }}</h3>
             <div v-if="reviews.length === 0" class="text-muted text-sm" style="padding: 8px 0;">
-              No reviews yet.
+              {{ t('No reviews yet.') }}
             </div>
             <div v-for="rev in reviews" :key="rev.id" class="review-item">
               <div class="review-meta">
@@ -226,7 +298,7 @@ function moduleLabel(mt: string) {
                 <span class="text-muted text-sm">{{ formatDateTime(rev.reviewedAt) }}</span>
               </div>
               <p v-if="rev.notes" class="text-sm">{{ rev.notes }}</p>
-              <p v-if="rev.nextReviewAt" class="text-muted text-sm">Next review: {{ formatDate(rev.nextReviewAt) }}</p>
+              <p v-if="rev.nextReviewAt" class="text-muted text-sm">{{ t('Next review:') }} {{ formatDate(rev.nextReviewAt) }}</p>
             </div>
           </div>
         </div>

@@ -4,11 +4,13 @@
  * add, edit, and toggle conditions on the active bevilling.
  */
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { bevillingApi, type Bevilling, type BevillingCondition } from '@/api/bevilling'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const route = useRoute()
+const { t } = useI18n()
 const bevillingId = Number(route.params.id)
 
 /** The loaded bevilling. */
@@ -41,7 +43,7 @@ onMounted(async () => {
   try {
     bevilling.value = await bevillingApi.get(bevillingId)
   } catch {
-    error.value = 'Failed to load bevilling.'
+    error.value = t('Failed to load bevilling.')
   } finally {
     loading.value = false
   }
@@ -63,7 +65,13 @@ async function addCondition() {
     newDescription.value = ''
     newConditionType.value = 'FOOD_REQUIREMENT'
   } catch (err: unknown) {
-    formError.value = err instanceof HttpError ? err.message : 'Failed to add condition'
+    formError.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to add condition'),
+      byStatus: {
+        400: t('Please check the condition details and try again'),
+        403: t('You do not have permission to manage bevilling conditions'),
+      },
+    })
   } finally {
     submitting.value = false
   }
@@ -80,7 +88,12 @@ async function toggleCondition(condition: BevillingCondition) {
       bevilling.value.conditions[idx] = updated
     }
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to update condition'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to update condition'),
+      byStatus: {
+        403: t('You do not have permission to manage bevilling conditions'),
+      },
+    })
   }
 }
 </script>
@@ -88,8 +101,8 @@ async function toggleCondition(condition: BevillingCondition) {
 <template>
   <div>
     <div class="page-header">
-      <h1>Bevilling Conditions</h1>
-      <router-link to="/app/bevilling" class="btn btn-secondary">Back</router-link>
+      <h1>{{ t('Bevilling Conditions') }}</h1>
+      <router-link to="/app/bevilling" class="btn btn-secondary">{{ t('Back') }}</router-link>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
@@ -101,9 +114,9 @@ async function toggleCondition(condition: BevillingCondition) {
     <template v-else-if="bevilling">
       <div class="card">
         <div class="section-header">
-          <h2>Conditions ({{ bevilling.conditions.length }})</h2>
+          <h2>{{ t('Conditions') }} ({{ bevilling.conditions.length }})</h2>
           <button class="btn btn-primary btn-sm" @click="showNewForm = !showNewForm">
-            {{ showNewForm ? 'Cancel' : 'Add Condition' }}
+            {{ showNewForm ? t('Cancel') : t('Add Condition') }}
           </button>
         </div>
 
@@ -113,38 +126,38 @@ async function toggleCondition(condition: BevillingCondition) {
           <form @submit.prevent="addCondition">
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label">Type</label>
+                <label class="form-label">{{ t('Type') }}</label>
                 <select v-model="newConditionType" class="form-select" required>
-                  <option v-for="ct in conditionTypes" :key="ct.value" :value="ct.value">{{ ct.label }}</option>
+                  <option v-for="ct in conditionTypes" :key="ct.value" :value="ct.value">{{ t(ct.label) }}</option>
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label">Title</label>
-                <input v-model="newTitle" class="form-input" required placeholder="Condition title" />
+                <label class="form-label">{{ t('Title') }}</label>
+                <input v-model="newTitle" class="form-input" required :placeholder="t('Condition title')" />
               </div>
             </div>
             <div class="form-group">
-              <label class="form-label">Description</label>
-              <textarea v-model="newDescription" class="form-textarea" rows="2" maxlength="2000" placeholder="Detailed description (optional)" />
+              <label class="form-label">{{ t('Description') }}</label>
+              <textarea v-model="newDescription" class="form-textarea" rows="2" maxlength="2000" :placeholder="t('Detailed description (optional)')" />
             </div>
             <button type="submit" class="btn btn-primary btn-sm" :disabled="submitting">
-              {{ submitting ? 'Adding...' : 'Add Condition' }}
+              {{ submitting ? t('Adding...') : t('Add Condition') }}
             </button>
           </form>
         </div>
 
         <!-- Existing conditions -->
-        <div v-if="bevilling.conditions.length === 0" class="text-muted text-sm">No conditions registered yet.</div>
+        <div v-if="bevilling.conditions.length === 0" class="text-muted text-sm">{{ t('No conditions registered yet.') }}</div>
         <div v-for="c in bevilling.conditions" :key="c.id" class="condition-item">
           <div class="condition-header">
             <div>
               <strong>{{ c.title }}</strong>
-              <div class="condition-type">{{ c.conditionType.replace(/_/g, ' ') }}</div>
+              <div class="condition-type">{{ t(c.conditionType.replace(/_/g, ' ')) }}</div>
             </div>
             <div class="condition-actions">
-              <span class="status-badge" :class="c.active ? 'success' : 'danger'">{{ c.active ? 'Active' : 'Inactive' }}</span>
+              <span class="status-badge" :class="c.active ? 'success' : 'danger'">{{ c.active ? t('Active') : t('Inactive') }}</span>
               <button class="btn btn-sm btn-secondary" @click="toggleCondition(c)">
-                {{ c.active ? 'Deactivate' : 'Activate' }}
+                {{ c.active ? t('Deactivate') : t('Activate') }}
               </button>
             </div>
           </div>

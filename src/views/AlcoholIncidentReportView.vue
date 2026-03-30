@@ -4,6 +4,7 @@
  * alcohol-related incidents in the current organization.
  */
 import { ref, onMounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { alcoholIncidentApi, type IncidentReport } from '@/api/alcoholIncidents'
 
 /** The loaded incident report, null until fetched. */
@@ -12,6 +13,7 @@ const report = ref<IncidentReport | null>(null)
 const loading = ref(true)
 /** Error message if loading failed. */
 const error = ref('')
+const { t } = useI18n()
 
 /** Under-review count derived from totals. */
 const underReviewCount = computed(() => {
@@ -30,7 +32,7 @@ onMounted(async () => {
   try {
     report.value = await alcoholIncidentApi.report()
   } catch {
-    error.value = 'Failed to load report. You may not have access.'
+    error.value = t('Failed to load report. You may not have access.')
   } finally {
     loading.value = false
   }
@@ -49,8 +51,8 @@ function formatType(t: string) {
 <template>
   <div>
     <div class="page-header">
-      <h1>Incident Report</h1>
-      <router-link to="/app/alcohol-incidents" class="btn btn-secondary">Back</router-link>
+      <h1>{{ t('Incident Report') }}</h1>
+      <router-link to="/app/alcohol-incidents" class="btn btn-secondary">{{ t('Back') }}</router-link>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
@@ -63,28 +65,28 @@ function formatType(t: string) {
       <div class="stats-grid">
         <div class="card stat-card">
           <div class="stat-value">{{ report.totalIncidents }}</div>
-          <div class="stat-label">Total Incidents</div>
+          <div class="stat-label">{{ t('Total Incidents') }}</div>
         </div>
         <div class="card stat-card">
           <div class="stat-value warning-text">{{ report.openCount }}</div>
-          <div class="stat-label">Open</div>
+          <div class="stat-label">{{ t('Open') }}</div>
         </div>
         <div class="card stat-card">
           <div class="stat-value info-text">{{ underReviewCount }}</div>
-          <div class="stat-label">Under Review</div>
+          <div class="stat-label">{{ t('Under Review') }}</div>
         </div>
         <div class="card stat-card">
           <div class="stat-value success-text">{{ report.closedCount }}</div>
-          <div class="stat-label">Closed</div>
+          <div class="stat-label">{{ t('Closed') }}</div>
         </div>
       </div>
 
       <div class="card">
-        <h2>Incidents by Type</h2>
-        <div v-if="sortedTypes.length === 0" class="text-muted text-sm">No incidents recorded yet.</div>
+        <h2>{{ t('Incidents by Type') }}</h2>
+        <div v-if="sortedTypes.length === 0" class="text-muted text-sm">{{ t('No incidents recorded yet.') }}</div>
         <div v-else class="type-list">
           <div v-for="[typeName, count] in sortedTypes" :key="typeName" class="type-row">
-            <span class="type-name">{{ formatType(typeName) }}</span>
+            <span class="type-name">{{ t(formatType(typeName)) }}</span>
             <div class="type-bar-wrapper">
               <div class="type-bar" :style="{ width: (count / report!.totalIncidents * 100) + '%' }" />
             </div>

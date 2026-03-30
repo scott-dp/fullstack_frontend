@@ -6,10 +6,12 @@
 import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { allergenApi, type Allergen } from '@/api/allergens'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const route = useRoute()
+const { t } = useI18n()
 
 /** Ingredient ID from route params; null when creating a new ingredient. */
 const ingredientId = computed(() => {
@@ -82,7 +84,13 @@ async function submit() {
     }
     router.push('/app/ingredients')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to save ingredient'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to save ingredient'),
+      byStatus: {
+        400: t('Please check the ingredient details and try again'),
+        403: t('You do not have permission to manage ingredients'),
+      },
+    })
   } finally {
     submitting.value = false
   }
@@ -90,14 +98,19 @@ async function submit() {
 
 async function handleDelete() {
   if (!isEdit.value || !ingredientId.value) return
-  if (!window.confirm('Delete this ingredient? This cannot be undone.')) return
+  if (!window.confirm(t('Delete this ingredient? This cannot be undone.'))) return
   deleting.value = true
   error.value = ''
   try {
     await allergenApi.deleteIngredient(ingredientId.value)
     router.push('/app/ingredients')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to delete ingredient'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to delete ingredient'),
+      byStatus: {
+        403: t('You do not have permission to delete ingredients'),
+      },
+    })
   } finally {
     deleting.value = false
   }
@@ -107,7 +120,7 @@ async function handleDelete() {
 <template>
   <div>
     <div class="page-header">
-      <h1>{{ isEdit ? 'Edit Ingredient' : 'New Ingredient' }}</h1>
+      <h1>{{ isEdit ? t('Edit Ingredient') : t('New Ingredient') }}</h1>
       <div style="display: flex; gap: 8px;">
         <button
           v-if="isEdit"
@@ -116,9 +129,9 @@ async function handleDelete() {
           :disabled="deleting"
           @click="handleDelete"
         >
-          {{ deleting ? 'Deleting...' : 'Delete' }}
+          {{ deleting ? t('Deleting...') : t('Delete') }}
         </button>
-        <router-link to="/app/ingredients" class="btn btn-secondary">Back</router-link>
+        <router-link to="/app/ingredients" class="btn btn-secondary">{{ t('Back') }}</router-link>
       </div>
     </div>
 
@@ -128,15 +141,15 @@ async function handleDelete() {
       <div v-if="error" class="alert-error">{{ error }}</div>
       <form @submit.prevent="submit">
         <div class="form-group">
-          <label class="form-label">Name</label>
-          <input v-model="name" class="form-input" required maxlength="255" placeholder="Ingredient name" />
+          <label class="form-label">{{ t('Name') }}</label>
+          <input v-model="name" class="form-input" required maxlength="255" :placeholder="t('Ingredient name')" />
         </div>
         <div class="form-group">
-          <label class="form-label">Notes</label>
-          <textarea v-model="notes" class="form-textarea" rows="3" maxlength="1000" placeholder="Optional notes about this ingredient" />
+          <label class="form-label">{{ t('Notes') }}</label>
+          <textarea v-model="notes" class="form-textarea" rows="3" maxlength="1000" :placeholder="t('Optional notes about this ingredient')" />
         </div>
         <div class="form-group">
-          <label class="form-label">Allergens</label>
+          <label class="form-label">{{ t('Allergens') }}</label>
           <div class="allergen-checkboxes">
             <label v-for="a in allergens" :key="a.id" class="checkbox-label">
               <input
@@ -150,7 +163,7 @@ async function handleDelete() {
           </div>
         </div>
         <button type="submit" class="btn btn-primary" :disabled="submitting">
-          {{ submitting ? 'Saving...' : (isEdit ? 'Update Ingredient' : 'Create Ingredient') }}
+          {{ submitting ? t('Saving...') : (isEdit ? t('Update Ingredient') : t('Create Ingredient')) }}
         </button>
       </form>
     </div>

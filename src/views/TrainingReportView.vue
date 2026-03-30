@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { trainingApi, type TrainingReport } from '@/api/trainings'
 
 const report = ref<TrainingReport | null>(null)
 const loading = ref(true)
+const { t } = useI18n()
 
 onMounted(async () => {
   try {
@@ -17,7 +19,7 @@ onMounted(async () => {
 <template>
   <div>
     <div class="page-header">
-      <h1>Training Report</h1>
+      <h1>{{ t('Training Report') }}</h1>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
@@ -25,29 +27,29 @@ onMounted(async () => {
     <template v-else-if="report">
       <div class="stats-grid">
         <div class="stat-card card">
-          <span class="stat-label">Templates</span>
+          <span class="stat-label">{{ t('Templates') }}</span>
           <span class="stat-value">{{ report.totalTemplates }}</span>
-          <span class="stat-desc">Active training templates</span>
+          <span class="stat-desc">{{ t('Active training templates') }}</span>
         </div>
         <div class="stat-card card">
-          <span class="stat-label">Total Assignments</span>
+          <span class="stat-label">{{ t('Total Assignments') }}</span>
           <span class="stat-value">{{ report.totalAssignments }}</span>
-          <span class="stat-desc">All time</span>
+          <span class="stat-desc">{{ t('All time') }}</span>
         </div>
         <div class="stat-card card">
-          <span class="stat-label">Completed</span>
+          <span class="stat-label">{{ t('Completed') }}</span>
           <span class="stat-value success">{{ report.completedCount }}</span>
-          <span class="stat-desc">Training completed</span>
+          <span class="stat-desc">{{ t('Training completed') }}</span>
         </div>
         <div class="stat-card card">
-          <span class="stat-label">Overdue</span>
+          <span class="stat-label">{{ t('Overdue') }}</span>
           <span class="stat-value" :class="report.overdueCount > 0 ? 'danger' : ''">{{ report.overdueCount }}</span>
-          <span class="stat-desc">Needing attention</span>
+          <span class="stat-desc">{{ t('Needing attention') }}</span>
         </div>
         <div class="stat-card card">
-          <span class="stat-label">Completion Rate</span>
+          <span class="stat-label">{{ t('Completion Rate') }}</span>
           <span class="stat-value info">{{ Math.round(report.completionRate) }}%</span>
-          <span class="stat-desc">Overall</span>
+          <span class="stat-desc">{{ t('Overall') }}</span>
         </div>
       </div>
     </template>

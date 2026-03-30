@@ -19,6 +19,11 @@ interface ApiError {
   errors: Record<string, string>
 }
 
+interface ErrorMessageOptions {
+  defaultMessage: string
+  byStatus?: Partial<Record<number, string>>
+}
+
 /**
  * Typed HTTP error thrown when the API returns a non-OK response.
  * Provides access to the status code and any field-level validation errors.
@@ -93,5 +98,12 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   return JSON.parse(body) as T
 }
 
-export { request, HttpError }
-export type { ApiError }
+function getErrorMessage(error: unknown, options: ErrorMessageOptions): string {
+  if (error instanceof HttpError) {
+    return options.byStatus?.[error.status] ?? options.defaultMessage
+  }
+  return options.defaultMessage
+}
+
+export { request, HttpError, getErrorMessage }
+export type { ApiError, ErrorMessageOptions }

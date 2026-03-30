@@ -2,9 +2,11 @@
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { authApi } from '@/api/auth'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
+import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
+const { t } = useI18n()
 const loading = ref(true)
 const success = ref('')
 const error = ref('')
@@ -13,7 +15,7 @@ onMounted(async () => {
   const token = typeof route.query.token === 'string' ? route.query.token : ''
 
   if (!token) {
-    error.value = 'Verification token is missing'
+    error.value = t('Verification token is missing')
     loading.value = false
     return
   }
@@ -22,7 +24,12 @@ onMounted(async () => {
     const response = await authApi.verifyEmail(token)
     success.value = response.message
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Email verification failed'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Email verification failed'),
+      byStatus: {
+        400: t('This verification link is invalid or has expired.'),
+      },
+    })
   } finally {
     loading.value = false
   }
@@ -32,10 +39,10 @@ onMounted(async () => {
 <template>
   <div class="auth-page">
     <div class="auth-card card">
-      <h1>Verify Email</h1>
-      <p class="text-muted">Activate your account before signing in.</p>
+      <h1>{{ t('Verify Email') }}</h1>
+      <p class="text-muted">{{ t('Activate your account before signing in.') }}</p>
 
-      <div v-if="loading" class="loading-state">Verifying your email...</div>
+      <div v-if="loading" class="loading-state">{{ t('Verifying your email...') }}</div>
       <div v-else-if="success" class="alert-success">
         {{ success }}
       </div>
@@ -44,7 +51,7 @@ onMounted(async () => {
       </div>
 
       <p class="auth-footer">
-        <router-link to="/login">Go to login</router-link>
+        <router-link to="/login">{{ t('Go to login') }}</router-link>
       </p>
     </div>
   </div>

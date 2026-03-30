@@ -5,10 +5,11 @@
  * and closing capability.
  */
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { alcoholIncidentApi, type AlcoholIncident } from '@/api/alcoholIncidents'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 import { userApi, type UserSummary } from '@/api/users'
 
 const route = useRoute()
@@ -32,6 +33,7 @@ const showCloseDialog = ref(false)
 const closeNotes = ref('')
 /** Whether a close action is currently being submitted. */
 const closing = ref(false)
+const { t, locale } = useI18n()
 
 onMounted(async () => {
   try {
@@ -57,7 +59,13 @@ async function updateStatus(newStatus: string) {
     incident.value = await alcoholIncidentApi.update(incidentId, { status: newStatus })
     selectedAssignedToId.value = incident.value.assignedToId
   } catch (err: unknown) {
-    updateError.value = err instanceof HttpError ? err.message : 'Update failed'
+    updateError.value = getErrorMessage(err, {
+      defaultMessage: t('Update failed'),
+      byStatus: {
+        400: t('The incident could not be updated.'),
+        403: t('You do not have permission to update this incident.'),
+      },
+    })
   }
 }
 
@@ -70,7 +78,13 @@ async function updateAssignment() {
     })
     selectedAssignedToId.value = incident.value.assignedToId
   } catch (err: unknown) {
-    updateError.value = err instanceof HttpError ? err.message : 'Assignment failed'
+    updateError.value = getErrorMessage(err, {
+      defaultMessage: t('Assignment failed'),
+      byStatus: {
+        400: t('The incident could not be assigned to that user.'),
+        403: t('You do not have permission to assign this incident.'),
+      },
+    })
   }
 }
 
@@ -84,7 +98,13 @@ async function closeIncident() {
     showCloseDialog.value = false
     closeNotes.value = ''
   } catch (err: unknown) {
-    updateError.value = err instanceof HttpError ? err.message : 'Failed to close incident'
+    updateError.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to close incident'),
+      byStatus: {
+        400: t('The incident could not be closed.'),
+        403: t('You do not have permission to close this incident.'),
+      },
+    })
   } finally {
     closing.value = false
   }
@@ -127,7 +147,26 @@ function formatType(t: string) {
  * @returns Formatted date/time string
  */
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleString()
+  return new Date(iso).toLocaleString(locale.value)
+}
+
+function statusLabel(status: string) {
+  const labels: Record<string, string> = {
+    OPEN: t('Open'),
+    UNDER_REVIEW: t('Under Review'),
+    CLOSED: t('Closed'),
+  }
+  return labels[status] ?? status
+}
+
+function severityLabel(severity: string) {
+  const labels: Record<string, string> = {
+    LOW: t('Low'),
+    MEDIUM: t('Medium'),
+    HIGH: t('High'),
+    CRITICAL: t('Critical'),
+  }
+  return labels[severity] ?? severity
 }
 </script>
 
@@ -135,7 +174,7 @@ function formatDate(iso: string) {
   <div>
     <div class="page-header">
       <h1 v-if="incident">{{ formatType(incident.incidentType) }}</h1>
-      <router-link to="/app/alcohol-incidents" class="btn btn-secondary">Back</router-link>
+      <router-link to="/app/alcohol-incidents" class="btn btn-secondary">{{ t('Back') }}</router-link>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
@@ -144,30 +183,30 @@ function formatDate(iso: string) {
       <div class="detail-grid">
         <div class="card detail-main">
           <div class="meta-row">
-            <span class="status-badge" :class="severityClass(incident.severity)">{{ incident.severity }}</span>
-            <span class="status-badge" :class="statusClass(incident.status)">{{ incident.status.replace('_', ' ') }}</span>
-            <span v-if="incident.followUpRequired" class="status-badge warning">Follow-up Required</span>
+            <span class="status-badge" :class="severityClass(incident.severity)">{{ severityLabel(incident.severity) }}</span>
+            <span class="status-badge" :class="statusClass(incident.status)">{{ statusLabel(incident.status) }}</span>
+            <span v-if="incident.followUpRequired" class="status-badge warning">{{ t('Follow-up Required') }}</span>
           </div>
           <p class="description">{{ incident.description }}</p>
 
           <div v-if="incident.immediateActionTaken" class="action-taken">
-            <h3>Immediate Action Taken</h3>
+            <h3>{{ t('Immediate Action Taken') }}</h3>
             <p>{{ incident.immediateActionTaken }}</p>
           </div>
 
           <div class="info-grid">
-            <div><span class="info-label">Occurred At</span><span>{{ formatDate(incident.occurredAt) }}</span></div>
-            <div><span class="info-label">Reported By</span><span>{{ incident.reportedByUsername }}</span></div>
-            <div><span class="info-label">Assigned To</span><span>{{ incident.assignedToUsername || 'Unassigned' }}</span></div>
-            <div v-if="incident.shiftLabel"><span class="info-label">Shift</span><span>{{ incident.shiftLabel }}</span></div>
-            <div v-if="incident.locationArea"><span class="info-label">Location</span><span>{{ incident.locationArea }}</span></div>
-            <div><span class="info-label">Created</span><span>{{ formatDate(incident.createdAt) }}</span></div>
+            <div><span class="info-label">{{ t('Occurred At') }}</span><span>{{ formatDate(incident.occurredAt) }}</span></div>
+            <div><span class="info-label">{{ t('Reported By') }}</span><span>{{ incident.reportedByUsername }}</span></div>
+            <div><span class="info-label">{{ t('Assigned To') }}</span><span>{{ incident.assignedToUsername || t('Unassigned') }}</span></div>
+            <div v-if="incident.shiftLabel"><span class="info-label">{{ t('Shift') }}</span><span>{{ incident.shiftLabel }}</span></div>
+            <div v-if="incident.locationArea"><span class="info-label">{{ t('Location') }}</span><span>{{ incident.locationArea }}</span></div>
+            <div><span class="info-label">{{ t('Created') }}</span><span>{{ formatDate(incident.createdAt) }}</span></div>
             <div v-if="incident.closedAt">
-              <span class="info-label">Closed</span>
-              <span>{{ formatDate(incident.closedAt) }} by {{ incident.closedByUsername }}</span>
+              <span class="info-label">{{ t('Closed') }}</span>
+              <span>{{ formatDate(incident.closedAt) }} {{ t('by') }} {{ incident.closedByUsername }}</span>
             </div>
             <div v-if="incident.linkedDeviationId">
-              <span class="info-label">Linked Deviation</span>
+              <span class="info-label">{{ t('Linked Deviation') }}</span>
               <router-link :to="`/app/deviations/${incident.linkedDeviationId}`">#{{ incident.linkedDeviationId }}</router-link>
             </div>
           </div>
@@ -176,38 +215,38 @@ function formatDate(iso: string) {
           <div v-if="auth.hasManageAccess && incident.status !== 'CLOSED'" class="actions-section">
             <div v-if="updateError" class="alert-error">{{ updateError }}</div>
             <div class="action-row">
-              <label class="form-label" for="assigned-user">Assign To</label>
+              <label class="form-label" for="assigned-user">{{ t('Assign To') }}</label>
               <div class="assignment-row">
                 <select id="assigned-user" v-model="selectedAssignedToId" class="form-select">
-                  <option :value="null">Unassigned</option>
+                  <option :value="null">{{ t('Unassigned') }}</option>
                   <option v-for="user in assignees" :key="user.id" :value="user.id">
                     {{ [user.firstName, user.lastName].filter(Boolean).join(' ') || user.username }}
                   </option>
                 </select>
-                <button class="btn btn-sm btn-secondary" @click="updateAssignment">Save Assignment</button>
+                <button class="btn btn-sm btn-secondary" @click="updateAssignment">{{ t('Save Assignment') }}</button>
               </div>
             </div>
             <div class="action-row">
-              <label class="form-label">Update Status</label>
+              <label class="form-label">{{ t('Update Status') }}</label>
               <div class="action-buttons">
-                <button v-if="incident.status !== 'UNDER_REVIEW'" class="btn btn-sm btn-secondary" @click="updateStatus('UNDER_REVIEW')">Under Review</button>
-                <button v-if="incident.status !== 'OPEN'" class="btn btn-sm btn-secondary" @click="updateStatus('OPEN')">Reopen</button>
-                <button class="btn btn-sm btn-primary" @click="showCloseDialog = true">Close Incident</button>
+                <button v-if="incident.status !== 'UNDER_REVIEW'" class="btn btn-sm btn-secondary" @click="updateStatus('UNDER_REVIEW')">{{ t('Under Review') }}</button>
+                <button v-if="incident.status !== 'OPEN'" class="btn btn-sm btn-secondary" @click="updateStatus('OPEN')">{{ t('Reopen') }}</button>
+                <button class="btn btn-sm btn-primary" @click="showCloseDialog = true">{{ t('Close Incident') }}</button>
               </div>
             </div>
           </div>
 
           <!-- Close dialog -->
           <div v-if="showCloseDialog" class="close-dialog card">
-            <h3>Close Incident</h3>
+            <h3>{{ t('Close Incident') }}</h3>
             <div class="form-group">
-              <label class="form-label">Closing Notes (optional)</label>
-              <textarea v-model="closeNotes" class="form-textarea" rows="3" placeholder="Any final notes or summary..." />
+              <label class="form-label">{{ t('Closing Notes (optional)') }}</label>
+              <textarea v-model="closeNotes" class="form-textarea" rows="3" :placeholder="t('Any final notes or summary...')" />
             </div>
             <div class="action-buttons">
-              <button class="btn btn-sm btn-secondary" @click="showCloseDialog = false">Cancel</button>
+              <button class="btn btn-sm btn-secondary" @click="showCloseDialog = false">{{ t('Cancel') }}</button>
               <button class="btn btn-sm btn-primary" :disabled="closing" @click="closeIncident">
-                {{ closing ? 'Closing...' : 'Confirm Close' }}
+                {{ closing ? t('Closing...') : t('Confirm Close') }}
               </button>
             </div>
           </div>
