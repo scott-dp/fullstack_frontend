@@ -124,10 +124,10 @@ function changeLocale(event: Event) {
             <h3>IK-Mat</h3>
             <p class="service-label">{{ t('Food Compliance') }}</p>
             <ul>
-              <li>{{ t('Hygiene and cleaning checklists') }}</li>
-              <li>{{ t('Temperature monitoring') }}</li>
-              <li>{{ t('Food safety documentation') }}</li>
-              <li>{{ t('HACCP support') }}</li>
+              <li>{{ t('Hygiene and cleaning routines') }}</li>
+              <li>{{ t('Temperature logs and alerts') }}</li>
+              <li>{{ t('Deviation follow-up and comments') }}</li>
+              <li>{{ t('Supplier and traceability records') }}</li>
             </ul>
           </div>
           <div class="service-card alcohol">
@@ -135,9 +135,9 @@ function changeLocale(event: Event) {
             <p class="service-label">{{ t('Alcohol Compliance') }}</p>
             <ul>
               <li>{{ t('Responsible service routines') }}</li>
-              <li>{{ t('Age verification documentation') }}</li>
-              <li>{{ t('Staff training records') }}</li>
-              <li>{{ t('Serving practice audits') }}</li>
+              <li>{{ t('Alcohol incident reporting') }}</li>
+              <li>{{ t('Staff training and assignments') }}</li>
+              <li>{{ t('Alcohol license overview and conditions') }}</li>
             </ul>
           </div>
         </div>

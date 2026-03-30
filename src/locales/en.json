@@ -33,7 +33,7 @@
   "Assign training templates, track completion, and notify staff when new learning is assigned to them.": "Assign training templates, track completion, and notify staff when new learning is assigned to them.",
   "Suppliers and Traceability": "Suppliers and Traceability",
   "Register suppliers, log deliveries, and search batch and lot information when you need traceability fast.": "Register suppliers, log deliveries, and search batch and lot information when you need traceability fast.",
-  "Allergens, Dishes, and Bevilling": "Allergens, Dishes, and Bevilling",
+  "Allergens, Dishes, and Bevilling": "Allergens, Dishes, and Alcohol Licenses",
   "Manage ingredients, dishes, allergen sheets, and alcohol license information in the same system.": "Manage ingredients, dishes, allergen sheets, and alcohol license information in the same system.",
   "Digital Checklists": "Digital Checklists",
   "Daily, weekly, and monthly task lists for hygiene, cleaning, and safety procedures. Never miss a routine.": "Daily, weekly, and monthly task lists for hygiene, cleaning, and safety procedures. Never miss a routine.",
@@ -48,15 +48,15 @@
   "Compliance Dashboard": "Compliance Dashboard",
   "Real-time overview of your compliance status with analytics on checklists, temperatures, and deviations.": "Real-time overview of your compliance status with analytics on checklists, temperatures, and deviations.",
   "Food Compliance": "Food Compliance",
-  "Hygiene and cleaning checklists": "Hygiene and cleaning checklists",
-  "Temperature monitoring": "Temperature monitoring",
-  "Food safety documentation": "Food safety documentation",
-  "HACCP support": "HACCP support",
+  "Hygiene and cleaning routines": "Hygiene and cleaning routines",
+  "Temperature logs and alerts": "Temperature logs and alerts",
+  "Deviation follow-up and comments": "Deviation follow-up and comments",
+  "Supplier and traceability records": "Supplier and traceability records",
   "Alcohol Compliance": "Alcohol Compliance",
   "Responsible service routines": "Responsible service routines",
-  "Age verification documentation": "Age verification documentation",
-  "Staff training records": "Staff training records",
-  "Serving practice audits": "Serving practice audits",
+  "Alcohol incident reporting": "Alcohol incident reporting",
+  "Staff training and assignments": "Staff training and assignments",
+  "Alcohol license overview and conditions": "Alcohol license overview and conditions",
   "Ready to simplify compliance?": "Ready to simplify compliance?",
   "Join restaurants, bars, and cafes already using IK System to stay audit-ready.": "Join restaurants, bars, and cafes already using CheckMate to stay audit-ready.",
   "Create your account": "Create your account",
@@ -70,6 +70,7 @@
   "Urdu": "Urdu",
   "No organization": "No organization",
   "Dashboard": "Dashboard",
+  "Front Page": "Front Page",
   "Checklists": "Checklists",
   "History": "History",
   "Temperature": "Temperature",
@@ -81,7 +82,7 @@
   "Traceability": "Traceability",
   "Training": "Training",
   "My Training": "My Training",
-  "Bevilling": "Bevilling",
+  "Bevilling": "Alcohol License",
   "Notifications": "Notifications",
   "Settings": "Settings",
   "Admin Panel": "Admin Panel",
@@ -590,10 +591,10 @@
   ,"Training completed": "Training completed"
   ,"Completion Rate": "Completion Rate"
   ,"Overall": "Overall"
-  ,"Failed to load bevilling information.": "Failed to load bevilling information."
+  ,"Failed to load bevilling information.": "Failed to load alcohol license information."
   ,"Edit License": "Edit License"
   ,"Manage Conditions": "Manage Conditions"
-  ,"No active bevilling": "No active bevilling"
+  ,"No active bevilling": "No active alcohol license"
   ,"No active alcohol license has been registered for your organization.": "No active alcohol license has been registered for your organization."
   ,"Register License": "Register License"
   ,"This license expired {days} days ago. Please renew immediately.": "This license expired {days} days ago. Please renew immediately."
@@ -622,8 +623,8 @@
   ,"On-premises License": "On-premises License"
   ,"Off-premises License": "Off-premises License"
   ,"Combined License": "Combined License"
-  ,"Edit Bevilling": "Edit Bevilling"
-  ,"Register Bevilling": "Register Bevilling"
+  ,"Edit Bevilling": "Edit Alcohol License"
+  ,"Register Bevilling": "Register Alcohol License"
   ,"License Type": "License Type"
   ,"Combined": "Combined"
   ,"Valid To (optional)": "Valid To (optional)"
@@ -634,10 +635,10 @@
   ,"Describe the serving area": "Describe the serving area"
   ,"Any additional notes": "Any additional notes"
   ,"to": "to"
-  ,"Update Bevilling": "Update Bevilling"
-  ,"Failed to save bevilling": "Failed to save bevilling"
-  ,"Bevilling Conditions": "Bevilling Conditions"
-  ,"Failed to load bevilling.": "Failed to load bevilling."
+  ,"Update Bevilling": "Update Alcohol License"
+  ,"Failed to save bevilling": "Failed to save alcohol license"
+  ,"Bevilling Conditions": "Alcohol License Conditions"
+  ,"Failed to load bevilling.": "Failed to load alcohol license."
   ,"Failed to add condition": "Failed to add condition"
   ,"Failed to update condition": "Failed to update condition"
   ,"Security Guard": "Security Guard"
