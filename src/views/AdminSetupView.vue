@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { authApi, type AdminSetupInfo } from '@/api/auth'
 import { getErrorMessage } from '@/api/client'
 import { useI18n } from 'vue-i18n'
+import PasswordInput from '@/components/PasswordInput.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -87,14 +88,22 @@ async function handleSubmit() {
               <label class="form-label">{{ t('Email') }}</label>
               <input :value="info.email" class="form-input" type="email" disabled />
             </div>
-            <div class="form-group">
-              <label class="form-label">{{ t('Password') }}</label>
-              <input v-model="password" class="form-input" type="password" required minlength="8" autocomplete="new-password" />
-            </div>
-            <div class="form-group">
-              <label class="form-label">{{ t('Confirm Password') }}</label>
-              <input v-model="confirmPassword" class="form-input" type="password" required minlength="8" autocomplete="new-password" />
-            </div>
+            <PasswordInput
+              id="admin-setup-password"
+              v-model="password"
+              :label="t('Password')"
+              autocomplete="new-password"
+              :minlength="8"
+              required
+            />
+            <PasswordInput
+              id="admin-setup-confirm-password"
+              v-model="confirmPassword"
+              :label="t('Confirm Password')"
+              autocomplete="new-password"
+              :minlength="8"
+              required
+            />
             <button type="submit" class="btn btn-primary btn-full" :disabled="saving">
               {{ saving ? t('Saving...') : t('Activate account') }}
             </button>
