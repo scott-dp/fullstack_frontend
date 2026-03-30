@@ -1,3 +1,4 @@
+<!-- Printable allergen matrix view derived from dishes, ingredients, and overrides. -->
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { allergenApi, type AllergenSheetEntry, type Allergen } from '@/api/operations/allergens.ts'

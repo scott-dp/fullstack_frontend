@@ -1,3 +1,6 @@
+/**
+ * Routine API types and helpers for CRUD, reviews, and archive state changes.
+ */
 import { request } from '../core/client.ts'
 
 export interface Routine {

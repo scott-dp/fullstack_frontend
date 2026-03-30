@@ -1,3 +1,4 @@
+<!-- Operational dashboard showing high-level compliance status and quick actions. -->
 <script setup lang="ts">
 /**
  * Dashboard view displaying compliance statistics and quick action cards.

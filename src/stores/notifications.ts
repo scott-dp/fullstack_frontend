@@ -1,3 +1,6 @@
+/**
+ * Pinia store managing the current user's notifications and unread badge state.
+ */
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { notificationApi, type Notification } from '@/api/operations/notifications.ts'

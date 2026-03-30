@@ -1,3 +1,4 @@
+<!-- Detail page for reviewing, updating, assigning, and closing an alcohol incident. -->
 <script setup lang="ts">
 /**
  * Alcohol Incident detail view showing full information about a single incident,

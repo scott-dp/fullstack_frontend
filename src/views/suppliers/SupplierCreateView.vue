@@ -1,3 +1,4 @@
+<!-- Form for creating a supplier record used by deliveries and traceability. -->
 <script setup lang="ts">
 /**
  * Supplier creation view presenting a form to add a new supplier

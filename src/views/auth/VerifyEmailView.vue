@@ -1,3 +1,4 @@
+<!-- Verification result page that confirms or rejects an email verification token. -->
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'

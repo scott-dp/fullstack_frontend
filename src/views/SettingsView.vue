@@ -1,3 +1,4 @@
+<!-- Account settings page for viewing and updating the current user's profile details. -->
 <script setup lang="ts">
 /**
  * Settings view allowing the user to view and update their profile

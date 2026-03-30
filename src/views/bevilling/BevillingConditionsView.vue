@@ -1,3 +1,4 @@
+<!-- Management page for adding and updating conditions tied to the active alcohol license. -->
 <script setup lang="ts">
 /**
  * Bevilling conditions management view allowing managers/admins to

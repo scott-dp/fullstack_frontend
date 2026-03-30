@@ -1,7 +1,9 @@
+<!-- Not-found page wrapped in the public shell for unmatched routes. -->
 <script setup lang="ts">
 import AppShell from '../components/layout/AppShell.vue'
 </script>
 
+<!-- Simple fallback page shown when the user navigates to an unknown route. -->
 <template>
   <AppShell>
     <section class="panel not-found">

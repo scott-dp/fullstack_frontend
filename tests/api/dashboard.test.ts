@@ -1,3 +1,6 @@
+/**
+ * Contract tests for dashboard API requests.
+ */
 import { describe, expect, it, vi } from 'vitest'
 
 const requestMock = vi.fn()

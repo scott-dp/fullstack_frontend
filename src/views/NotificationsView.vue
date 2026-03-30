@@ -1,3 +1,4 @@
+<!-- Notification center for reviewing assignment, reminder, and system alerts. -->
 <script setup lang="ts">
 /**
  * Notifications view displaying all user notifications in a list.

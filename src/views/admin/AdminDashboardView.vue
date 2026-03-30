@@ -1,3 +1,4 @@
+<!-- Organization admin dashboard with user counts and invite-oriented management shortcuts. -->
 <script setup lang="ts">
 /**
  * Admin dashboard providing system-wide management and overview.

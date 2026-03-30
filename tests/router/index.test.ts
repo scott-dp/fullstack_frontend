@@ -1,3 +1,6 @@
+/**
+ * Router tests covering auth guards, redirects, and superadmin navigation rules.
+ */
 import { describe, expect, it, vi } from 'vitest'
 import { applyRouteGuard } from '@/router'
 

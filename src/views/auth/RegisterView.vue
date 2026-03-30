@@ -1,3 +1,4 @@
+<!-- Self-registration page for creating a user account and triggering email verification. -->
 <script setup lang="ts">
 /**
  * Registration view presenting a sign-up form with password confirmation.

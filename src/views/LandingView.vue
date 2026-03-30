@@ -1,3 +1,4 @@
+<!-- Public landing page presenting CheckMate's product positioning and main feature areas. -->
 <script setup lang="ts">
 /**
  * Public landing page shown to unauthenticated visitors.

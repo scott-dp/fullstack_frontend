@@ -1,3 +1,6 @@
+/**
+ * Compatibility tests for the legacy health service wrapper.
+ */
 import { describe, expect, it, vi } from 'vitest'
 
 const httpClientMock = {

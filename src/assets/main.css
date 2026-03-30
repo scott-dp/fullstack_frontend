@@ -1,3 +1,4 @@
+/* Shared design tokens and utility styles imported by the application entrypoint. */
 :root {
   --text: #64748b;
   --text-h: #0f172a;

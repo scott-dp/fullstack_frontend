@@ -1,3 +1,4 @@
+<!-- Authentication page supporting username/password login and one-time email code login. -->
 <script setup lang="ts">
 /**
  * Login view presenting an email-or-username/password form.

@@ -1,3 +1,4 @@
+<!-- Delivery detail view for inspecting one recorded delivery and its item breakdown. -->
 <script setup lang="ts">
 /**
  * Delivery detail view showing full information about a single delivery

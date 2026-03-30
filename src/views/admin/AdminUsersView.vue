@@ -1,3 +1,4 @@
+<!-- Organization user management page for admins to invite, review, and disable users. -->
 <script setup lang="ts">
 /**
  * Admin user management view displaying a table of all users

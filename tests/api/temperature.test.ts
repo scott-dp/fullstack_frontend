@@ -1,3 +1,6 @@
+/**
+ * Contract tests for temperature log API helpers.
+ */
 import { describe, expect, it, vi } from 'vitest'
 
 const requestMock = vi.fn()

@@ -1,3 +1,4 @@
+<!-- Form for creating a new operational routine with metadata, steps, and review cadence. -->
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'

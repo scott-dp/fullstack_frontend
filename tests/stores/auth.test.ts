@@ -1,3 +1,6 @@
+/**
+ * Store tests for authentication state management and role helpers.
+ */
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useAuthStore } from '@/stores/auth'

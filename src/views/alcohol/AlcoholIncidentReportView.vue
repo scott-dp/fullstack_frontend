@@ -1,3 +1,4 @@
+<!-- Summary reporting page showing alcohol incident trends and type breakdowns. -->
 <script setup lang="ts">
 /**
  * Alcohol Incident report view showing summary statistics for all

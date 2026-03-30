@@ -1,3 +1,6 @@
+/**
+ * Contract tests for the auth API wrapper.
+ */
 import { describe, expect, it, vi } from 'vitest'
 
 const requestMock = vi.fn()

@@ -1,3 +1,4 @@
+<!-- Supplier register for filtering and reviewing approved or inactive suppliers. -->
 <script setup lang="ts">
 /**
  * Suppliers list view displaying all suppliers in a filterable table.

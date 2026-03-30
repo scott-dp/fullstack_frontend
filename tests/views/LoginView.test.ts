@@ -1,3 +1,6 @@
+/**
+ * View tests for login flows and frontend-owned auth error messages.
+ */
 import { render, fireEvent, screen } from '@testing-library/vue'
 import { describe, expect, it, vi } from 'vitest'
 import LoginView from '../../src/views/auth/LoginView.vue'

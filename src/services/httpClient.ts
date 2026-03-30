@@ -1,3 +1,6 @@
+/**
+ * Compatibility exports that forward legacy HTTP helpers to the shared API client layer.
+ */
 import type { ApiErrorPayload } from '../types/auth'
 
 // In production behind Nginx, the frontend should call the backend through the

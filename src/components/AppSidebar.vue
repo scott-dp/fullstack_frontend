@@ -1,3 +1,4 @@
+<!-- Primary authenticated navigation with grouped modules and role-aware links. -->
 <script setup lang="ts">
 /**
  * Application sidebar navigation component.

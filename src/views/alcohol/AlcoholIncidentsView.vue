@@ -1,3 +1,4 @@
+<!-- Listing page for alcohol incidents with status and type-based filtering. -->
 <script setup lang="ts">
 /**
  * Alcohol Incidents list view displaying all incident reports in a filterable table.

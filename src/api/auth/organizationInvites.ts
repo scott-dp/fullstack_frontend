@@ -1,3 +1,6 @@
+/**
+ * Organization invite API helpers for creating, inspecting, and accepting invite tokens.
+ */
 import { request } from '../core/client.ts'
 import type { CurrentUser } from './auth.ts'
 
