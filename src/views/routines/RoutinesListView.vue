@@ -146,7 +146,15 @@ const alkoholCategories = ['AGE_CONTROL', 'INTOXICATION', 'CLOSING', 'BYO_CONTRO
           </tr>
         </thead>
         <tbody>
-          <tr v-for="r in filtered" :key="r.id" class="clickable-row" @click="$router.push(`/app/routines/${r.id}`)">
+          <tr
+            v-for="r in filtered"
+            :key="r.id"
+            class="clickable-row"
+            tabindex="0"
+            @click="$router.push(`/app/routines/${r.id}`)"
+            @keydown.enter="$router.push(`/app/routines/${r.id}`)"
+            @keydown.space.prevent="$router.push(`/app/routines/${r.id}`)"
+          >
             <td>
               <strong>{{ r.name }}</strong>
               <span v-if="isOverdueForReview(r)" class="status-badge danger" style="margin-left: 8px; font-size: 11px;">{{ t('Review overdue') }}</span>

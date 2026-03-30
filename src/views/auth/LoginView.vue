@@ -93,7 +93,7 @@ async function handleEmailCodeLogin() {
       <h1>{{ t('Sign In') }}</h1>
       <p class="text-muted">{{ t('IK System - Internal Control') }}</p>
       <form @submit.prevent="handleSubmit" class="auth-form">
-        <div v-if="error" class="alert-error">{{ error }}</div>
+        <div v-if="error" class="alert-error" role="alert" aria-live="assertive">{{ error }}</div>
         <div class="form-group">
           <label for="identifier" class="form-label">Email or username</label>
           <input
@@ -119,8 +119,8 @@ async function handleEmailCodeLogin() {
       </form>
       <div class="auth-divider"><span>or</span></div>
       <form @submit.prevent="handleEmailCodeLogin" class="auth-form code-form">
-        <div v-if="codeMessage" class="alert-success">{{ codeMessage }}</div>
-        <div v-if="codeError" class="alert-error">{{ codeError }}</div>
+        <div v-if="codeMessage" class="alert-success" aria-live="polite">{{ codeMessage }}</div>
+        <div v-if="codeError" class="alert-error" role="alert" aria-live="assertive">{{ codeError }}</div>
         <div class="form-group">
           <label for="email-code-email" class="form-label">Email</label>
           <input

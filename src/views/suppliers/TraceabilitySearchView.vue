@@ -106,7 +106,15 @@ function formatDate(iso: string) {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="r in results" :key="r.deliveryItemId" class="clickable-row" @click="$router.push(`/app/deliveries/${r.deliveryRecordId}`)">
+          <tr
+            v-for="r in results"
+            :key="r.deliveryItemId"
+            class="clickable-row"
+            tabindex="0"
+            @click="$router.push(`/app/deliveries/${r.deliveryRecordId}`)"
+            @keydown.enter="$router.push(`/app/deliveries/${r.deliveryRecordId}`)"
+            @keydown.space.prevent="$router.push(`/app/deliveries/${r.deliveryRecordId}`)"
+          >
             <td><strong>{{ r.productName }}</strong></td>
             <td>{{ r.batchLot || '-' }}</td>
             <td>{{ r.supplierName }}</td>

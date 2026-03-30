@@ -238,7 +238,15 @@ function formatDate(iso: string) {
               </tr>
             </thead>
             <tbody>
-              <tr v-for="d in deliveries" :key="d.id" class="clickable-row" @click="router.push(`/app/deliveries/${d.id}`)">
+              <tr
+                v-for="d in deliveries"
+                :key="d.id"
+                class="clickable-row"
+                tabindex="0"
+                @click="router.push(`/app/deliveries/${d.id}`)"
+                @keydown.enter="router.push(`/app/deliveries/${d.id}`)"
+                @keydown.space.prevent="router.push(`/app/deliveries/${d.id}`)"
+              >
                 <td>{{ formatDate(d.deliveryDate) }}</td>
                 <td>{{ d.documentNumber || '-' }}</td>
                 <td>{{ d.receivedByUsername }}</td>

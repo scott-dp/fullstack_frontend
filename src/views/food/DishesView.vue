@@ -74,7 +74,10 @@ function getAllergenCodes(dish: Dish): string[] {
             v-for="dish in dishes"
             :key="dish.id"
             class="clickable-row"
+            tabindex="0"
             @click="$router.push(`/app/dishes/${dish.id}`)"
+            @keydown.enter="$router.push(`/app/dishes/${dish.id}`)"
+            @keydown.space.prevent="$router.push(`/app/dishes/${dish.id}`)"
           >
             <td><strong>{{ dish.name }}</strong></td>
             <td>

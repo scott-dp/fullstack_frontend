@@ -44,10 +44,10 @@ onMounted(async () => {
       <p class="text-muted">{{ t('Activate your account before signing in.') }}</p>
 
       <div v-if="loading" class="loading-state">{{ t('Verifying your email...') }}</div>
-      <div v-else-if="success" class="alert-success">
+      <div v-else-if="success" class="alert-success" aria-live="polite">
         {{ success }}
       </div>
-      <div v-else class="alert-error">
+      <div v-else class="alert-error" role="alert" aria-live="assertive">
         {{ error }}
       </div>
 

@@ -65,7 +65,10 @@ function formatDate(iso: string) {
             v-for="ing in ingredients"
             :key="ing.id"
             class="clickable-row"
+            tabindex="0"
             @click="$router.push(`/app/ingredients/${ing.id}/edit`)"
+            @keydown.enter="$router.push(`/app/ingredients/${ing.id}/edit`)"
+            @keydown.space.prevent="$router.push(`/app/ingredients/${ing.id}/edit`)"
           >
             <td><strong>{{ ing.name }}</strong></td>
             <td>

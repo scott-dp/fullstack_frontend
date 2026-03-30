@@ -41,10 +41,16 @@ function changeLocale(event: Event) {
     <div class="app-main">
       <header class="app-header">
         <div class="header-left">
-          <button class="menu-toggle" @click="sidebarOpen = !sidebarOpen" :aria-label="t('Toggle menu')">
+          <button
+            class="menu-toggle"
+            :aria-label="t('Toggle menu')"
+            :aria-expanded="sidebarOpen ? 'true' : 'false'"
+            aria-controls="app-sidebar"
+            @click="sidebarOpen = !sidebarOpen"
+          >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
           </button>
-          <router-link to="/" class="home-link">
+          <router-link to="/" class="home-link" :aria-label="t('Front Page')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
             <span>{{ t('Front Page') }}</span>
           </router-link>
@@ -66,7 +72,7 @@ function changeLocale(event: Event) {
           </router-link>
           <div class="user-info">
             <span class="username">{{ auth.user?.firstName || auth.user?.username }}</span>
-            <button class="btn-link" @click="handleLogout">{{ t('Log out') }}</button>
+            <button class="btn-link" type="button" @click="handleLogout">{{ t('Log out') }}</button>
           </div>
         </div>
       </header>

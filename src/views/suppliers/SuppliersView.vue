@@ -83,7 +83,15 @@ function formatDate(iso: string) {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="s in filtered" :key="s.id" class="clickable-row" @click="$router.push(`/app/suppliers/${s.id}`)">
+          <tr
+            v-for="s in filtered"
+            :key="s.id"
+            class="clickable-row"
+            tabindex="0"
+            @click="$router.push(`/app/suppliers/${s.id}`)"
+            @keydown.enter="$router.push(`/app/suppliers/${s.id}`)"
+            @keydown.space.prevent="$router.push(`/app/suppliers/${s.id}`)"
+          >
             <td><strong>{{ s.name }}</strong></td>
             <td>{{ s.organizationNumber || '-' }}</td>
             <td>{{ s.contactName || '-' }}</td>

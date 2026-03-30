@@ -78,8 +78,8 @@ async function handleSubmit() {
       <h1>{{ t('Set Up Admin Account') }}</h1>
       <div v-if="loading" class="loading"><div class="spinner" /></div>
       <template v-else>
-        <div v-if="error" class="alert-error">{{ error }}</div>
-        <div v-if="success" class="alert-success">{{ success }}</div>
+        <div v-if="error" class="alert-error" role="alert" aria-live="assertive">{{ error }}</div>
+        <div v-if="success" class="alert-success" aria-live="polite">{{ success }}</div>
         <template v-if="info">
           <p class="text-muted">
             {{ [info.firstName, info.lastName].filter(Boolean).join(' ') || info.email }} for {{ info.organizationName }}
