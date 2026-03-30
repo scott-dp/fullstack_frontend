@@ -9,6 +9,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { getErrorMessage } from '@/api/client'
+import PasswordInput from '@/components/PasswordInput.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -104,17 +105,13 @@ async function handleEmailCodeLogin() {
             autofocus
           />
         </div>
-        <div class="form-group">
-          <label for="password" class="form-label">{{ t('Password') }}</label>
-          <input
-            id="password"
-            v-model="password"
-            type="password"
-            class="form-input"
-            required
-            autocomplete="current-password"
-          />
-        </div>
+        <PasswordInput
+          id="password"
+          v-model="password"
+          :label="t('Password')"
+          autocomplete="current-password"
+          required
+        />
         <button type="submit" class="btn btn-primary btn-full" :disabled="auth.loading">
           {{ auth.loading ? t('Signing in...') : t('Sign In') }}
         </button>

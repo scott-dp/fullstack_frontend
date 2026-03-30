@@ -7,6 +7,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { getErrorMessage } from '@/api/client'
+import PasswordInput from '@/components/PasswordInput.vue'
 
 const auth = useAuthStore()
 const { t } = useI18n()
@@ -71,14 +72,22 @@ async function handleSubmit() {
           <label for="email" class="form-label">Email</label>
           <input id="email" v-model="email" type="email" class="form-input" required maxlength="255" autocomplete="email" />
         </div>
-        <div class="form-group">
-          <label for="password" class="form-label">{{ t('Password') }}</label>
-          <input id="password" v-model="password" type="password" class="form-input" required minlength="6" autocomplete="new-password" />
-        </div>
-        <div class="form-group">
-          <label for="confirm-password" class="form-label">{{ t('Confirm Password') }}</label>
-          <input id="confirm-password" v-model="confirmPassword" type="password" class="form-input" required minlength="6" autocomplete="new-password" />
-        </div>
+        <PasswordInput
+          id="password"
+          v-model="password"
+          :label="t('Password')"
+          autocomplete="new-password"
+          :minlength="6"
+          required
+        />
+        <PasswordInput
+          id="confirm-password"
+          v-model="confirmPassword"
+          :label="t('Confirm Password')"
+          autocomplete="new-password"
+          :minlength="6"
+          required
+        />
         <button type="submit" class="btn btn-primary btn-full" :disabled="auth.loading">
           {{ auth.loading ? t('Creating account...') : t('Register') }}
         </button>

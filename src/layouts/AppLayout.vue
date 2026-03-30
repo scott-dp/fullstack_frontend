@@ -39,9 +39,15 @@ function changeLocale(event: Event) {
     <AppSidebar :open="sidebarOpen" @close="sidebarOpen = false" />
     <div class="app-main">
       <header class="app-header">
-        <button class="menu-toggle" @click="sidebarOpen = !sidebarOpen" :aria-label="t('Toggle menu')">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
-        </button>
+        <div class="header-left">
+          <button class="menu-toggle" @click="sidebarOpen = !sidebarOpen" :aria-label="t('Toggle menu')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+          </button>
+          <router-link to="/" class="home-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
+            <span>{{ t('Front Page') }}</span>
+          </router-link>
+        </div>
         <div class="header-right">
           <label class="locale-switcher">
             <span>{{ t('Language') }}</span>
@@ -93,6 +99,12 @@ function changeLocale(event: Event) {
   top: 0;
   z-index: 10;
 }
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
 .menu-toggle {
   display: none;
   background: none;
@@ -100,6 +112,24 @@ function changeLocale(event: Event) {
   color: var(--text);
   cursor: pointer;
   padding: 4px;
+}
+.home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-h);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.home-link:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 .header-right {
   display: flex;
@@ -172,6 +202,12 @@ function changeLocale(event: Event) {
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
+  }
+  .home-link {
+    padding: 8px;
+  }
+  .home-link span {
+    display: none;
   }
   .app-content {
     padding: 16px;
