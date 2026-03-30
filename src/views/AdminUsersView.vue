@@ -9,7 +9,6 @@ import { userApi, type UserSummary } from '@/api/users'
 import { organizationInviteApi, type OrganizationInvite } from '@/api/organizationInvites'
 import { organizationApi, type OrganizationSummary } from '@/api/organizations'
 import { useAuthStore } from '@/stores/auth'
-import { HttpError } from '@/api/client'
 
 /** All users loaded from the server. */
 const users = ref<UserSummary[]>([])
@@ -60,8 +59,8 @@ async function createInvite() {
     createInviteSuccess.value = t('Invite created for {organizationName}. Share the token below with the user.', {
       organizationName: invite.organizationName,
     })
-  } catch (err: unknown) {
-    createInviteError.value = err instanceof HttpError ? err.message : t('Failed to create invite')
+  } catch {
+    createInviteError.value = t('Failed to create invite')
   } finally {
     creatingInvite.value = false
   }
@@ -74,8 +73,8 @@ async function deleteUser(userId: number) {
   try {
     await userApi.delete(userId)
     users.value = users.value.filter((user) => user.id !== userId)
-  } catch (err: unknown) {
-    createInviteError.value = err instanceof HttpError ? err.message : t('Failed to delete user')
+  } catch {
+    createInviteError.value = t('Failed to delete user')
   } finally {
     deletingUserId.value = null
   }
