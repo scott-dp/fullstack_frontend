@@ -8,7 +8,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { supplierApi } from '@/api/suppliers'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const router = useRouter()
 /** Bound supplier name input value. */
@@ -50,7 +50,13 @@ async function submit() {
     })
     router.push('/app/suppliers')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to create supplier')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to create supplier'),
+      byStatus: {
+        400: t('Please check the supplier details and try again'),
+        403: t('You do not have permission to create suppliers'),
+      },
+    })
   } finally {
     submitting.value = false
   }

@@ -7,7 +7,7 @@
 import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { allergenApi, type Ingredient, type DishIngredientEntry } from '@/api/allergens'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
@@ -128,7 +128,13 @@ async function submit() {
     }
     router.push('/app/dishes')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to save dish')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to save dish'),
+      byStatus: {
+        400: t('Please check the dish details and try again'),
+        403: t('You do not have permission to manage dishes'),
+      },
+    })
   } finally {
     submitting.value = false
   }

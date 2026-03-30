@@ -7,7 +7,7 @@ import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { userApi } from '@/api/users'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const auth = useAuthStore()
 const { t } = useI18n()
@@ -49,7 +49,12 @@ async function save() {
     auth.user = updated
     success.value = t('Profile updated successfully')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to update profile')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to update profile'),
+      byStatus: {
+        400: t('Please check your profile details and try again'),
+      },
+    })
   } finally {
     saving.value = false
   }

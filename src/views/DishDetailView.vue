@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { allergenApi, type Dish, type Allergen } from '@/api/allergens'
 import { useAuthStore } from '@/stores/auth'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
@@ -28,14 +28,23 @@ onMounted(async () => {
     dish.value = d
     allergens.value = a
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to load dish')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to load dish'),
+    })
   } finally { loading.value = false }
 })
 
 async function handleApprove() {
   approving.value = true
   try { dish.value = await allergenApi.approveDish(id.value) }
-  catch (err: unknown) { error.value = err instanceof HttpError ? err.message : t('Failed to approve') }
+  catch (err: unknown) {
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to approve'),
+      byStatus: {
+        403: t('You do not have permission to approve allergens'),
+      },
+    })
+  }
   finally { approving.value = false }
 }
 
@@ -46,13 +55,28 @@ async function handleAddOverride() {
     await allergenApi.addOverride(id.value, { allergenId: overrideAllergenId.value, included: overrideIncluded.value, reason: overrideReason.value })
     dish.value = await allergenApi.getDish(id.value)
     overrideAllergenId.value = null; overrideReason.value = ''
-  } catch (err: unknown) { error.value = err instanceof HttpError ? err.message : t('Failed to add override') }
+  } catch (err: unknown) {
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to add override'),
+      byStatus: {
+        400: t('Please check the override details and try again'),
+        403: t('You do not have permission to manage allergen overrides'),
+      },
+    })
+  }
   finally { addingOverride.value = false }
 }
 
 async function handleRemoveOverride(overrideId: number) {
   try { await allergenApi.removeOverride(id.value, overrideId); dish.value = await allergenApi.getDish(id.value) }
-  catch (err: unknown) { error.value = err instanceof HttpError ? err.message : t('Failed to remove override') }
+  catch (err: unknown) {
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to remove override'),
+      byStatus: {
+        403: t('You do not have permission to manage allergen overrides'),
+      },
+    })
+  }
 }
 
 async function handleDelete() {
@@ -62,7 +86,12 @@ async function handleDelete() {
     await allergenApi.deleteDish(id.value)
     router.push('/app/dishes')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to delete dish')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to delete dish'),
+      byStatus: {
+        403: t('You do not have permission to delete dishes'),
+      },
+    })
   } finally {
     deleting.value = false
   }

@@ -9,7 +9,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { supplierApi, type Supplier } from '@/api/suppliers'
 import { deliveryApi, type DeliveryRecord } from '@/api/deliveries'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const route = useRoute()
 const router = useRouter()
@@ -96,7 +96,13 @@ async function saveEdit() {
     })
     editing.value = false
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to update supplier')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to update supplier'),
+      byStatus: {
+        400: t('Please check the supplier details and try again'),
+        403: t('You do not have permission to manage suppliers'),
+      },
+    })
   } finally {
     submitting.value = false
   }
@@ -109,7 +115,12 @@ async function toggleActive() {
   try {
     supplier.value = await supplierApi.update(supplierId, { active: !supplier.value.active })
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to update supplier')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to update supplier'),
+      byStatus: {
+        403: t('You do not have permission to manage suppliers'),
+      },
+    })
   }
 }
 

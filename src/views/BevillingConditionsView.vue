@@ -7,7 +7,7 @@ import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { bevillingApi, type Bevilling, type BevillingCondition } from '@/api/bevilling'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const route = useRoute()
 const { t } = useI18n()
@@ -65,7 +65,13 @@ async function addCondition() {
     newDescription.value = ''
     newConditionType.value = 'FOOD_REQUIREMENT'
   } catch (err: unknown) {
-    formError.value = err instanceof HttpError ? err.message : t('Failed to add condition')
+    formError.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to add condition'),
+      byStatus: {
+        400: t('Please check the condition details and try again'),
+        403: t('You do not have permission to manage bevilling conditions'),
+      },
+    })
   } finally {
     submitting.value = false
   }
@@ -82,7 +88,12 @@ async function toggleCondition(condition: BevillingCondition) {
       bevilling.value.conditions[idx] = updated
     }
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to update condition')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to update condition'),
+      byStatus: {
+        403: t('You do not have permission to manage bevilling conditions'),
+      },
+    })
   }
 }
 </script>

@@ -6,7 +6,7 @@
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { temperatureApi, type TemperatureLog, type CreateTemperatureLogRequest } from '@/api/temperature'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 /** All temperature log entries loaded from the server. */
 const logs = ref<TemperatureLog[]>([])
@@ -62,7 +62,13 @@ async function submit() {
     temperature.value = null
     comment.value = ''
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to log temperature')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to log temperature'),
+      byStatus: {
+        400: t('Please check the temperature details and try again'),
+        403: t('You do not have permission to log temperatures'),
+      },
+    })
   }
 }
 

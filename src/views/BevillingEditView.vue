@@ -7,7 +7,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter, useRoute } from 'vue-router'
 import { bevillingApi, type ServingHoursEntry } from '@/api/bevilling'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const router = useRouter()
 const route = useRoute()
@@ -155,7 +155,13 @@ async function submit() {
     }
     router.push('/app/bevilling')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to save bevilling')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to save bevilling'),
+      byStatus: {
+        400: t('Please check the bevilling details and try again'),
+        403: t('You do not have permission to manage bevilling'),
+      },
+    })
   } finally {
     submitting.value = false
   }

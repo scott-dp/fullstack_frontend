@@ -8,7 +8,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { checklistApi, type ChecklistTemplate, type CreateTemplateRequest } from '@/api/checklists'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const auth = useAuthStore()
 /** All checklist templates loaded from the server. */
@@ -96,7 +96,13 @@ async function createTemplate() {
     newDescription.value = ''
     newItems.value = [{ description: '', requiresComment: false }]
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to create template')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to create template'),
+      byStatus: {
+        400: t('Please check the template details and try again'),
+        403: t('You do not have permission to create checklist templates'),
+      },
+    })
   }
 }
 

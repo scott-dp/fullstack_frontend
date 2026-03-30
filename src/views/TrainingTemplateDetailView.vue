@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { trainingApi, type TrainingTemplate } from '@/api/trainings'
 import { useAuthStore } from '@/stores/auth'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const route = useRoute()
 const router = useRouter()
@@ -22,7 +22,9 @@ onMounted(async () => {
   try {
     template.value = await trainingApi.getTemplate(templateId.value)
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to load training template')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to load training template'),
+    })
   } finally {
     loading.value = false
   }
@@ -45,7 +47,12 @@ async function handleDelete() {
     await trainingApi.deleteTemplate(templateId.value)
     router.push('/app/training')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to delete training template')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to delete training template'),
+      byStatus: {
+        403: t('You do not have permission to delete training templates'),
+      },
+    })
   } finally {
     deleting.value = false
   }

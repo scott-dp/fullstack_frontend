@@ -10,7 +10,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { supplierApi, type Supplier } from '@/api/suppliers'
 import { deliveryApi, type CreateDeliveryItemRequest } from '@/api/deliveries'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const router = useRouter()
 
@@ -97,7 +97,13 @@ async function submit() {
     })
     router.push('/app/deliveries')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to create delivery')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to create delivery'),
+      byStatus: {
+        400: t('Please check the delivery details and try again'),
+        403: t('You do not have permission to create deliveries'),
+      },
+    })
   } finally {
     submitting.value = false
   }

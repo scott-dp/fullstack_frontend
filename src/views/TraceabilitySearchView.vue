@@ -7,7 +7,7 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { deliveryApi, type TraceabilityResult } from '@/api/deliveries'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 /** Search field: product name. */
 const productName = ref('')
@@ -39,7 +39,12 @@ async function search() {
     })
     searched.value = true
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Search failed')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Search failed'),
+      byStatus: {
+        400: t('Please enter valid search criteria'),
+      },
+    })
   } finally {
     searching.value = false
   }

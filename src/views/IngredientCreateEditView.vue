@@ -6,7 +6,7 @@
 import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { allergenApi, type Allergen } from '@/api/allergens'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
@@ -84,7 +84,13 @@ async function submit() {
     }
     router.push('/app/ingredients')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to save ingredient')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to save ingredient'),
+      byStatus: {
+        400: t('Please check the ingredient details and try again'),
+        403: t('You do not have permission to manage ingredients'),
+      },
+    })
   } finally {
     submitting.value = false
   }
@@ -99,7 +105,12 @@ async function handleDelete() {
     await allergenApi.deleteIngredient(ingredientId.value)
     router.push('/app/ingredients')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to delete ingredient')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to delete ingredient'),
+      byStatus: {
+        403: t('You do not have permission to delete ingredients'),
+      },
+    })
   } finally {
     deleting.value = false
   }

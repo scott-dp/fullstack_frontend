@@ -2,7 +2,7 @@
 import { ref, onMounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { trainingApi, type TrainingAssignment } from '@/api/trainings'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const assignments = ref<TrainingAssignment[]>([])
 const loading = ref(true)
@@ -56,7 +56,12 @@ async function handleComplete(assignmentId: number) {
     if (idx >= 0) assignments.value[idx].status = 'COMPLETED'
     showAck.value = null
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to complete training')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to complete training'),
+      byStatus: {
+        400: t('Please confirm the training acknowledgment before completing'),
+      },
+    })
   } finally {
     completing.value = null
   }
