@@ -8,7 +8,7 @@ import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { alcoholIncidentApi } from '@/api/alcoholIncidents'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 import { userApi, type UserSummary } from '@/api/users'
 import { useAuthStore } from '@/stores/auth'
 
@@ -73,7 +73,12 @@ async function submit() {
     })
     router.push('/app/alcohol-incidents')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to create incident')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to create incident'),
+      byStatus: {
+        400: t('Could not create incident. Check the required fields and try again.'),
+      },
+    })
   } finally {
     submitting.value = false
   }

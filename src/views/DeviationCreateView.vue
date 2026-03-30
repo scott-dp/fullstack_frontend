@@ -8,7 +8,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { deviationApi } from '@/api/deviations'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const router = useRouter()
 /** Bound title input value. */
@@ -41,7 +41,12 @@ async function submit() {
     })
     router.push('/app/deviations')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to create deviation')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to create deviation'),
+      byStatus: {
+        400: t('Could not create deviation. Check the required fields and try again.'),
+      },
+    })
   } finally {
     submitting.value = false
   }

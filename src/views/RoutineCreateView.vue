@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { routineApi } from '@/api/routines'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const router = useRouter()
 const error = ref('')
@@ -57,7 +57,12 @@ async function handleSubmit() {
     })
     router.push(`/app/routines/${routine.id}`)
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to create routine')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to create routine'),
+      byStatus: {
+        400: t('Could not create routine. Check the required fields and try again.'),
+      },
+    })
   } finally {
     saving.value = false
   }

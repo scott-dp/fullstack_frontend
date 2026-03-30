@@ -7,10 +7,12 @@
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { checklistApi, type ChecklistTemplate, type ChecklistItem } from '@/api/checklists'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const route = useRoute()
+const { t } = useI18n()
 /** Template ID parsed from the route params. */
 const templateId = Number(route.params.id)
 
@@ -34,7 +36,12 @@ onMounted(async () => {
       answers.value[item.id] = { checked: false, comment: '' }
     }
   } catch (err: unknown) {
-    error.value = 'Failed to load checklist'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to load checklist'),
+      byStatus: {
+        400: t('The checklist could not be loaded.'),
+      },
+    })
   } finally {
     loading.value = false
   }
@@ -60,7 +67,12 @@ async function submit() {
     })
     router.push('/app/checklists/history')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to submit checklist'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to submit checklist'),
+      byStatus: {
+        400: t('The checklist could not be submitted. Check the required comments and try again.'),
+      },
+    })
   } finally {
     submitting.value = false
   }
@@ -74,7 +86,7 @@ async function submit() {
         <h1 v-if="template">{{ template.title }}</h1>
         <p v-if="template" class="text-muted">{{ template.description }}</p>
       </div>
-      <router-link to="/app/checklists" class="btn btn-secondary">Back</router-link>
+      <router-link to="/app/checklists" class="btn btn-secondary">{{ t('Back') }}</router-link>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
@@ -92,20 +104,20 @@ async function submit() {
             <input
               v-model="answers[item.id].comment"
               class="form-input"
-              :placeholder="item.requiresComment ? 'Comment (required)' : 'Comment (optional)'"
+              :placeholder="item.requiresComment ? t('Comment (required)') : t('Comment (optional)')"
               :required="item.requiresComment"
             />
           </div>
         </div>
 
         <div class="form-group overall-comment">
-          <label class="form-label">Overall Comment (optional)</label>
+          <label class="form-label">{{ t('Overall Comment (optional)') }}</label>
           <textarea v-model="overallComment" class="form-textarea" rows="2" />
         </div>
 
         <div class="submit-row">
           <button type="submit" class="btn btn-primary" :disabled="submitting">
-            {{ submitting ? 'Submitting...' : 'Submit Checklist' }}
+            {{ submitting ? t('Submitting...') : t('Submit Checklist') }}
           </button>
         </div>
       </form>

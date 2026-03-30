@@ -9,7 +9,7 @@ import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { alcoholIncidentApi, type AlcoholIncident } from '@/api/alcoholIncidents'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 import { userApi, type UserSummary } from '@/api/users'
 
 const route = useRoute()
@@ -59,7 +59,13 @@ async function updateStatus(newStatus: string) {
     incident.value = await alcoholIncidentApi.update(incidentId, { status: newStatus })
     selectedAssignedToId.value = incident.value.assignedToId
   } catch (err: unknown) {
-    updateError.value = err instanceof HttpError ? err.message : t('Update failed')
+    updateError.value = getErrorMessage(err, {
+      defaultMessage: t('Update failed'),
+      byStatus: {
+        400: t('The incident could not be updated.'),
+        403: t('You do not have permission to update this incident.'),
+      },
+    })
   }
 }
 
@@ -72,7 +78,13 @@ async function updateAssignment() {
     })
     selectedAssignedToId.value = incident.value.assignedToId
   } catch (err: unknown) {
-    updateError.value = err instanceof HttpError ? err.message : t('Assignment failed')
+    updateError.value = getErrorMessage(err, {
+      defaultMessage: t('Assignment failed'),
+      byStatus: {
+        400: t('The incident could not be assigned to that user.'),
+        403: t('You do not have permission to assign this incident.'),
+      },
+    })
   }
 }
 
@@ -86,7 +98,13 @@ async function closeIncident() {
     showCloseDialog.value = false
     closeNotes.value = ''
   } catch (err: unknown) {
-    updateError.value = err instanceof HttpError ? err.message : t('Failed to close incident')
+    updateError.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to close incident'),
+      byStatus: {
+        400: t('The incident could not be closed.'),
+        403: t('You do not have permission to close this incident.'),
+      },
+    })
   } finally {
     closing.value = false
   }

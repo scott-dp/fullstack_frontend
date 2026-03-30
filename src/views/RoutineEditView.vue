@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { routineApi } from '@/api/routines'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const route = useRoute()
 const router = useRouter()
@@ -64,7 +64,12 @@ onMounted(async () => {
       reviewIntervalDays: routine.reviewIntervalDays,
     }
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to load routine')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to load routine'),
+      byStatus: {
+        400: t('The routine could not be loaded.'),
+      },
+    })
   } finally {
     loading.value = false
   }
@@ -85,7 +90,12 @@ async function handleSubmit() {
     })
     router.push(`/app/routines/${id.value}`)
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to update routine')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to update routine'),
+      byStatus: {
+        400: t('The routine could not be updated.'),
+      },
+    })
   } finally {
     saving.value = false
   }

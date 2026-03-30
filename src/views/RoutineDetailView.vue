@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { routineApi, type Routine, type RoutineReview } from '@/api/routines'
 import { useAuthStore } from '@/stores/auth'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const route = useRoute()
 const router = useRouter()
@@ -39,7 +39,12 @@ onMounted(async () => {
     routine.value = r
     reviews.value = h
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to load routine')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to load routine'),
+      byStatus: {
+        400: t('The routine could not be loaded.'),
+      },
+    })
   } finally {
     loading.value = false
   }
@@ -54,7 +59,13 @@ async function handleReview() {
     routine.value = await routineApi.get(id.value)
     reviewNotes.value = ''
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to review routine')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to review routine'),
+      byStatus: {
+        400: t('The routine review could not be submitted.'),
+        403: t('You do not have permission to review this routine.'),
+      },
+    })
   } finally {
     reviewing.value = false
   }
@@ -65,7 +76,13 @@ async function handleArchive() {
   try {
     routine.value = await routineApi.archive(id.value)
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to archive routine')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to archive routine'),
+      byStatus: {
+        400: t('The routine could not be archived.'),
+        403: t('You do not have permission to archive this routine.'),
+      },
+    })
   } finally {
     archiving.value = false
   }
@@ -76,7 +93,13 @@ async function handleUnarchive() {
   try {
     routine.value = await routineApi.unarchive(id.value)
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to unarchive routine')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to unarchive routine'),
+      byStatus: {
+        400: t('The routine could not be restored.'),
+        403: t('You do not have permission to restore this routine.'),
+      },
+    })
   } finally {
     archiving.value = false
   }
@@ -89,7 +112,13 @@ async function handleDelete() {
     await routineApi.delete(id.value)
     router.push('/app/routines')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Failed to delete routine')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to delete routine'),
+      byStatus: {
+        400: t('The routine could not be deleted.'),
+        403: t('You do not have permission to delete this routine.'),
+      },
+    })
   } finally {
     deleting.value = false
   }

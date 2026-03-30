@@ -10,7 +10,7 @@ import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { deviationApi, type Deviation } from '@/api/deviations'
 import { userApi, type UserSummary } from '@/api/users'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const route = useRoute()
 const auth = useAuthStore()
@@ -53,7 +53,13 @@ async function updateStatus(newStatus: string) {
   try {
     deviation.value = await deviationApi.update(deviationId, { status: newStatus })
   } catch (err: unknown) {
-    updateError.value = err instanceof HttpError ? err.message : t('Update failed')
+    updateError.value = getErrorMessage(err, {
+      defaultMessage: t('Update failed'),
+      byStatus: {
+        400: t('The deviation could not be updated.'),
+        403: t('You do not have permission to update this deviation.'),
+      },
+    })
   }
 }
 
@@ -66,7 +72,13 @@ async function assign(userId: number | undefined) {
   try {
     deviation.value = await deviationApi.update(deviationId, { assignedToId: userId })
   } catch (err: unknown) {
-    updateError.value = err instanceof HttpError ? err.message : t('Assignment failed')
+    updateError.value = getErrorMessage(err, {
+      defaultMessage: t('Assignment failed'),
+      byStatus: {
+        400: t('The deviation could not be assigned to that user.'),
+        403: t('You do not have permission to assign this deviation.'),
+      },
+    })
   }
 }
 
@@ -80,7 +92,12 @@ async function addComment() {
     deviation.value?.comments.push(comment)
     newComment.value = ''
   } catch (err: unknown) {
-    commentError.value = err instanceof HttpError ? err.message : t('Failed to add comment')
+    commentError.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to add comment'),
+      byStatus: {
+        400: t('Your comment could not be added.'),
+      },
+    })
   } finally {
     submittingComment.value = false
   }
