@@ -6,8 +6,8 @@
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
-import { userApi } from '@/api/users'
-import { getErrorMessage } from '@/api/client'
+import { userApi } from '@/api/auth/users.ts'
+import { getErrorMessage } from '@/api/core/client.ts'
 
 const auth = useAuthStore()
 const { t } = useI18n()

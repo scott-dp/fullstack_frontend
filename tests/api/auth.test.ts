@@ -2,13 +2,13 @@ import { describe, expect, it, vi } from 'vitest'
 
 const requestMock = vi.fn()
 
-vi.mock('@/api/client', () => ({
+vi.mock('@/api/core/client.ts', () => ({
   request: requestMock,
 }))
 
 describe('authApi', () => {
   it('uses the expected auth endpoints', async () => {
-    const { authApi } = await import('@/api/auth')
+    const { authApi } = await import('../../src/api/auth/auth')
 
     const loginPayload = { identifier: 'alice@example.com', password: 'secret' }
     const registerPayload = { username: 'alice', email: 'alice@example.com', password: 'secret' }

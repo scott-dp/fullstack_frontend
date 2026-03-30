@@ -2,13 +2,13 @@ import { describe, expect, it, vi } from 'vitest'
 
 const requestMock = vi.fn()
 
-vi.mock('@/api/client', () => ({
+vi.mock('@/api/core/client.ts', () => ({
   request: requestMock,
 }))
 
 describe('userApi', () => {
   it('uses the expected user endpoints', async () => {
-    const { userApi } = await import('@/api/users')
+    const { userApi } = await import('../../src/api/auth/users')
 
     userApi.me()
     userApi.updateProfile({ firstName: 'Alice' })

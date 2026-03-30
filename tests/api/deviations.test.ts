@@ -2,13 +2,13 @@ import { describe, expect, it, vi } from 'vitest'
 
 const requestMock = vi.fn()
 
-vi.mock('@/api/client', () => ({
+vi.mock('@/api/core/client.ts', () => ({
   request: requestMock,
 }))
 
 describe('deviationApi', () => {
   it('builds list, CRUD, and comment requests correctly', async () => {
-    const { deviationApi } = await import('@/api/deviations')
+    const { deviationApi } = await import('../../src/api/operations/deviations')
 
     deviationApi.list('OPEN', 'FOOD')
     deviationApi.get(1)
@@ -44,7 +44,7 @@ describe('deviationApi', () => {
   })
 
   it('omits empty list filters from the query string', async () => {
-    const { deviationApi } = await import('@/api/deviations')
+    const { deviationApi } = await import('../../src/api/operations/deviations')
 
     deviationApi.list()
     expect(requestMock).toHaveBeenCalledWith('/deviations')
