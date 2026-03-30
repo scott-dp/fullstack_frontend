@@ -2,7 +2,7 @@
 import { onMounted, ref, computed } from 'vue'
 import { superAdminApi, type OrganizationAdminSummary } from '@/api/superAdmin'
 import { organizationApi, type OrganizationSummary } from '@/api/organizations'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const loading = ref(true)
 const saving = ref(false)
@@ -37,7 +37,12 @@ async function loadData() {
     admins.value = loadedAdmins
     organizations.value = loadedOrganizations
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to load superadmin data'
+    error.value = getErrorMessage(err, {
+      defaultMessage: 'Failed to load superadmin data',
+      byStatus: {
+        403: 'You do not have access to the superadmin dashboard.',
+      },
+    })
   } finally {
     loading.value = false
   }
@@ -68,7 +73,12 @@ async function handleCreate() {
       email: '',
     }
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to create organization admin'
+    error.value = getErrorMessage(err, {
+      defaultMessage: 'Failed to create organization admin',
+      byStatus: {
+        400: 'Could not create the organization admin. Check the form values and use an email that is not already in use.',
+      },
+    })
   } finally {
     saving.value = false
   }
@@ -82,7 +92,12 @@ async function archiveAdmin(adminId: number) {
     await superAdminApi.archiveOrganizationAdmin(adminId)
     admins.value = admins.value.map((admin) => admin.id === adminId ? { ...admin, active: false, setupPending: false } : admin)
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to archive organization admin'
+    error.value = getErrorMessage(err, {
+      defaultMessage: 'Failed to archive organization admin',
+      byStatus: {
+        400: 'This organization admin could not be archived.',
+      },
+    })
   } finally {
     archivingId.value = null
   }

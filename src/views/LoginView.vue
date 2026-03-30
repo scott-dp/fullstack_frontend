@@ -8,7 +8,7 @@ import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const router = useRouter()
 const route = useRoute()
@@ -42,7 +42,12 @@ async function handleSubmit() {
     const redirect = route.query.redirect as string
     router.push(redirect || '/')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Login failed')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Login failed'),
+      byStatus: {
+        401: t('Invalid username, email, or password'),
+      },
+    })
   }
 }
 
@@ -53,7 +58,12 @@ async function requestCode() {
     const response = await auth.requestEmailCode({ email: emailForCode.value })
     codeMessage.value = response.message
   } catch (err: unknown) {
-    codeError.value = err instanceof HttpError ? err.message : 'Failed to send login code'
+    codeError.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to send login code'),
+      byStatus: {
+        400: t('We could not send a login code to that email. Make sure the account exists and the email is verified.'),
+      },
+    })
   }
 }
 
@@ -64,7 +74,13 @@ async function handleEmailCodeLogin() {
     const redirect = route.query.redirect as string
     router.push(redirect || '/')
   } catch (err: unknown) {
-    codeError.value = err instanceof HttpError ? err.message : 'Email code login failed'
+    codeError.value = getErrorMessage(err, {
+      defaultMessage: t('Email code login failed'),
+      byStatus: {
+        400: t('This login code is invalid or has expired. Request a new code and try again.'),
+        401: t('This login code is invalid or has expired. Request a new code and try again.'),
+      },
+    })
   }
 }
 </script>

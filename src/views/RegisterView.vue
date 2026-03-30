@@ -6,7 +6,7 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const auth = useAuthStore()
 const { t } = useI18n()
@@ -43,7 +43,12 @@ async function handleSubmit() {
     })
     success.value = response.message
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : t('Registration failed')
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Registration failed'),
+      byStatus: {
+        400: t('Could not create account. Check your details or try a different username or email.'),
+      },
+    })
   }
 }
 </script>

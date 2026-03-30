@@ -4,11 +4,12 @@
  * a list of their deliveries, and edit/deactivate controls for managers.
  */
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { supplierApi, type Supplier } from '@/api/suppliers'
 import { deliveryApi, type DeliveryRecord } from '@/api/deliveries'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 const route = useRoute()
 const router = useRouter()
@@ -28,6 +29,7 @@ const editing = ref(false)
 const error = ref('')
 /** Whether an update is being submitted. */
 const submitting = ref(false)
+const { t, locale } = useI18n()
 
 /** Edit form fields bound to inputs. */
 const form = ref({
@@ -94,7 +96,13 @@ async function saveEdit() {
     })
     editing.value = false
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to update supplier'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to update supplier'),
+      byStatus: {
+        400: t('Please check the supplier details and try again'),
+        403: t('You do not have permission to manage suppliers'),
+      },
+    })
   } finally {
     submitting.value = false
   }
@@ -107,7 +115,12 @@ async function toggleActive() {
   try {
     supplier.value = await supplierApi.update(supplierId, { active: !supplier.value.active })
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to update supplier'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to update supplier'),
+      byStatus: {
+        403: t('You do not have permission to manage suppliers'),
+      },
+    })
   }
 }
 
@@ -117,7 +130,7 @@ async function toggleActive() {
  * @returns Formatted date string
  */
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString()
+  return new Date(iso).toLocaleDateString(locale.value)
 }
 </script>
 
@@ -125,7 +138,7 @@ function formatDate(iso: string) {
   <div>
     <div class="page-header">
       <h1 v-if="supplier">{{ supplier.name }}</h1>
-      <router-link to="/app/suppliers" class="btn btn-secondary">Back</router-link>
+      <router-link to="/app/suppliers" class="btn btn-secondary">{{ t('Back') }}</router-link>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
@@ -135,45 +148,45 @@ function formatDate(iso: string) {
 
       <!-- Edit mode -->
       <div v-if="editing" class="card">
-        <h2>Edit Supplier</h2>
+        <h2>{{ t('Edit Supplier') }}</h2>
         <form @submit.prevent="saveEdit">
           <div class="form-group">
-            <label class="form-label">Name</label>
+              <label class="form-label">{{ t('Name') }}</label>
             <input v-model="form.name" class="form-input" required maxlength="255" />
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label">Organization Number</label>
+              <label class="form-label">{{ t('Organization Number') }}</label>
               <input v-model="form.organizationNumber" class="form-input" maxlength="50" />
             </div>
             <div class="form-group">
-              <label class="form-label">Contact Name</label>
+              <label class="form-label">{{ t('Contact Name') }}</label>
               <input v-model="form.contactName" class="form-input" maxlength="255" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label">Email</label>
+              <label class="form-label">{{ t('Email') }}</label>
               <input v-model="form.email" class="form-input" type="email" maxlength="255" />
             </div>
             <div class="form-group">
-              <label class="form-label">Phone</label>
+              <label class="form-label">{{ t('Phone') }}</label>
               <input v-model="form.phone" class="form-input" maxlength="50" />
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Address</label>
+            <label class="form-label">{{ t('Address') }}</label>
             <input v-model="form.address" class="form-input" maxlength="500" />
           </div>
           <div class="form-group">
-            <label class="form-label">Notes</label>
+            <label class="form-label">{{ t('Notes') }}</label>
             <textarea v-model="form.notes" class="form-textarea" rows="3" maxlength="2000" />
           </div>
           <div class="action-buttons">
             <button type="submit" class="btn btn-primary" :disabled="submitting">
-              {{ submitting ? 'Saving...' : 'Save' }}
+              {{ submitting ? t('Saving...') : t('Save') }}
             </button>
-            <button type="button" class="btn btn-secondary" @click="cancelEdit">Cancel</button>
+            <button type="button" class="btn btn-secondary" @click="cancelEdit">{{ t('Cancel') }}</button>
           </div>
         </form>
       </div>
@@ -182,28 +195,28 @@ function formatDate(iso: string) {
       <div v-else class="card detail-main">
         <div class="meta-row">
           <span class="status-badge" :class="supplier.active ? 'success' : 'warning'">
-            {{ supplier.active ? 'Active' : 'Inactive' }}
+            {{ supplier.active ? t('Active') : t('Inactive') }}
           </span>
         </div>
         <div class="info-grid">
-          <div><span class="info-label">Organization Number</span><span>{{ supplier.organizationNumber || '-' }}</span></div>
-          <div><span class="info-label">Contact Name</span><span>{{ supplier.contactName || '-' }}</span></div>
-          <div><span class="info-label">Email</span><span>{{ supplier.email || '-' }}</span></div>
-          <div><span class="info-label">Phone</span><span>{{ supplier.phone || '-' }}</span></div>
-          <div><span class="info-label">Address</span><span>{{ supplier.address || '-' }}</span></div>
-          <div><span class="info-label">Created</span><span>{{ formatDate(supplier.createdAt) }}</span></div>
-          <div><span class="info-label">Updated</span><span>{{ formatDate(supplier.updatedAt) }}</span></div>
+          <div><span class="info-label">{{ t('Organization Number') }}</span><span>{{ supplier.organizationNumber || '-' }}</span></div>
+          <div><span class="info-label">{{ t('Contact Name') }}</span><span>{{ supplier.contactName || '-' }}</span></div>
+          <div><span class="info-label">{{ t('Email') }}</span><span>{{ supplier.email || '-' }}</span></div>
+          <div><span class="info-label">{{ t('Phone') }}</span><span>{{ supplier.phone || '-' }}</span></div>
+          <div><span class="info-label">{{ t('Address') }}</span><span>{{ supplier.address || '-' }}</span></div>
+          <div><span class="info-label">{{ t('Created') }}</span><span>{{ formatDate(supplier.createdAt) }}</span></div>
+          <div><span class="info-label">{{ t('Updated') }}</span><span>{{ formatDate(supplier.updatedAt) }}</span></div>
         </div>
         <div v-if="supplier.notes" class="notes-section">
-          <span class="info-label">Notes</span>
+          <span class="info-label">{{ t('Notes') }}</span>
           <p class="description">{{ supplier.notes }}</p>
         </div>
 
         <div v-if="auth.hasManageAccess" class="actions-section">
           <div class="action-buttons">
-            <button class="btn btn-primary btn-sm" @click="startEdit">Edit</button>
+            <button class="btn btn-primary btn-sm" @click="startEdit">{{ t('Edit') }}</button>
             <button class="btn btn-sm" :class="supplier.active ? 'btn-secondary' : 'btn-primary'" @click="toggleActive">
-              {{ supplier.active ? 'Deactivate' : 'Activate' }}
+              {{ supplier.active ? t('Deactivate') : t('Activate') }}
             </button>
           </div>
         </div>
@@ -211,16 +224,16 @@ function formatDate(iso: string) {
 
       <!-- Supplier deliveries -->
       <div class="card" style="margin-top: 16px;">
-        <h2>Deliveries</h2>
-        <div v-if="deliveries.length === 0" class="text-muted text-sm">No deliveries from this supplier yet.</div>
+        <h2>{{ t('Deliveries') }}</h2>
+        <div v-if="deliveries.length === 0" class="text-muted text-sm">{{ t('No deliveries from this supplier yet.') }}</div>
         <div v-else class="table-wrapper">
           <table>
             <thead>
               <tr>
-                <th>Date</th>
-                <th>Document #</th>
-                <th>Received By</th>
-                <th>Items</th>
+                <th>{{ t('Date') }}</th>
+                <th>{{ t('Document #') }}</th>
+                <th>{{ t('Received By') }}</th>
+                <th>{{ t('Items') }}</th>
               </tr>
             </thead>
             <tbody>

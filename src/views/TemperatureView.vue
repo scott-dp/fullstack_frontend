@@ -4,8 +4,9 @@
  * and an inline form for recording new temperature measurements.
  */
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { temperatureApi, type TemperatureLog, type CreateTemperatureLogRequest } from '@/api/temperature'
-import { HttpError } from '@/api/client'
+import { getErrorMessage } from '@/api/client'
 
 /** All temperature log entries loaded from the server. */
 const logs = ref<TemperatureLog[]>([])
@@ -15,6 +16,7 @@ const loading = ref(true)
 const showForm = ref(false)
 /** Error message from the last submission attempt. */
 const error = ref('')
+const { t, locale } = useI18n()
 
 /** Bound location input value for the recording form. */
 const location = ref('')
@@ -42,7 +44,7 @@ onMounted(async () => {
 async function submit() {
   error.value = ''
   if (!location.value || temperature.value === null) {
-    error.value = 'Location and temperature are required'
+    error.value = t('Location and temperature are required')
     return
   }
   try {
@@ -60,7 +62,13 @@ async function submit() {
     temperature.value = null
     comment.value = ''
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to log temperature'
+    error.value = getErrorMessage(err, {
+      defaultMessage: t('Failed to log temperature'),
+      byStatus: {
+        400: t('Please check the temperature details and try again'),
+        403: t('You do not have permission to log temperatures'),
+      },
+    })
   }
 }
 
@@ -81,69 +89,78 @@ function statusClass(status: string) {
  * @returns Formatted date/time string
  */
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleString()
+  return new Date(iso).toLocaleString(locale.value)
+}
+
+function statusLabel(status: string) {
+  const labels: Record<string, string> = {
+    NORMAL: t('Normal'),
+    WARNING: t('Warning'),
+    CRITICAL: t('Critical'),
+  }
+  return labels[status] ?? status
 }
 </script>
 
 <template>
   <div>
     <div class="page-header">
-      <h1>Temperature Logs</h1>
+      <h1>{{ t('Temperature Logs') }}</h1>
       <button class="btn btn-primary" @click="showForm = !showForm">
-        {{ showForm ? 'Cancel' : 'Log Temperature' }}
+        {{ showForm ? t('Cancel') : t('Log Temperature') }}
       </button>
     </div>
 
     <div v-if="showForm" class="card log-form">
-      <h2>Record Temperature</h2>
+      <h2>{{ t('Record Temperature') }}</h2>
       <div v-if="error" class="alert-error">{{ error }}</div>
       <form @submit.prevent="submit">
         <div class="form-row">
           <div class="form-group flex-1">
-            <label class="form-label">Location</label>
-            <input v-model="location" class="form-input" placeholder="e.g., Fridge A, Freezer 1" required />
+            <label class="form-label">{{ t('Location') }}</label>
+            <input v-model="location" class="form-input" :placeholder="t('e.g., Fridge A, Freezer 1')" required />
           </div>
           <div class="form-group">
-            <label class="form-label">Temperature (&deg;C)</label>
+            <label class="form-label">{{ t('Temperature (&deg;C)') }}</label>
             <input v-model.number="temperature" type="number" step="0.1" class="form-input" required />
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Min Threshold (&deg;C)</label>
+            <label class="form-label">{{ t('Min Threshold (&deg;C)') }}</label>
             <input v-model.number="minThreshold" type="number" step="0.1" class="form-input" />
           </div>
           <div class="form-group">
-            <label class="form-label">Max Threshold (&deg;C)</label>
+            <label class="form-label">{{ t('Max Threshold (&deg;C)') }}</label>
             <input v-model.number="maxThreshold" type="number" step="0.1" class="form-input" />
           </div>
           <div class="form-group flex-1">
-            <label class="form-label">Comment (optional)</label>
+            <label class="form-label">{{ t('Comment (optional)') }}</label>
             <input v-model="comment" class="form-input" />
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Record</button>
+        <button type="submit" class="btn btn-primary">{{ t('Record') }}</button>
       </form>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
 
     <div v-else-if="logs.length === 0" class="empty-state">
-      <h3>No temperature logs</h3>
-      <p>Start logging temperatures to track compliance.</p>
+      <h3>{{ t('No temperature logs') }}</h3>
+      <p>{{ t('Start logging temperatures to track compliance.') }}</p>
     </div>
 
     <div v-else class="card table-wrapper">
       <table>
         <thead>
           <tr>
-            <th>Location</th>
-            <th>Temp (&deg;C)</th>
-            <th>Range</th>
-            <th>Status</th>
-            <th>Recorded By</th>
-            <th>Date</th>
-            <th>Comment</th>
+            <th>{{ t('Location') }}</th>
+            <th>{{ t('Temp (&deg;C)') }}</th>
+            <th>{{ t('Range') }}</th>
+            <th>{{ t('Status') }}</th>
+            <th>{{ t('Recorded By') }}</th>
+            <th>{{ t('Date') }}</th>
+            <th>{{ t('Comment') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -151,7 +168,7 @@ function formatDate(iso: string) {
             <td>{{ log.location }}</td>
             <td><strong>{{ log.temperature.toFixed(1) }}</strong></td>
             <td class="text-sm text-muted">{{ log.minThreshold }}&deg; &ndash; {{ log.maxThreshold }}&deg;</td>
-            <td><span class="status-badge" :class="statusClass(log.status)">{{ log.status }}</span></td>
+            <td><span class="status-badge" :class="statusClass(log.status)">{{ statusLabel(log.status) }}</span></td>
             <td>{{ log.recordedByUsername }}</td>
             <td>{{ formatDate(log.recordedAt) }}</td>
             <td>{{ log.comment || '-' }}</td>

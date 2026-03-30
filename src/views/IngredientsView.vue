@@ -7,8 +7,10 @@
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { allergenApi, type Ingredient } from '@/api/allergens'
+import { useI18n } from 'vue-i18n'
 
 const auth = useAuthStore()
+const { t } = useI18n()
 
 /** All ingredients loaded from the server. */
 const ingredients = ref<Ingredient[]>([])
@@ -36,25 +38,25 @@ function formatDate(iso: string) {
 <template>
   <div>
     <div class="page-header">
-      <h1>Ingredients</h1>
-      <router-link v-if="auth.hasManageAccess" to="/app/ingredients/new" class="btn btn-primary">New Ingredient</router-link>
+      <h1>{{ t('Ingredients') }}</h1>
+      <router-link v-if="auth.hasManageAccess" to="/app/ingredients/new" class="btn btn-primary">{{ t('New Ingredient') }}</router-link>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
 
     <div v-else-if="ingredients.length === 0" class="empty-state">
-      <h3>No ingredients found</h3>
-      <p>Add your first ingredient to get started.</p>
+      <h3>{{ t('No ingredients found') }}</h3>
+      <p>{{ t('Add your first ingredient to get started.') }}</p>
     </div>
 
     <div v-else class="card table-wrapper">
       <table>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Allergens</th>
-            <th>Notes</th>
-            <th>Updated</th>
+            <th>{{ t('Name') }}</th>
+            <th>{{ t('Allergens') }}</th>
+            <th>{{ t('Notes') }}</th>
+            <th>{{ t('Updated') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -67,9 +69,9 @@ function formatDate(iso: string) {
             <td><strong>{{ ing.name }}</strong></td>
             <td>
               <span v-for="a in ing.allergens" :key="a.id" class="allergen-badge">{{ a.code }}</span>
-              <span v-if="ing.allergens.length === 0" class="text-muted">None</span>
+              <span v-if="ing.allergens.length === 0" class="text-muted">{{ t('None') }}</span>
             </td>
-            <td>{{ ing.notes || '-' }}</td>
+            <td>{{ ing.notes || t('None') }}</td>
             <td>{{ formatDate(ing.updatedAt) }}</td>
           </tr>
         </tbody>

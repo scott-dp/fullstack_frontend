@@ -69,7 +69,7 @@ describe('AdminSetupView', () => {
     vi.useRealTimers()
   })
 
-  it('shows API errors from setup completion', async () => {
+  it('shows safe frontend errors from setup completion', async () => {
     authApiMock.getAdminSetupInfo.mockResolvedValue({
       email: 'ava@example.com',
       firstName: 'Ava',
@@ -97,6 +97,8 @@ describe('AdminSetupView', () => {
     await fireEvent.update(passwordInputs[1], 'superSecret123')
     await fireEvent.click(screen.getByRole('button', { name: 'Activate account' }))
 
-    expect(await screen.findByText('Setup token has expired')).toBeTruthy()
+    expect(
+      await screen.findByText('This setup link is invalid or has expired. Ask for a new admin invitation.'),
+    ).toBeTruthy()
   })
 })
