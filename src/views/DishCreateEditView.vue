@@ -8,9 +8,11 @@ import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { allergenApi, type Ingredient, type DishIngredientEntry } from '@/api/allergens'
 import { HttpError } from '@/api/client'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const route = useRoute()
+const { t } = useI18n()
 
 /** Dish ID from route params; null when creating a new dish. */
 const dishId = computed(() => {
@@ -98,7 +100,7 @@ function removeIngredient(index: number) {
  * @returns The ingredient name, or 'Unknown'
  */
 function ingredientName(id: number): string {
-  return allIngredients.value.find((i) => i.id === id)?.name || 'Unknown'
+  return allIngredients.value.find((i) => i.id === id)?.name || t('Unknown')
 }
 
 /**
@@ -126,7 +128,7 @@ async function submit() {
     }
     router.push('/app/dishes')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to save dish'
+    error.value = err instanceof HttpError ? err.message : t('Failed to save dish')
   } finally {
     submitting.value = false
   }
@@ -136,8 +138,8 @@ async function submit() {
 <template>
   <div>
     <div class="page-header">
-      <h1>{{ isEdit ? 'Edit Dish' : 'New Dish' }}</h1>
-      <router-link to="/app/dishes" class="btn btn-secondary">Back</router-link>
+      <h1>{{ isEdit ? t('Edit Dish') : t('New Dish') }}</h1>
+      <router-link to="/app/dishes" class="btn btn-secondary">{{ t('Back') }}</router-link>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
@@ -146,48 +148,48 @@ async function submit() {
       <div v-if="error" class="alert-error">{{ error }}</div>
       <form @submit.prevent="submit">
         <div class="form-group">
-          <label class="form-label">Name</label>
-          <input v-model="name" class="form-input" required maxlength="255" placeholder="Dish name" />
+          <label class="form-label">{{ t('Name') }}</label>
+          <input v-model="name" class="form-input" required maxlength="255" :placeholder="t('Dish name')" />
         </div>
         <div class="form-group">
-          <label class="form-label">Description</label>
-          <textarea v-model="description" class="form-textarea" rows="3" maxlength="2000" placeholder="Optional description" />
+          <label class="form-label">{{ t('Description') }}</label>
+          <textarea v-model="description" class="form-textarea" rows="3" maxlength="2000" :placeholder="t('Optional description')" />
         </div>
         <div class="form-group">
-          <label class="form-label">Notes</label>
-          <textarea v-model="notes" class="form-textarea" rows="2" maxlength="1000" placeholder="Internal notes" />
+          <label class="form-label">{{ t('Notes') }}</label>
+          <textarea v-model="notes" class="form-textarea" rows="2" maxlength="1000" :placeholder="t('Internal notes')" />
         </div>
 
         <!-- Ingredient selector -->
         <div class="form-group">
-          <label class="form-label">Ingredients</label>
+          <label class="form-label">{{ t('Ingredients') }}</label>
           <div class="ingredient-selector">
             <select class="form-select" @change="addIngredient(Number(($event.target as HTMLSelectElement).value)); ($event.target as HTMLSelectElement).value = ''">
-              <option value="">Add an ingredient...</option>
+              <option value="">{{ t('Add an ingredient...') }}</option>
               <option v-for="ing in availableIngredients" :key="ing.id" :value="ing.id">{{ ing.name }}</option>
             </select>
           </div>
           <div v-if="selectedIngredients.length > 0" class="selected-ingredients">
             <div v-for="(sel, idx) in selectedIngredients" :key="sel.ingredientId" class="ingredient-row">
               <span class="ingredient-name">{{ ingredientName(sel.ingredientId) }}</span>
-              <input v-model="sel.quantityText" class="form-input quantity-input" placeholder="Quantity (optional)" />
-              <button type="button" class="btn btn-sm btn-danger" @click="removeIngredient(idx)">Remove</button>
+              <input v-model="sel.quantityText" class="form-input quantity-input" :placeholder="t('Quantity (optional)')" />
+              <button type="button" class="btn btn-sm btn-danger" @click="removeIngredient(idx)">{{ t('Remove') }}</button>
             </div>
           </div>
-          <div v-else class="text-muted text-sm">No ingredients added yet.</div>
+          <div v-else class="text-muted text-sm">{{ t('No ingredients added yet.') }}</div>
         </div>
 
         <!-- Derived allergens preview -->
         <div class="form-group">
-          <label class="form-label">Derived Allergens (from ingredients)</label>
+          <label class="form-label">{{ t('Derived Allergens (from ingredients)') }}</label>
           <div class="allergen-preview">
             <span v-for="a in derivedAllergens" :key="a.code" class="allergen-badge">{{ a.code }} - {{ a.nameEn }}</span>
-            <span v-if="derivedAllergens.length === 0" class="text-muted">No allergens detected from selected ingredients.</span>
+            <span v-if="derivedAllergens.length === 0" class="text-muted">{{ t('No allergens detected from selected ingredients.') }}</span>
           </div>
         </div>
 
         <button type="submit" class="btn btn-primary" :disabled="submitting">
-          {{ submitting ? 'Saving...' : (isEdit ? 'Update Dish' : 'Create Dish') }}
+          {{ submitting ? t('Saving...') : (isEdit ? t('Update Dish') : t('Create Dish')) }}
         </button>
       </form>
     </div>

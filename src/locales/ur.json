@@ -103,5 +103,355 @@
   "Login failed": "سائن ان ناکام ہو گیا",
   "Digital Internal Control": "ڈیجیٹل اندرونی کنٹرول",
   "for Food & Alcohol Compliance": "خوراک اور الکحل کمپلائنس کے لیے",
-  "Replace paper checklists and manual routines with a structured digital solution. Monitor daily operations, ensure proper documentation, and pass inspections with confidence.": "کاغذی چیک لسٹس اور دستی معمولات کو ایک منظم ڈیجیٹل حل سے بدل دیں۔ روزمرہ کاموں کی نگرانی کریں، درست دستاویزات یقینی بنائیں، اور اعتماد کے ساتھ معائنوں سے گزریں۔"
+  "Replace paper checklists and manual routines with a structured digital solution. Monitor daily operations, ensure proper documentation, and pass inspections with confidence.": "کاغذی چیک لسٹس اور دستی معمولات کو ایک منظم ڈیجیٹل حل سے بدل دیں۔ روزمرہ کاموں کی نگرانی کریں، درست دستاویزات یقینی بنائیں، اور اعتماد کے ساتھ معائنوں سے گزریں۔",
+  "Invitation accepted. Your organization dashboard is now ready.": "دعوت قبول کر لی گئی۔ آپ کی تنظیم کا ڈیش بورڈ اب تیار ہے۔",
+  "Failed to accept invitation": "دعوت قبول نہیں ہو سکی",
+  "You need an invitation from an admin or restaurant manager before you can access restaurant data.": "ریسٹورنٹ کا ڈیٹا دیکھنے سے پہلے آپ کو ایڈمن یا ریسٹورنٹ مینیجر کی دعوت درکار ہے۔",
+  "Checklist Templates": "چیک لسٹ ٹیمپلیٹس",
+  "Active templates": "فعال ٹیمپلیٹس",
+  "Completed Today": "آج مکمل شدہ",
+  "Checklists finished": "مکمل چیک لسٹس",
+  "Temperature Alerts": "درجہ حرارت الرٹس",
+  "Alerts today": "آج کے الرٹس",
+  "Open Deviations": "کھلے انحرافات",
+  "Needing attention": "توجہ درکار",
+  "In Progress": "جاری",
+  "Being resolved": "حل کیا جا رہا ہے",
+  "Unread": "بغیر پڑھے",
+  "Quick Actions": "فوری اقدامات",
+  "Complete Checklist": "چیک لسٹ مکمل کریں",
+  "Complete a daily, weekly, or monthly checklist": "روزانہ، ہفتہ وار یا ماہانہ چیک لسٹ مکمل کریں",
+  "Log Temperature": "درجہ حرارت درج کریں",
+  "Record storage temperature readings": "ذخیرہ کرنے کے درجہ حرارت کی ریڈنگ درج کریں",
+  "Report Deviation": "انحراف رپورٹ کریں",
+  "Report a non-compliance issue": "عدم مطابقت کا مسئلہ رپورٹ کریں",
+  "Dishes": "ڈشز",
+  "Ingredients": "اجزاء",
+  "Allergen Sheet": "الرجن شیٹ",
+  "New Dish": "نئی ڈش",
+  "No dishes found": "کوئی ڈش نہیں ملی",
+  "Add your first dish to get started.": "شروع کرنے کے لیے اپنی پہلی ڈش شامل کریں۔",
+  "Status": "حیثیت",
+  "Approval": "منظوری",
+  "None": "کوئی نہیں",
+  "Active": "فعال",
+  "Inactive": "غیر فعال",
+  "Needs approval": "منظوری درکار ہے",
+  "Approved": "منظور شدہ",
+  "Not approved": "منظور نہیں",
+  "Failed to load dish": "ڈش لوڈ نہیں ہو سکی",
+  "Failed to approve": "منظور نہیں ہو سکا",
+  "Failed to add override": "اووررائیڈ شامل نہیں ہو سکا",
+  "Failed to remove override": "اووررائیڈ ہٹایا نہیں جا سکا",
+  "Delete this dish? This cannot be undone.": "کیا اس ڈش کو حذف کریں؟ یہ واپس نہیں ہو سکے گا۔",
+  "Failed to delete dish": "ڈش حذف نہیں ہو سکی",
+  "Dish Details": "ڈش کی تفصیلات",
+  "Edit": "ترمیم",
+  "Approving...": "منظور کیا جا رہا ہے...",
+  "Approve Allergens": "الرجنز منظور کریں",
+  "Deleting...": "حذف کیا جا رہا ہے...",
+  "Delete": "حذف کریں",
+  "Never approved": "کبھی منظور نہیں ہوئی",
+  "Last approved:": "آخری منظوری:",
+  "by": "کی طرف سے",
+  "No ingredients.": "کوئی اجزاء نہیں۔",
+  "Derived Allergens": "ماخوذ الرجنز",
+  "No allergens.": "کوئی الرجنز نہیں۔",
+  "Allergen Overrides": "الرجن اووررائیڈز",
+  "Included": "شامل",
+  "Excluded": "خارج",
+  "Remove": "ہٹائیں",
+  "No overrides.": "کوئی اووررائیڈ نہیں۔",
+  "Add Override": "اووررائیڈ شامل کریں",
+  "Select allergen...": "الرجن منتخب کریں...",
+  "Include": "شامل کریں",
+  "Exclude": "خارج کریں",
+  "Reason...": "وجہ...",
+  "Add": "شامل کریں",
+  "Unknown": "نامعلوم",
+  "Failed to save dish": "ڈش محفوظ نہیں ہو سکی",
+  "Edit Dish": "ڈش میں ترمیم کریں",
+  "Back": "واپس",
+  "Dish name": "ڈش کا نام",
+  "Description": "تفصیل",
+  "Optional description": "اختیاری تفصیل",
+  "Notes": "نوٹس",
+  "Internal notes": "اندرونی نوٹس",
+  "Add an ingredient...": "ایک جز شامل کریں...",
+  "Quantity (optional)": "مقدار (اختیاری)",
+  "No ingredients added yet.": "ابھی تک کوئی جز شامل نہیں کیا گیا۔",
+  "Derived Allergens (from ingredients)": "ماخوذ الرجنز (اجزاء سے)",
+  "No allergens detected from selected ingredients.": "منتخب اجزاء سے کوئی الرجن معلوم نہیں ہوا۔",
+  "Saving...": "محفوظ کیا جا رہا ہے...",
+  "Update Dish": "ڈش اپڈیٹ کریں",
+  "Create Dish": "ڈش بنائیں",
+  "New Ingredient": "نیا جز",
+  "No ingredients found": "کوئی جز نہیں ملا",
+  "Add your first ingredient to get started.": "شروع کرنے کے لیے اپنا پہلا جز شامل کریں۔",
+  "Updated": "اپڈیٹ شدہ",
+  "Failed to save ingredient": "جز محفوظ نہیں ہو سکا",
+  "Delete this ingredient? This cannot be undone.": "کیا اس جز کو حذف کریں؟ یہ واپس نہیں ہو سکے گا۔",
+  "Failed to delete ingredient": "جز حذف نہیں ہو سکا",
+  "Edit Ingredient": "جز میں ترمیم کریں",
+  "Ingredient name": "جز کا نام",
+  "Optional notes about this ingredient": "اس جز کے بارے میں اختیاری نوٹس",
+  "Update Ingredient": "جز اپڈیٹ کریں",
+  "Create Ingredient": "جز بنائیں",
+  "Print": "پرنٹ",
+  "No dishes": "کوئی ڈش نہیں",
+  "Add dishes to generate the allergen sheet.": "الرجن شیٹ بنانے کے لیے ڈشز شامل کریں۔",
+  "Allergen Information": "الرجن معلومات",
+  "Dish": "ڈش",
+  "X = contains allergen, - = not present": "X = الرجن موجود ہے، - = موجود نہیں",
+  "Mark all as read": "سب کو پڑھا ہوا نشان زد کریں",
+  "No notifications": "کوئی نوٹیفکیشن نہیں",
+  "You're all caught up.": "آپ مکمل طور پر اپ ڈیٹ ہیں۔",
+  "Temperature Alert": "درجہ حرارت الرٹ",
+  "Deviation Assigned": "انحراف تفویض ہوا",
+  "Training Assigned": "تربیت تفویض ہوئی",
+  "Task Due": "کام کی مدت ختم",
+  "General": "عمومی",
+  "Profile": "پروفائل",
+  "First Name": "پہلا نام",
+  "Last Name": "آخری نام",
+  "Email": "ای میل",
+  "Roles": "کردار",
+  "Profile updated successfully": "پروفائل کامیابی سے اپ ڈیٹ ہو گیا",
+  "Failed to update profile": "پروفائل اپ ڈیٹ نہ ہو سکا",
+  "Save Changes": "تبدیلیاں محفوظ کریں",
+  "Admin Dashboard": "ایڈمن ڈیش بورڈ",
+  "Total Users": "کل صارفین",
+  "In organization": "ادارے میں",
+  "Admins": "ایڈمنز",
+  "Managers": "منیجرز",
+  "Staff": "عملہ",
+  "System administrators": "سسٹم ایڈمنسٹریٹرز",
+  "Compliance managers": "کمپلائنس منیجرز",
+  "Operational staff": "آپریشنل عملہ",
+  "Compliance Overview": "کمپلائنس جائزہ",
+  "Active Templates": "فعال ٹیمپلیٹس",
+  "Checklist templates": "چیک لسٹ ٹیمپلیٹس",
+  "Temp Alerts": "درجہ حرارت الرٹس",
+  "Today": "آج",
+  "Administration": "انتظامیہ",
+  "View and manage user accounts and roles": "صارف اکاؤنٹس اور کردار دیکھیں اور منظم کریں",
+  "Create and manage compliance checklists": "کمپلائنس چیک لسٹس بنائیں اور منظم کریں",
+  "Review and assign open deviations": "کھلے انحرافات کا جائزہ لیں اور تفویض کریں",
+  "Audit History": "آڈٹ ہسٹری",
+  "View checklist completion history": "چیک لسٹ مکمل ہونے کی ہسٹری دیکھیں",
+  "Create Invitation": "دعوت بنائیں",
+  "Superadmins can create manager or staff invites for any restaurant.": "سپر ایڈمن کسی بھی ریسٹورنٹ کے لیے منیجر یا عملے کی دعوتیں بنا سکتے ہیں۔",
+  "Admins can create manager or staff invites for their restaurant.": "ایڈمن اپنے ریسٹورنٹ کے لیے منیجر یا عملے کی دعوتیں بنا سکتے ہیں۔",
+  "Managers can invite staff users into their own restaurant.": "منیجر اپنے ریسٹورنٹ میں عملے کے صارفین کو مدعو کر سکتے ہیں۔",
+  "Role": "کردار",
+  "Manager": "منیجر",
+  "Admin": "ایڈمن",
+  "Superadmin": "سپر ایڈمن",
+  "Restaurant": "ریسٹورنٹ",
+  "Select restaurant": "ریسٹورنٹ منتخب کریں",
+  "Expires in days": "اتنے دن میں ختم",
+  "Creating invite...": "دعوت بنائی جا رہی ہے...",
+  "Create invite": "دعوت بنائیں",
+  "Latest invite token": "تازہ ترین دعوتی ٹوکن",
+  "No users found": "کوئی صارف نہیں ملا",
+  "Name": "نام",
+  "Actions": "اقدامات",
+  "Invitations": "دعوتیں",
+  "Token": "ٹوکن",
+  "Expires": "ختم ہوگا",
+  "Pending": "زیر التوا",
+  "Accepted by {username}": "{username} نے قبول کیا",
+  "No invitations created yet": "ابھی تک کوئی دعوت نہیں بنائی گئی",
+  "Invite created for {organizationName}. Share the token below with the user.": "{organizationName} کے لیے دعوت بن گئی ہے۔ نیچے دیا گیا ٹوکن صارف کے ساتھ شیئر کریں۔",
+  "Failed to create invite": "دعوت بنانے میں ناکامی",
+  "Delete this user? This will remove their access.": "کیا اس صارف کو حذف کریں؟ اس سے اس کی رسائی ختم ہو جائے گی۔",
+  "Failed to delete user": "صارف کو حذف نہ کیا جا سکا"
+  ,"New Supplier": "نیا سپلائر"
+  ,"All Suppliers": "تمام سپلائرز"
+  ,"No suppliers found": "کوئی سپلائر نہیں ملا"
+  ,"No suppliers match your filters.": "آپ کے فلٹرز سے کوئی سپلائر مطابقت نہیں رکھتا۔"
+  ,"Org. Number": "ادارہ نمبر"
+  ,"Contact": "رابطہ"
+  ,"Organization Number": "ادارہ نمبر"
+  ,"Contact Name": "رابطہ شخص کا نام"
+  ,"Supplier company name": "سپلائر کمپنی کا نام"
+  ,"e.g. 123 456 789": "مثلاً 123 456 789"
+  ,"Primary contact person": "بنیادی رابطہ شخص"
+  ,"contact@supplier.com": "contact@supplier.com"
+  ,"+47 123 45 678": "+47 123 45 678"
+  ,"Address": "پتہ"
+  ,"Street address, city": "گلی کا پتہ، شہر"
+  ,"Internal notes about this supplier": "اس سپلائر کے بارے میں اندرونی نوٹس"
+  ,"Creating...": "بنایا جا رہا ہے..."
+  ,"Create Supplier": "سپلائر بنائیں"
+  ,"Failed to create supplier": "سپلائر بنانے میں ناکامی"
+  ,"Edit Supplier": "سپلائر میں ترمیم"
+  ,"Failed to update supplier": "سپلائر اپڈیٹ نہ ہو سکا"
+  ,"Save": "محفوظ کریں"
+  ,"Deactivate": "غیر فعال کریں"
+  ,"Activate": "فعال کریں"
+  ,"No deliveries from this supplier yet.": "اس سپلائر سے ابھی تک کوئی ڈیلیوری نہیں آئی۔"
+  ,"New Delivery": "نئی ڈیلیوری"
+  ,"No deliveries found": "کوئی ڈیلیوری نہیں ملی"
+  ,"No delivery records have been created yet.": "ابھی تک کوئی ڈیلیوری ریکارڈ نہیں بنایا گیا۔"
+  ,"Document #": "دستاویز نمبر"
+  ,"Received By": "موصول کرنے والا"
+  ,"Document Number": "دستاویز نمبر"
+  ,"Invoice or delivery note number": "انوائس یا ڈیلیوری نوٹ نمبر"
+  ,"Optional notes about this delivery": "اس ڈیلیوری کے بارے میں اختیاری نوٹس"
+  ,"Please select a supplier": "براہ کرم ایک سپلائر منتخب کریں"
+  ,"Please enter a delivery date": "براہ کرم ڈیلیوری کی تاریخ درج کریں"
+  ,"Please add at least one item with a product name": "براہ کرم پروڈکٹ نام کے ساتھ کم از کم ایک آئٹم شامل کریں"
+  ,"Select a supplier": "ایک سپلائر منتخب کریں"
+  ,"Delivery Date": "ڈیلیوری کی تاریخ"
+  ,"Product Name": "پروڈکٹ کا نام"
+  ,"Product name": "پروڈکٹ کا نام"
+  ,"Quantity": "مقدار"
+  ,"Qty": "مقدار"
+  ,"Unit": "اکائی"
+  ,"kg, pcs, L": "kg, pcs, L"
+  ,"Batch/Lot": "بیچ/لاٹ"
+  ,"Batch / Lot Number": "بیچ / لاٹ نمبر"
+  ,"Batch or lot number": "بیچ یا لاٹ نمبر"
+  ,"Expiry Date": "اختتامی تاریخ"
+  ,"Create Delivery": "ڈیلیوری بنائیں"
+  ,"Failed to create delivery": "ڈیلیوری بنانے میں ناکامی"
+  ,"Delivery Detail": "ڈیلیوری کی تفصیل"
+  ,"No items recorded.": "کوئی آئٹمز ریکارڈ نہیں ہوئیں۔"
+  ,"Traceability Search": "ٹریس ایبلٹی تلاش"
+  ,"Search by product name": "پروڈکٹ نام سے تلاش کریں"
+  ,"Search by batch or lot number": "بیچ یا لاٹ نمبر سے تلاش کریں"
+  ,"Please enter a product name or batch/lot number to search": "تلاش کے لیے پروڈکٹ نام یا بیچ/لاٹ نمبر درج کریں"
+  ,"Search failed": "تلاش ناکام ہو گئی"
+  ,"No results found": "کوئی نتائج نہیں ملے"
+  ,"No delivery items match your search criteria.": "آپ کے تلاش کے معیار سے کوئی ڈیلیوری آئٹم مطابقت نہیں رکھتا۔"
+  ,"View Delivery": "ڈیلیوری دیکھیں"
+  ,"Training Templates": "تربیتی سانچے"
+  ,"No training templates found": "کوئی تربیتی سانچہ نہیں ملا"
+  ,"Create your first training template to get started.": "شروع کرنے کے لیے اپنا پہلا تربیتی سانچہ بنائیں۔"
+  ,"Mandatory": "لازمی"
+  ,"Valid for {days} days": "{days} دن کے لیے مؤثر"
+  ,"Acknowledgment required": "تصدیق درکار ہے"
+  ,"All Staff": "تمام عملہ"
+  ,"IK-Alkohol": "IK-الکحل"
+  ,"Food Hygiene": "خوراکی صفائی"
+  ,"HACCP Awareness": "HACCP آگاہی"
+  ,"Intoxication Handling": "نشے کی حالت کا انتظام"
+  ,"License Rules": "لائسنس کے قواعد"
+  ,"Responsible Hosting": "ذمہ دار سروس"
+  ,"Custom": "حسب ضرورت"
+  ,"New Training Template": "نیا تربیتی سانچہ"
+  ,"Title is required": "عنوان ضروری ہے"
+  ,"e.g. Basic food hygiene": "مثلاً بنیادی خوراکی صفائی"
+  ,"Training Content": "تربیتی مواد"
+  ,"Full training material text...": "تربیتی مواد کا مکمل متن..."
+  ,"Required For": "کس کے لیے ضروری"
+  ,"Validity (days)": "مدت (دن)"
+  ,"e.g. 365": "مثلاً 365"
+  ,"Mandatory training": "لازمی تربیت"
+  ,"Requires acknowledgment": "تصدیق درکار ہے"
+  ,"Training Template": "تربیتی سانچہ"
+  ,"Failed to load training template": "تربیتی سانچہ لوڈ نہ ہو سکا"
+  ,"Delete this training template? This will also remove its assignments.": "کیا یہ تربیتی سانچہ حذف کریں؟ اس سے اس کی اسائنمنٹس بھی ختم ہو جائیں گی۔"
+  ,"Failed to delete training template": "تربیتی سانچہ حذف نہ ہو سکا"
+  ,"No description provided.": "کوئی وضاحت فراہم نہیں کی گئی۔"
+  ,"No training content added yet.": "ابھی تک کوئی تربیتی مواد شامل نہیں کیا گیا۔"
+  ,"Template Details": "سانچے کی تفصیلات"
+  ,"Validity": "مدت"
+  ,"No expiry": "کوئی اختتام نہیں"
+  ,"Acknowledgment": "تصدیق"
+  ,"Required": "ضروری"
+  ,"Not required": "ضروری نہیں"
+  ,"Assign Training": "تربیت تفویض کریں"
+  ,"Failed to load data": "ڈیٹا لوڈ نہ ہو سکا"
+  ,"Select at least one user": "کم از کم ایک صارف منتخب کریں"
+  ,"Training assigned to {count} user(s)": "{count} صارفین کو تربیت تفویض کر دی گئی"
+  ,"Failed to assign training": "تربیت تفویض نہ ہو سکی"
+  ,"Select Users": "صارفین منتخب کریں"
+  ,"Select All": "سب منتخب کریں"
+  ,"Deselect All": "سب ہٹائیں"
+  ,"{count} selected": "{count} منتخب"
+  ,"Due Date (optional)": "آخری تاریخ (اختیاری)"
+  ,"Assigning...": "تفویض کیا جا رہا ہے..."
+  ,"Assign to {count} user(s)": "{count} صارفین کو تفویض کریں"
+  ,"No training assignments": "کوئی تربیتی اسائنمنٹ نہیں"
+  ,"You have no training assigned to you.": "آپ کو کوئی تربیت تفویض نہیں کی گئی۔"
+  ,"Assigned": "تفویض شدہ"
+  ,"Overdue": "مدت گزر چکی"
+  ,"Assigned by {username} on {date}": "{date} کو {username} کی طرف سے تفویض کیا گیا"
+  ,"Due: {date}": "آخری تاریخ: {date}"
+  ,"Mark as Completed": "مکمل نشان زد کریں"
+  ,"I have read and understood this training": "میں نے یہ تربیت پڑھ لی اور سمجھ لی ہے"
+  ,"Comments (optional)...": "تبصرے (اختیاری)..."
+  ,"Completing...": "مکمل کیا جا رہا ہے..."
+  ,"Confirm Completion": "تکمیل کی تصدیق کریں"
+  ,"Failed to complete training": "تربیت مکمل نہ ہو سکی"
+  ,"Training Report": "تربیتی رپورٹ"
+  ,"Templates": "سانچے"
+  ,"Active training templates": "فعال تربیتی سانچے"
+  ,"Total Assignments": "کل اسائنمنٹس"
+  ,"All time": "ہر وقت"
+  ,"Training completed": "تربیت مکمل"
+  ,"Completion Rate": "تکمیل کی شرح"
+  ,"Overall": "مجموعی"
+  ,"Failed to load bevilling information.": "لائسنس کی معلومات لوڈ نہ ہو سکیں۔"
+  ,"Edit License": "لائسنس میں ترمیم"
+  ,"Manage Conditions": "شرائط کا انتظام"
+  ,"No active bevilling": "کوئی فعال لائسنس نہیں"
+  ,"No active alcohol license has been registered for your organization.": "آپ کی تنظیم کے لیے کوئی فعال الکحل لائسنس رجسٹر نہیں ہوا۔"
+  ,"Register License": "لائسنس رجسٹر کریں"
+  ,"This license expired {days} days ago. Please renew immediately.": "یہ لائسنس {days} دن پہلے ختم ہو گیا۔ براہ کرم فوراً تجدید کریں۔"
+  ,"This license expires in {days} days. Consider starting the renewal process.": "یہ لائسنس {days} دن میں ختم ہو جائے گا۔ تجدید کا عمل شروع کرنے پر غور کریں۔"
+  ,"Municipality": "بلدیہ"
+  ,"License Number": "لائسنس نمبر"
+  ,"Valid From": "سے مؤثر"
+  ,"Valid To": "تک مؤثر"
+  ,"Indefinite": "غیر معینہ"
+  ,"License Manager": "لائسنس مینیجر"
+  ,"Deputy": "نائب"
+  ,"Indoor": "اندرونی"
+  ,"Outdoor": "بیرونی"
+  ,"Serving Area": "سروس ایریا"
+  ,"Alcohol Groups Allowed": "اجازت یافتہ الکحل گروپس"
+  ,"Conditions": "شرائط"
+  ,"No conditions registered.": "کوئی شرائط رجسٹر نہیں ہوئیں۔"
+  ,"No serving hours configured.": "سروس کے اوقات ترتیب نہیں دیے گئے۔"
+  ,"Monday": "پیر"
+  ,"Tuesday": "منگل"
+  ,"Wednesday": "بدھ"
+  ,"Thursday": "جمعرات"
+  ,"Friday": "جمعہ"
+  ,"Saturday": "ہفتہ"
+  ,"Sunday": "اتوار"
+  ,"On-premises License": "مقام کے اندر سروس لائسنس"
+  ,"Off-premises License": "مقام کے باہر فروخت لائسنس"
+  ,"Combined License": "مشترکہ لائسنس"
+  ,"Edit Bevilling": "لائسنس میں ترمیم"
+  ,"Register Bevilling": "لائسنس رجسٹر کریں"
+  ,"License Type": "لائسنس کی قسم"
+  ,"Combined": "مشترکہ"
+  ,"Valid To (optional)": "تک مؤثر (اختیاری)"
+  ,"Full name": "پورا نام"
+  ,"Indoor serving allowed": "اندرونی سروس کی اجازت"
+  ,"Outdoor serving allowed": "بیرونی سروس کی اجازت"
+  ,"Serving Area Description": "سروس ایریا کی وضاحت"
+  ,"Describe the serving area": "سروس ایریا کی وضاحت کریں"
+  ,"Any additional notes": "اضافی نوٹس"
+  ,"to": "سے"
+  ,"Update Bevilling": "لائسنس اپڈیٹ کریں"
+  ,"Failed to save bevilling": "لائسنس محفوظ نہ ہو سکا"
+  ,"Bevilling Conditions": "لائسنس کی شرائط"
+  ,"Failed to load bevilling.": "لائسنس لوڈ نہ ہو سکا۔"
+  ,"Failed to add condition": "شرط شامل نہ ہو سکی"
+  ,"Failed to update condition": "شرط اپڈیٹ نہ ہو سکی"
+  ,"Security Guard": "سکیورٹی گارڈ"
+  ,"Food Requirement": "خوراک کی شرط"
+  ,"Area Limitation": "علاقے کی حد"
+  ,"Event Limitation": "تقریب کی حد"
+  ,"Training Requirement": "تربیت کی شرط"
+  ,"Condition title": "شرط کا عنوان"
+  ,"Detailed description (optional)": "تفصیلی وضاحت (اختیاری)"
+  ,"Adding...": "شامل کیا جا رہا ہے..."
+  ,"Add Condition": "شرط شامل کریں"
+  ,"No conditions registered yet.": "ابھی تک کوئی شرط رجسٹر نہیں ہوئی۔"
 }

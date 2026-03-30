@@ -5,6 +5,7 @@
  * Redirects to the suppliers list on successful submission.
  */
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { supplierApi } from '@/api/suppliers'
 import { HttpError } from '@/api/client'
@@ -28,6 +29,7 @@ const notes = ref('')
 const error = ref('')
 /** Whether the form is currently being submitted. */
 const submitting = ref(false)
+const { t } = useI18n()
 
 /**
  * Submits the new supplier to the server.
@@ -48,7 +50,7 @@ async function submit() {
     })
     router.push('/app/suppliers')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to create supplier'
+    error.value = err instanceof HttpError ? err.message : t('Failed to create supplier')
   } finally {
     submitting.value = false
   }
@@ -58,47 +60,47 @@ async function submit() {
 <template>
   <div>
     <div class="page-header">
-      <h1>New Supplier</h1>
-      <router-link to="/app/suppliers" class="btn btn-secondary">Back</router-link>
+      <h1>{{ t('New Supplier') }}</h1>
+      <router-link to="/app/suppliers" class="btn btn-secondary">{{ t('Back') }}</router-link>
     </div>
 
     <div class="card">
       <div v-if="error" class="alert-error">{{ error }}</div>
       <form @submit.prevent="submit">
         <div class="form-group">
-          <label class="form-label">Name</label>
-          <input v-model="name" class="form-input" required maxlength="255" placeholder="Supplier company name" />
+          <label class="form-label">{{ t('Name') }}</label>
+          <input v-model="name" class="form-input" required maxlength="255" :placeholder="t('Supplier company name')" />
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Organization Number</label>
-            <input v-model="organizationNumber" class="form-input" maxlength="50" placeholder="e.g. 123 456 789" />
+            <label class="form-label">{{ t('Organization Number') }}</label>
+            <input v-model="organizationNumber" class="form-input" maxlength="50" :placeholder="t('e.g. 123 456 789')" />
           </div>
           <div class="form-group">
-            <label class="form-label">Contact Name</label>
-            <input v-model="contactName" class="form-input" maxlength="255" placeholder="Primary contact person" />
+            <label class="form-label">{{ t('Contact Name') }}</label>
+            <input v-model="contactName" class="form-input" maxlength="255" :placeholder="t('Primary contact person')" />
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Email</label>
-            <input v-model="email" class="form-input" type="email" maxlength="255" placeholder="contact@supplier.com" />
+            <label class="form-label">{{ t('Email') }}</label>
+            <input v-model="email" class="form-input" type="email" maxlength="255" :placeholder="t('contact@supplier.com')" />
           </div>
           <div class="form-group">
-            <label class="form-label">Phone</label>
-            <input v-model="phone" class="form-input" maxlength="50" placeholder="+47 123 45 678" />
+            <label class="form-label">{{ t('Phone') }}</label>
+            <input v-model="phone" class="form-input" maxlength="50" :placeholder="t('+47 123 45 678')" />
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Address</label>
-          <input v-model="address" class="form-input" maxlength="500" placeholder="Street address, city" />
+          <label class="form-label">{{ t('Address') }}</label>
+          <input v-model="address" class="form-input" maxlength="500" :placeholder="t('Street address, city')" />
         </div>
         <div class="form-group">
-          <label class="form-label">Notes</label>
-          <textarea v-model="notes" class="form-textarea" rows="3" maxlength="2000" placeholder="Internal notes about this supplier" />
+          <label class="form-label">{{ t('Notes') }}</label>
+          <textarea v-model="notes" class="form-textarea" rows="3" maxlength="2000" :placeholder="t('Internal notes about this supplier')" />
         </div>
         <button type="submit" class="btn btn-primary" :disabled="submitting">
-          {{ submitting ? 'Creating...' : 'Create Supplier' }}
+          {{ submitting ? t('Creating...') : t('Create Supplier') }}
         </button>
       </form>
     </div>

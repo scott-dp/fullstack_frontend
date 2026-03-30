@@ -108,5 +108,546 @@
   "Invitation token": "Invitation token",
   "Paste invite token here": "Paste invite token here",
   "Joining organization...": "Joining organization...",
-  "Join organization": "Join organization"
+  "Join organization": "Join organization",
+  "Invitation accepted. Your organization dashboard is now ready.": "Invitation accepted. Your organization dashboard is now ready.",
+  "Failed to accept invitation": "Failed to accept invitation",
+  "You need an invitation from an admin or restaurant manager before you can access restaurant data.": "You need an invitation from an admin or restaurant manager before you can access restaurant data.",
+  "Checklist Templates": "Checklist Templates",
+  "Active templates": "Active templates",
+  "Completed Today": "Completed Today",
+  "Checklists finished": "Checklists finished",
+  "Temperature Alerts": "Temperature Alerts",
+  "Alerts today": "Alerts today",
+  "Open Deviations": "Open Deviations",
+  "Needing attention": "Needing attention",
+  "In Progress": "In Progress",
+  "Being resolved": "Being resolved",
+  "Unread": "Unread",
+  "Quick Actions": "Quick Actions",
+  "Complete Checklist": "Complete Checklist",
+  "Complete a daily, weekly, or monthly checklist": "Complete a daily, weekly, or monthly checklist",
+  "Log Temperature": "Log Temperature",
+  "Record storage temperature readings": "Record storage temperature readings",
+  "Report Deviation": "Report Deviation",
+  "Report a non-compliance issue": "Report a non-compliance issue",
+  "Dishes": "Dishes",
+  "Ingredients": "Ingredients",
+  "Allergen Sheet": "Allergen Sheet",
+  "New Dish": "New Dish",
+  "No dishes found": "No dishes found",
+  "Add your first dish to get started.": "Add your first dish to get started.",
+  "Status": "Status",
+  "Approval": "Approval",
+  "None": "None",
+  "Active": "Active",
+  "Inactive": "Inactive",
+  "Needs approval": "Needs approval",
+  "Approved": "Approved",
+  "Not approved": "Not approved",
+  "Failed to load dish": "Failed to load dish",
+  "Failed to approve": "Failed to approve",
+  "Failed to add override": "Failed to add override",
+  "Failed to remove override": "Failed to remove override",
+  "Delete this dish? This cannot be undone.": "Delete this dish? This cannot be undone.",
+  "Failed to delete dish": "Failed to delete dish",
+  "Dish Details": "Dish Details",
+  "Edit": "Edit",
+  "Approving...": "Approving...",
+  "Approve Allergens": "Approve Allergens",
+  "Deleting...": "Deleting...",
+  "Delete": "Delete",
+  "Never approved": "Never approved",
+  "Last approved:": "Last approved:",
+  "by": "by",
+  "No ingredients.": "No ingredients.",
+  "Derived Allergens": "Derived Allergens",
+  "No allergens.": "No allergens.",
+  "Allergen Overrides": "Allergen Overrides",
+  "Included": "Included",
+  "Excluded": "Excluded",
+  "Remove": "Remove",
+  "No overrides.": "No overrides.",
+  "Add Override": "Add Override",
+  "Select allergen...": "Select allergen...",
+  "Include": "Include",
+  "Exclude": "Exclude",
+  "Reason...": "Reason...",
+  "Add": "Add",
+  "Unknown": "Unknown",
+  "Failed to save dish": "Failed to save dish",
+  "Edit Dish": "Edit Dish",
+  "Back": "Back",
+  "Dish name": "Dish name",
+  "Description": "Description",
+  "Optional description": "Optional description",
+  "Notes": "Notes",
+  "Internal notes": "Internal notes",
+  "Add an ingredient...": "Add an ingredient...",
+  "Quantity (optional)": "Quantity (optional)",
+  "No ingredients added yet.": "No ingredients added yet.",
+  "Derived Allergens (from ingredients)": "Derived Allergens (from ingredients)",
+  "No allergens detected from selected ingredients.": "No allergens detected from selected ingredients.",
+  "Saving...": "Saving...",
+  "Update Dish": "Update Dish",
+  "Create Dish": "Create Dish",
+  "New Ingredient": "New Ingredient",
+  "No ingredients found": "No ingredients found",
+  "Add your first ingredient to get started.": "Add your first ingredient to get started.",
+  "Updated": "Updated",
+  "Failed to save ingredient": "Failed to save ingredient",
+  "Delete this ingredient? This cannot be undone.": "Delete this ingredient? This cannot be undone.",
+  "Failed to delete ingredient": "Failed to delete ingredient",
+  "Edit Ingredient": "Edit Ingredient",
+  "Ingredient name": "Ingredient name",
+  "Optional notes about this ingredient": "Optional notes about this ingredient",
+  "Update Ingredient": "Update Ingredient",
+  "Create Ingredient": "Create Ingredient",
+  "Print": "Print",
+  "No dishes": "No dishes",
+  "Add dishes to generate the allergen sheet.": "Add dishes to generate the allergen sheet.",
+  "Allergen Information": "Allergen Information",
+  "Dish": "Dish",
+  "X = contains allergen, - = not present": "X = contains allergen, - = not present",
+  "Mark all as read": "Mark all as read",
+  "No notifications": "No notifications",
+  "You're all caught up.": "You're all caught up.",
+  "Temperature Alert": "Temperature Alert",
+  "Deviation Assigned": "Deviation Assigned",
+  "Training Assigned": "Training Assigned",
+  "Task Due": "Task Due",
+  "General": "General",
+  "Profile": "Profile",
+  "First Name": "First Name",
+  "Last Name": "Last Name",
+  "Email": "Email",
+  "Roles": "Roles",
+  "Profile updated successfully": "Profile updated successfully",
+  "Failed to update profile": "Failed to update profile",
+  "Save Changes": "Save Changes",
+  "Admin Dashboard": "Admin Dashboard",
+  "Total Users": "Total Users",
+  "In organization": "In organization",
+  "Admins": "Admins",
+  "Managers": "Managers",
+  "Staff": "Staff",
+  "System administrators": "System administrators",
+  "Compliance managers": "Compliance managers",
+  "Operational staff": "Operational staff",
+  "Compliance Overview": "Compliance Overview",
+  "Active Templates": "Active Templates",
+  "Checklist templates": "Checklist templates",
+  "Temp Alerts": "Temp Alerts",
+  "Today": "Today",
+  "Administration": "Administration",
+  "View and manage user accounts and roles": "View and manage user accounts and roles",
+  "Create and manage compliance checklists": "Create and manage compliance checklists",
+  "Review and assign open deviations": "Review and assign open deviations",
+  "Audit History": "Audit History",
+  "View checklist completion history": "View checklist completion history",
+  "Create Invitation": "Create Invitation",
+  "Superadmins can create manager or staff invites for any restaurant.": "Superadmins can create manager or staff invites for any restaurant.",
+  "Admins can create manager or staff invites for their restaurant.": "Admins can create manager or staff invites for their restaurant.",
+  "Managers can invite staff users into their own restaurant.": "Managers can invite staff users into their own restaurant.",
+  "Role": "Role",
+  "Manager": "Manager",
+  "Admin": "Admin",
+  "Superadmin": "Superadmin",
+  "Restaurant": "Restaurant",
+  "Select restaurant": "Select restaurant",
+  "Expires in days": "Expires in days",
+  "Creating invite...": "Creating invite...",
+  "Create invite": "Create invite",
+  "Latest invite token": "Latest invite token",
+  "No users found": "No users found",
+  "Name": "Name",
+  "Actions": "Actions",
+  "Invitations": "Invitations",
+  "Token": "Token",
+  "Expires": "Expires",
+  "Pending": "Pending",
+  "Accepted by {username}": "Accepted by {username}",
+  "No invitations created yet": "No invitations created yet",
+  "Invite created for {organizationName}. Share the token below with the user.": "Invite created for {organizationName}. Share the token below with the user.",
+  "Failed to create invite": "Failed to create invite",
+  "Delete this user? This will remove their access.": "Delete this user? This will remove their access.",
+  "Failed to delete user": "Failed to delete user"
+  ,"New Routine": "New Routine"
+  ,"All Modules": "All Modules"
+  ,"Shared": "Shared"
+  ,"All Categories": "All Categories"
+  ,"Other": "Other"
+  ,"All Status": "All Status"
+  ,"No routines found": "No routines found"
+  ,"No routines match your filters.": "No routines match your filters."
+  ,"Module": "Module"
+  ,"Category": "Category"
+  ,"Responsible": "Responsible"
+  ,"Last Review": "Last Review"
+  ,"Review overdue": "Review overdue"
+  ,"Routine Details": "Routine Details"
+  ,"Archiving...": "Archiving..."
+  ,"Archive": "Archive"
+  ,"Restoring...": "Restoring..."
+  ,"Unarchive": "Unarchive"
+  ,"Failed to load routine": "Failed to load routine"
+  ,"Failed to review routine": "Failed to review routine"
+  ,"Failed to archive routine": "Failed to archive routine"
+  ,"Failed to unarchive routine": "Failed to unarchive routine"
+  ,"Delete this routine? This cannot be undone.": "Delete this routine? This cannot be undone."
+  ,"Failed to delete routine": "Failed to delete routine"
+  ,"Review Interval": "Review Interval"
+  ,"days": "days"
+  ,"Not set": "Not set"
+  ,"Last Reviewed": "Last Reviewed"
+  ,"Created By": "Created By"
+  ,"Created": "Created"
+  ,"Steps": "Steps"
+  ,"What Counts as a Deviation": "What Counts as a Deviation"
+  ,"Corrective Action": "Corrective Action"
+  ,"Required Evidence": "Required Evidence"
+  ,"Review Routine": "Review Routine"
+  ,"Review notes (optional)...": "Review notes (optional)..."
+  ,"Submitting...": "Submitting..."
+  ,"Submit Review": "Submit Review"
+  ,"Review History": "Review History"
+  ,"No reviews yet.": "No reviews yet."
+  ,"Next review:": "Next review:"
+  ,"Name is required": "Name is required"
+  ,"Failed to create routine": "Failed to create routine"
+  ,"IK-Mat": "IK-Mat"
+  ,"Hygiene": "Hygiene"
+  ,"Cleaning": "Cleaning"
+  ,"Traceability": "Traceability"
+  ,"Allergens": "Allergens"
+  ,"Age Control": "Age Control"
+  ,"Intoxication": "Intoxication"
+  ,"Closing": "Closing"
+  ,"BYO Control": "BYO Control"
+  ,"License Conditions": "License Conditions"
+  ,"Security": "Security"
+  ,"Responsible Role": "Responsible Role"
+  ,"Daily": "Daily"
+  ,"Weekly": "Weekly"
+  ,"Monthly": "Monthly"
+  ,"Shift-Based": "Shift-Based"
+  ,"Event-Based": "Event-Based"
+  ,"What this routine covers...": "What this routine covers..."
+  ,"Why this routine exists...": "Why this routine exists..."
+  ,"Step-by-step instructions...": "Step-by-step instructions..."
+  ,"What counts as a deviation?": "What counts as a deviation?"
+  ,"Corrective action": "Corrective action"
+  ,"Required evidence": "Required evidence"
+  ,"Review Interval (days)": "Review Interval (days)"
+  ,"e.g. 30": "e.g. 30"
+  ,"Create Routine": "Create Routine"
+  ,"Failed to update routine": "Failed to update routine"
+  ,"Edit Routine": "Edit Routine"
+  ,"New Template": "New Template"
+  ,"Create Checklist Template": "Create Checklist Template"
+  ,"Title": "Title"
+  ,"Description (optional)": "Description (optional)"
+  ,"Checklist Items": "Checklist Items"
+  ,"Item": "Item"
+  ,"Comment required": "Comment required"
+  ,"Add Item": "Add Item"
+  ,"Create Template": "Create Template"
+  ,"Title and at least one item are required": "Title and at least one item are required"
+  ,"Failed to create template": "Failed to create template"
+  ,"No checklists found": "No checklists found"
+  ,"Create your first checklist template to get started.": "Create your first checklist template to get started."
+  ,"No checklists have been created yet.": "No checklists have been created yet."
+  ,"items": "items"
+  ,"Checklist History": "Checklist History"
+  ,"No completions yet": "No completions yet"
+  ,"Complete your first checklist to see it here.": "Complete your first checklist to see it here."
+  ,"Checklist": "Checklist"
+  ,"Completed By": "Completed By"
+  ,"Date": "Date"
+  ,"Comment": "Comment"
+  ,"Deviation Found": "Deviation Found"
+  ,"Incomplete": "Incomplete"
+  ,"Location and temperature are required": "Location and temperature are required"
+  ,"Failed to log temperature": "Failed to log temperature"
+  ,"Normal": "Normal"
+  ,"Warning": "Warning"
+  ,"Critical": "Critical"
+  ,"Temperature Logs": "Temperature Logs"
+  ,"Record Temperature": "Record Temperature"
+  ,"Location": "Location"
+  ,"e.g., Fridge A, Freezer 1": "e.g., Fridge A, Freezer 1"
+  ,"Temperature (&deg;C)": "Temperature (°C)"
+  ,"Min Threshold (&deg;C)": "Min Threshold (°C)"
+  ,"Max Threshold (&deg;C)": "Max Threshold (°C)"
+  ,"Comment (optional)": "Comment (optional)"
+  ,"Record": "Record"
+  ,"No temperature logs": "No temperature logs"
+  ,"Start logging temperatures to track compliance.": "Start logging temperatures to track compliance."
+  ,"Temp (&deg;C)": "Temp (°C)"
+  ,"Range": "Range"
+  ,"Recorded By": "Recorded By"
+  ,"All Statuses": "All Statuses"
+  ,"Open": "Open"
+  ,"Resolved": "Resolved"
+  ,"Closed": "Closed"
+  ,"Severity": "Severity"
+  ,"Reported By": "Reported By"
+  ,"Assigned To": "Assigned To"
+  ,"No deviations found": "No deviations found"
+  ,"No deviations match your filters.": "No deviations match your filters."
+  ,"Low": "Low"
+  ,"Medium": "Medium"
+  ,"High": "High"
+  ,"Failed to create deviation": "Failed to create deviation"
+  ,"Brief description of the issue": "Brief description of the issue"
+  ,"Detailed description of what happened, where, and any immediate actions taken": "Detailed description of what happened, where, and any immediate actions taken"
+  ,"Update failed": "Update failed"
+  ,"Assignment failed": "Assignment failed"
+  ,"Failed to add comment": "Failed to add comment"
+  ,"Reported by": "Reported by"
+  ,"Assigned to": "Assigned to"
+  ,"Update Status": "Update Status"
+  ,"Resolve": "Resolve"
+  ,"Close": "Close"
+  ,"Reopen": "Reopen"
+  ,"No comments yet.": "No comments yet."
+  ,"Add a comment...": "Add a comment..."
+  ,"Posting...": "Posting..."
+  ,"Post Comment": "Post Comment"
+  ,"Alcohol Incidents": "Alcohol Incidents"
+  ,"View Report": "View Report"
+  ,"Report Incident": "Report Incident"
+  ,"All Types": "All Types"
+  ,"Age Doubt Refusal": "Age Doubt Refusal"
+  ,"Underage Attempt": "Underage Attempt"
+  ,"Intoxication Refusal": "Intoxication Refusal"
+  ,"Guest Removed": "Guest Removed"
+  ,"Suspected Fake ID": "Suspected Fake ID"
+  ,"Brought In Alcohol": "Brought In Alcohol"
+  ,"Outside Licensed Area": "Outside Licensed Area"
+  ,"Alcohol Taken Outside Licensed Area": "Alcohol Taken Outside Licensed Area"
+  ,"Service After Closing Risk": "Service After Closing Risk"
+  ,"No incidents found": "No incidents found"
+  ,"No alcohol incidents match your filters.": "No alcohol incidents match your filters."
+  ,"Type": "Type"
+  ,"Occurred": "Occurred"
+  ,"Follow-up": "Follow-up"
+  ,"Yes": "Yes"
+  ,"No": "No"
+  ,"Failed to create incident": "Failed to create incident"
+  ,"Report Alcohol Incident": "Report Alcohol Incident"
+  ,"When did it occur?": "When did it occur?"
+  ,"Shift": "Shift"
+  ,"e.g. Evening Shift": "e.g. Evening Shift"
+  ,"Location / Area": "Location / Area"
+  ,"e.g. Bar Area": "e.g. Bar Area"
+  ,"Incident Type": "Incident Type"
+  ,"Describe what happened, where, and the circumstances": "Describe what happened, where, and the circumstances"
+  ,"Immediate Action Taken": "Immediate Action Taken"
+  ,"What was done immediately in response?": "What was done immediately in response?"
+  ,"Follow-up required": "Follow-up required"
+  ,"Unassigned": "Unassigned"
+  ,"Follow-up Required": "Follow-up Required"
+  ,"Occurred At": "Occurred At"
+  ,"Linked Deviation": "Linked Deviation"
+  ,"Save Assignment": "Save Assignment"
+  ,"Under Review": "Under Review"
+  ,"Close Incident": "Close Incident"
+  ,"Closing Notes (optional)": "Closing Notes (optional)"
+  ,"Any final notes or summary...": "Any final notes or summary..."
+  ,"Closing...": "Closing..."
+  ,"Confirm Close": "Confirm Close"
+  ,"Failed to close incident": "Failed to close incident"
+  ,"Incident Report": "Incident Report"
+  ,"Failed to load report. You may not have access.": "Failed to load report. You may not have access."
+  ,"Total Incidents": "Total Incidents"
+  ,"Incidents by Type": "Incidents by Type"
+  ,"No incidents recorded yet.": "No incidents recorded yet."
+  ,"New Supplier": "New Supplier"
+  ,"All Suppliers": "All Suppliers"
+  ,"No suppliers found": "No suppliers found"
+  ,"No suppliers match your filters.": "No suppliers match your filters."
+  ,"Org. Number": "Org. Number"
+  ,"Contact": "Contact"
+  ,"Organization Number": "Organization Number"
+  ,"Contact Name": "Contact Name"
+  ,"Supplier company name": "Supplier company name"
+  ,"e.g. 123 456 789": "e.g. 123 456 789"
+  ,"Primary contact person": "Primary contact person"
+  ,"contact@supplier.com": "contact@supplier.com"
+  ,"+47 123 45 678": "+47 123 45 678"
+  ,"Address": "Address"
+  ,"Street address, city": "Street address, city"
+  ,"Internal notes about this supplier": "Internal notes about this supplier"
+  ,"Creating...": "Creating..."
+  ,"Create Supplier": "Create Supplier"
+  ,"Failed to create supplier": "Failed to create supplier"
+  ,"Edit Supplier": "Edit Supplier"
+  ,"Failed to update supplier": "Failed to update supplier"
+  ,"Save": "Save"
+  ,"Deactivate": "Deactivate"
+  ,"Activate": "Activate"
+  ,"No deliveries from this supplier yet.": "No deliveries from this supplier yet."
+  ,"New Delivery": "New Delivery"
+  ,"No deliveries found": "No deliveries found"
+  ,"No delivery records have been created yet.": "No delivery records have been created yet."
+  ,"Document #": "Document #"
+  ,"Received By": "Received By"
+  ,"Document Number": "Document Number"
+  ,"Invoice or delivery note number": "Invoice or delivery note number"
+  ,"Optional notes about this delivery": "Optional notes about this delivery"
+  ,"Please select a supplier": "Please select a supplier"
+  ,"Please enter a delivery date": "Please enter a delivery date"
+  ,"Please add at least one item with a product name": "Please add at least one item with a product name"
+  ,"Select a supplier": "Select a supplier"
+  ,"Delivery Date": "Delivery Date"
+  ,"Product Name": "Product Name"
+  ,"Product name": "Product name"
+  ,"Quantity": "Quantity"
+  ,"Qty": "Qty"
+  ,"Unit": "Unit"
+  ,"kg, pcs, L": "kg, pcs, L"
+  ,"Batch/Lot": "Batch/Lot"
+  ,"Batch / Lot Number": "Batch / Lot Number"
+  ,"Batch or lot number": "Batch or lot number"
+  ,"Expiry Date": "Expiry Date"
+  ,"Create Delivery": "Create Delivery"
+  ,"Failed to create delivery": "Failed to create delivery"
+  ,"Delivery Detail": "Delivery Detail"
+  ,"No items recorded.": "No items recorded."
+  ,"Traceability Search": "Traceability Search"
+  ,"Search by product name": "Search by product name"
+  ,"Search by batch or lot number": "Search by batch or lot number"
+  ,"Please enter a product name or batch/lot number to search": "Please enter a product name or batch/lot number to search"
+  ,"Search failed": "Search failed"
+  ,"No results found": "No results found"
+  ,"No delivery items match your search criteria.": "No delivery items match your search criteria."
+  ,"View Delivery": "View Delivery"
+  ,"Training Templates": "Training Templates"
+  ,"No training templates found": "No training templates found"
+  ,"Create your first training template to get started.": "Create your first training template to get started."
+  ,"Mandatory": "Mandatory"
+  ,"Valid for {days} days": "Valid for {days} days"
+  ,"Acknowledgment required": "Acknowledgment required"
+  ,"All Staff": "All Staff"
+  ,"IK-Alkohol": "IK-Alkohol"
+  ,"Food Hygiene": "Food Hygiene"
+  ,"HACCP Awareness": "HACCP Awareness"
+  ,"Intoxication Handling": "Intoxication Handling"
+  ,"License Rules": "License Rules"
+  ,"Responsible Hosting": "Responsible Hosting"
+  ,"Custom": "Custom"
+  ,"New Training Template": "New Training Template"
+  ,"Title is required": "Title is required"
+  ,"e.g. Basic food hygiene": "e.g. Basic food hygiene"
+  ,"Training Content": "Training Content"
+  ,"Full training material text...": "Full training material text..."
+  ,"Required For": "Required For"
+  ,"Validity (days)": "Validity (days)"
+  ,"e.g. 365": "e.g. 365"
+  ,"Mandatory training": "Mandatory training"
+  ,"Requires acknowledgment": "Requires acknowledgment"
+  ,"Training Template": "Training Template"
+  ,"Failed to load training template": "Failed to load training template"
+  ,"Delete this training template? This will also remove its assignments.": "Delete this training template? This will also remove its assignments."
+  ,"Failed to delete training template": "Failed to delete training template"
+  ,"No description provided.": "No description provided."
+  ,"No training content added yet.": "No training content added yet."
+  ,"Template Details": "Template Details"
+  ,"Validity": "Validity"
+  ,"No expiry": "No expiry"
+  ,"Acknowledgment": "Acknowledgment"
+  ,"Required": "Required"
+  ,"Not required": "Not required"
+  ,"Assign Training": "Assign Training"
+  ,"Failed to load data": "Failed to load data"
+  ,"Select at least one user": "Select at least one user"
+  ,"Training assigned to {count} user(s)": "Training assigned to {count} user(s)"
+  ,"Failed to assign training": "Failed to assign training"
+  ,"Select Users": "Select Users"
+  ,"Select All": "Select All"
+  ,"Deselect All": "Deselect All"
+  ,"{count} selected": "{count} selected"
+  ,"Due Date (optional)": "Due Date (optional)"
+  ,"Assigning...": "Assigning..."
+  ,"Assign to {count} user(s)": "Assign to {count} user(s)"
+  ,"No training assignments": "No training assignments"
+  ,"You have no training assigned to you.": "You have no training assigned to you."
+  ,"Assigned": "Assigned"
+  ,"Overdue": "Overdue"
+  ,"Assigned by {username} on {date}": "Assigned by {username} on {date}"
+  ,"Due: {date}": "Due: {date}"
+  ,"Mark as Completed": "Mark as Completed"
+  ,"I have read and understood this training": "I have read and understood this training"
+  ,"Comments (optional)...": "Comments (optional)..."
+  ,"Completing...": "Completing..."
+  ,"Confirm Completion": "Confirm Completion"
+  ,"Failed to complete training": "Failed to complete training"
+  ,"Training Report": "Training Report"
+  ,"Templates": "Templates"
+  ,"Active training templates": "Active training templates"
+  ,"Total Assignments": "Total Assignments"
+  ,"All time": "All time"
+  ,"Training completed": "Training completed"
+  ,"Completion Rate": "Completion Rate"
+  ,"Overall": "Overall"
+  ,"Failed to load bevilling information.": "Failed to load bevilling information."
+  ,"Edit License": "Edit License"
+  ,"Manage Conditions": "Manage Conditions"
+  ,"No active bevilling": "No active bevilling"
+  ,"No active alcohol license has been registered for your organization.": "No active alcohol license has been registered for your organization."
+  ,"Register License": "Register License"
+  ,"This license expired {days} days ago. Please renew immediately.": "This license expired {days} days ago. Please renew immediately."
+  ,"This license expires in {days} days. Consider starting the renewal process.": "This license expires in {days} days. Consider starting the renewal process."
+  ,"Municipality": "Municipality"
+  ,"License Number": "License Number"
+  ,"Valid From": "Valid From"
+  ,"Valid To": "Valid To"
+  ,"Indefinite": "Indefinite"
+  ,"License Manager": "License Manager"
+  ,"Deputy": "Deputy"
+  ,"Indoor": "Indoor"
+  ,"Outdoor": "Outdoor"
+  ,"Serving Area": "Serving Area"
+  ,"Alcohol Groups Allowed": "Alcohol Groups Allowed"
+  ,"Conditions": "Conditions"
+  ,"No conditions registered.": "No conditions registered."
+  ,"No serving hours configured.": "No serving hours configured."
+  ,"Monday": "Monday"
+  ,"Tuesday": "Tuesday"
+  ,"Wednesday": "Wednesday"
+  ,"Thursday": "Thursday"
+  ,"Friday": "Friday"
+  ,"Saturday": "Saturday"
+  ,"Sunday": "Sunday"
+  ,"On-premises License": "On-premises License"
+  ,"Off-premises License": "Off-premises License"
+  ,"Combined License": "Combined License"
+  ,"Edit Bevilling": "Edit Bevilling"
+  ,"Register Bevilling": "Register Bevilling"
+  ,"License Type": "License Type"
+  ,"Combined": "Combined"
+  ,"Valid To (optional)": "Valid To (optional)"
+  ,"Full name": "Full name"
+  ,"Indoor serving allowed": "Indoor serving allowed"
+  ,"Outdoor serving allowed": "Outdoor serving allowed"
+  ,"Serving Area Description": "Serving Area Description"
+  ,"Describe the serving area": "Describe the serving area"
+  ,"Any additional notes": "Any additional notes"
+  ,"to": "to"
+  ,"Update Bevilling": "Update Bevilling"
+  ,"Failed to save bevilling": "Failed to save bevilling"
+  ,"Bevilling Conditions": "Bevilling Conditions"
+  ,"Failed to load bevilling.": "Failed to load bevilling."
+  ,"Failed to add condition": "Failed to add condition"
+  ,"Failed to update condition": "Failed to update condition"
+  ,"Security Guard": "Security Guard"
+  ,"Food Requirement": "Food Requirement"
+  ,"Area Limitation": "Area Limitation"
+  ,"Event Limitation": "Event Limitation"
+  ,"Training Requirement": "Training Requirement"
+  ,"Condition title": "Condition title"
+  ,"Detailed description (optional)": "Detailed description (optional)"
+  ,"Adding...": "Adding..."
+  ,"Add Condition": "Add Condition"
+  ,"No conditions registered yet.": "No conditions registered yet."
 }

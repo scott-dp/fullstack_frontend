@@ -4,6 +4,7 @@
  * in the organization with their roles. Accessible only to admins.
  */
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { userApi, type UserSummary } from '@/api/users'
 import { organizationInviteApi, type OrganizationInvite } from '@/api/organizationInvites'
 import { organizationApi, type OrganizationSummary } from '@/api/organizations'
@@ -25,6 +26,7 @@ const createInviteError = ref('')
 const createInviteSuccess = ref('')
 const latestInviteToken = ref('')
 const deletingUserId = ref<number | null>(null)
+const { t, locale } = useI18n()
 
 onMounted(async () => {
   try {
@@ -55,64 +57,89 @@ async function createInvite() {
     })
     invites.value = [invite, ...invites.value]
     latestInviteToken.value = invite.token
-    createInviteSuccess.value = `Invite created for ${invite.organizationName}. Share the token below with the user.`
+    createInviteSuccess.value = t('Invite created for {organizationName}. Share the token below with the user.', {
+      organizationName: invite.organizationName,
+    })
   } catch (err: unknown) {
-    createInviteError.value = err instanceof HttpError ? err.message : 'Failed to create invite'
+    createInviteError.value = err instanceof HttpError ? err.message : t('Failed to create invite')
   } finally {
     creatingInvite.value = false
   }
 }
 
 async function deleteUser(userId: number) {
-  if (!window.confirm('Delete this user? This will remove their access.')) return
+  if (!window.confirm(t('Delete this user? This will remove their access.'))) return
   deletingUserId.value = userId
   createInviteError.value = ''
   try {
     await userApi.delete(userId)
     users.value = users.value.filter((user) => user.id !== userId)
   } catch (err: unknown) {
-    createInviteError.value = err instanceof HttpError ? err.message : 'Failed to delete user'
+    createInviteError.value = err instanceof HttpError ? err.message : t('Failed to delete user')
   } finally {
     deletingUserId.value = null
   }
+}
+
+function roleLabel(roleName: string) {
+  const labels: Record<string, string> = {
+    ROLE_ADMIN: t('Admin'),
+    ROLE_MANAGER: t('Manager'),
+    ROLE_STAFF: t('Staff'),
+    ROLE_SUPERADMIN: t('Superadmin'),
+  }
+  return labels[roleName] ?? roleName.replace('ROLE_', '')
+}
+
+function invitationStatus(invite: OrganizationInvite) {
+  if (!invite.accepted) return t('Pending')
+  return t('Accepted by {username}', { username: invite.acceptedByUsername })
+}
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleString(locale.value)
 }
 </script>
 
 <template>
   <div>
     <div class="page-header">
-      <h1>User Management</h1>
+      <h1>{{ t('User Management') }}</h1>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
 
     <template v-else>
       <div class="card invite-card">
-        <h2>Create Invitation</h2>
+        <h2>{{ t('Create Invitation') }}</h2>
         <p class="text-muted">
-          {{ auth.isSuperAdmin ? 'Superadmins can create manager or staff invites for any restaurant.' : auth.isAdmin ? 'Admins can create manager or staff invites for their restaurant.' : 'Managers can invite staff users into their own restaurant.' }}
+          {{ auth.isSuperAdmin
+            ? t('Superadmins can create manager or staff invites for any restaurant.')
+            : auth.isAdmin
+              ? t('Admins can create manager or staff invites for their restaurant.')
+              : t('Managers can invite staff users into their own restaurant.') }}
         </p>
         <div v-if="createInviteSuccess" class="alert-success">{{ createInviteSuccess }}</div>
         <div v-if="createInviteError" class="alert-error">{{ createInviteError }}</div>
         <form class="invite-grid" @submit.prevent="createInvite">
           <div class="form-group">
-            <label class="form-label">Role</label>
+            <label class="form-label">{{ t('Role') }}</label>
             <select v-model="role" class="form-input" :disabled="!auth.hasManageAccess || creatingInvite">
-              <option v-if="auth.isAdmin || auth.isSuperAdmin" value="ROLE_MANAGER">Manager</option>
-              <option value="ROLE_STAFF">Staff</option>
+              <option v-if="auth.isAdmin || auth.isSuperAdmin" value="ROLE_MANAGER">{{ t('Manager') }}</option>
+              <option value="ROLE_STAFF">{{ t('Staff') }}</option>
             </select>
           </div>
           <div class="form-group" v-if="auth.isSuperAdmin">
-            <label class="form-label">Restaurant</label>
+            <label class="form-label">{{ t('Restaurant') }}</label>
             <select v-model="organizationId" class="form-input" :disabled="creatingInvite">
-              <option :value="null" disabled>Select restaurant</option>
+              <option :value="null" disabled>{{ t('Select restaurant') }}</option>
               <option v-for="organization in organizations" :key="organization.id" :value="organization.id">
                 {{ organization.name }}
               </option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Expires in days</label>
+            <label class="form-label">{{ t('Expires in days') }}</label>
             <input v-model.number="expiresInDays" class="form-input" type="number" min="1" max="30" :disabled="creatingInvite" />
           </div>
           <div class="invite-actions">
@@ -121,19 +148,19 @@ async function deleteUser(userId: number) {
               class="btn btn-primary"
               :disabled="creatingInvite || (auth.isSuperAdmin && !organizationId)"
             >
-              {{ creatingInvite ? 'Creating invite...' : 'Create invite' }}
+              {{ creatingInvite ? t('Creating invite...') : t('Create invite') }}
             </button>
           </div>
         </form>
 
         <div v-if="latestInviteToken" class="token-box">
-          <label class="form-label">Latest invite token</label>
+          <label class="form-label">{{ t('Latest invite token') }}</label>
           <code>{{ latestInviteToken }}</code>
         </div>
       </div>
 
       <div v-if="users.length === 0" class="empty-state">
-        <h3>No users found</h3>
+        <h3>{{ t('No users found') }}</h3>
       </div>
 
       <div v-else class="card table-wrapper">
@@ -141,10 +168,10 @@ async function deleteUser(userId: number) {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Username</th>
-              <th>Name</th>
-              <th>Roles</th>
-              <th v-if="auth.isAdmin">Actions</th>
+              <th>{{ t('Username') }}</th>
+              <th>{{ t('Name') }}</th>
+              <th>{{ t('Roles') }}</th>
+              <th v-if="auth.isAdmin">{{ t('Actions') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -154,7 +181,7 @@ async function deleteUser(userId: number) {
               <td>{{ [u.firstName, u.lastName].filter(Boolean).join(' ') || '-' }}</td>
               <td>
                 <span v-for="role in u.roles" :key="role" class="status-badge info role-badge">
-                  {{ role.replace('ROLE_', '') }}
+                  {{ roleLabel(role) }}
                 </span>
               </td>
               <td v-if="auth.isAdmin">
@@ -164,7 +191,7 @@ async function deleteUser(userId: number) {
                   :disabled="deletingUserId === u.id"
                   @click="deleteUser(u.id)"
                 >
-                  {{ deletingUserId === u.id ? 'Deleting...' : 'Delete' }}
+                  {{ deletingUserId === u.id ? t('Deleting...') : t('Delete') }}
                 </button>
               </td>
             </tr>
@@ -173,29 +200,29 @@ async function deleteUser(userId: number) {
       </div>
 
       <div class="card table-wrapper">
-        <h2>Invitations</h2>
+        <h2>{{ t('Invitations') }}</h2>
         <table v-if="invites.length > 0">
           <thead>
             <tr>
-              <th>Restaurant</th>
-              <th>Role</th>
-              <th>Token</th>
-              <th>Status</th>
-              <th>Expires</th>
+              <th>{{ t('Restaurant') }}</th>
+              <th>{{ t('Role') }}</th>
+              <th>{{ t('Token') }}</th>
+              <th>{{ t('Status') }}</th>
+              <th>{{ t('Expires') }}</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="invite in invites" :key="invite.id">
               <td>{{ invite.organizationName }}</td>
-              <td>{{ invite.role.replace('ROLE_', '') }}</td>
+              <td>{{ roleLabel(invite.role) }}</td>
               <td><code>{{ invite.token }}</code></td>
-              <td>{{ invite.accepted ? `Accepted by ${invite.acceptedByUsername}` : 'Pending' }}</td>
-              <td>{{ new Date(invite.expiresAt).toLocaleString() }}</td>
+              <td>{{ invitationStatus(invite) }}</td>
+              <td>{{ formatDate(invite.expiresAt) }}</td>
             </tr>
           </tbody>
         </table>
         <div v-else class="empty-state compact-empty">
-          <h3>No invitations created yet</h3>
+          <h3>{{ t('No invitations created yet') }}</h3>
         </div>
       </div>
     </template>

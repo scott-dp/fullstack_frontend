@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { routineApi } from '@/api/routines'
 import { HttpError } from '@/api/client'
@@ -7,6 +8,7 @@ import { HttpError } from '@/api/client'
 const router = useRouter()
 const error = ref('')
 const saving = ref(false)
+const { t } = useI18n()
 
 const form = ref({
   name: '',
@@ -43,7 +45,7 @@ const alkoholCategories = [
 async function handleSubmit() {
   error.value = ''
   if (!form.value.name.trim()) {
-    error.value = 'Name is required'
+    error.value = t('Name is required')
     return
   }
 
@@ -55,7 +57,7 @@ async function handleSubmit() {
     })
     router.push(`/app/routines/${routine.id}`)
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to create routine'
+    error.value = err instanceof HttpError ? err.message : t('Failed to create routine')
   } finally {
     saving.value = false
   }
@@ -65,106 +67,106 @@ async function handleSubmit() {
 <template>
   <div>
     <div class="page-header">
-      <h1>New Routine</h1>
+      <h1>{{ t('New Routine') }}</h1>
     </div>
 
     <form class="card routine-form" @submit.prevent="handleSubmit">
       <div v-if="error" class="alert-error">{{ error }}</div>
 
       <div class="form-group">
-        <label class="form-label">Name *</label>
-        <input v-model="form.name" class="form-input" required maxlength="255" placeholder="e.g. Morning fridge temperature control" />
+        <label class="form-label">{{ t('Name') }} *</label>
+        <input v-model="form.name" class="form-input" required maxlength="255" :placeholder="t('e.g. Morning fridge temperature control')" />
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Module *</label>
+          <label class="form-label">{{ t('Module') }} *</label>
           <select v-model="form.moduleType" class="form-select">
-            <option value="IK_MAT">IK-Mat (Food)</option>
-            <option value="IK_ALKOHOL">IK-Alkohol</option>
-            <option value="SHARED">Shared</option>
+            <option value="IK_MAT">{{ t('IK-Mat (Food)') }}</option>
+            <option value="IK_ALKOHOL">{{ t('IK-Alkohol') }}</option>
+            <option value="SHARED">{{ t('Shared') }}</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Category *</label>
+          <label class="form-label">{{ t('Category') }} *</label>
           <select v-model="form.category" class="form-select">
-            <optgroup label="IK-Mat">
-              <option v-for="c in matCategories" :key="c.value" :value="c.value">{{ c.label }}</option>
+            <optgroup :label="t('IK-Mat')">
+              <option v-for="c in matCategories" :key="c.value" :value="c.value">{{ t(c.label) }}</option>
             </optgroup>
-            <optgroup label="IK-Alkohol">
-              <option v-for="c in alkoholCategories" :key="c.value" :value="c.value">{{ c.label }}</option>
+            <optgroup :label="t('IK-Alkohol')">
+              <option v-for="c in alkoholCategories" :key="c.value" :value="c.value">{{ t(c.label) }}</option>
             </optgroup>
-            <option value="OTHER">Other</option>
+            <option value="OTHER">{{ t('Other') }}</option>
           </select>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Responsible Role *</label>
+          <label class="form-label">{{ t('Responsible Role') }} *</label>
           <select v-model="form.responsibleRole" class="form-select">
-            <option value="ADMIN">Admin</option>
-            <option value="MANAGER">Manager</option>
-            <option value="STAFF">Staff</option>
-            <option value="ALL">All</option>
+            <option value="ADMIN">{{ t('Admin') }}</option>
+            <option value="MANAGER">{{ t('Manager') }}</option>
+            <option value="STAFF">{{ t('Staff') }}</option>
+            <option value="ALL">{{ t('All') }}</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Frequency *</label>
+          <label class="form-label">{{ t('Frequency') }} *</label>
           <select v-model="form.frequencyType" class="form-select">
-            <option value="NONE">None</option>
-            <option value="DAILY">Daily</option>
-            <option value="WEEKLY">Weekly</option>
-            <option value="MONTHLY">Monthly</option>
-            <option value="SHIFT_BASED">Shift-Based</option>
-            <option value="EVENT_BASED">Event-Based</option>
+            <option value="NONE">{{ t('None') }}</option>
+            <option value="DAILY">{{ t('Daily') }}</option>
+            <option value="WEEKLY">{{ t('Weekly') }}</option>
+            <option value="MONTHLY">{{ t('Monthly') }}</option>
+            <option value="SHIFT_BASED">{{ t('Shift-Based') }}</option>
+            <option value="EVENT_BASED">{{ t('Event-Based') }}</option>
           </select>
         </div>
       </div>
 
       <div class="form-group">
-        <label class="form-label">Description</label>
-        <textarea v-model="form.description" class="form-textarea" rows="2" maxlength="2000" placeholder="What this routine covers..." />
+        <label class="form-label">{{ t('Description') }}</label>
+        <textarea v-model="form.description" class="form-textarea" rows="2" maxlength="2000" :placeholder="t('What this routine covers...')" />
       </div>
 
       <div class="form-group">
-        <label class="form-label">Purpose</label>
-        <textarea v-model="form.purpose" class="form-textarea" rows="2" maxlength="1000" placeholder="Why this routine exists..." />
+        <label class="form-label">{{ t('Purpose') }}</label>
+        <textarea v-model="form.purpose" class="form-textarea" rows="2" maxlength="1000" :placeholder="t('Why this routine exists...')" />
       </div>
 
       <div class="form-group">
-        <label class="form-label">Steps</label>
-        <textarea v-model="form.stepsText" class="form-textarea" rows="4" maxlength="4000" placeholder="Step-by-step instructions..." />
+        <label class="form-label">{{ t('Steps') }}</label>
+        <textarea v-model="form.stepsText" class="form-textarea" rows="4" maxlength="4000" :placeholder="t('Step-by-step instructions...')" />
       </div>
 
       <div class="form-group">
-        <label class="form-label">What counts as a deviation?</label>
+        <label class="form-label">{{ t('What counts as a deviation?') }}</label>
         <textarea v-model="form.whatIsDeviationText" class="form-textarea" rows="2" maxlength="2000" />
       </div>
 
       <div class="form-group">
-        <label class="form-label">Corrective action</label>
+        <label class="form-label">{{ t('Corrective action') }}</label>
         <textarea v-model="form.correctiveActionText" class="form-textarea" rows="2" maxlength="2000" />
       </div>
 
       <div class="form-group">
-        <label class="form-label">Required evidence</label>
+        <label class="form-label">{{ t('Required evidence') }}</label>
         <textarea v-model="form.requiredEvidenceText" class="form-textarea" rows="2" maxlength="2000" />
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Review Interval (days)</label>
-          <input v-model.number="form.reviewIntervalDays" type="number" class="form-input" min="1" max="365" placeholder="e.g. 30" />
+          <label class="form-label">{{ t('Review Interval (days)') }}</label>
+          <input v-model.number="form.reviewIntervalDays" type="number" class="form-input" min="1" max="365" :placeholder="t('e.g. 30')" />
         </div>
       </div>
 
       <div class="form-actions">
-        <button type="button" class="btn btn-secondary" @click="router.push('/app/routines')">Cancel</button>
+        <button type="button" class="btn btn-secondary" @click="router.push('/app/routines')">{{ t('Cancel') }}</button>
         <button type="submit" class="btn btn-primary" :disabled="saving">
-          {{ saving ? 'Creating...' : 'Create Routine' }}
+          {{ saving ? t('Creating...') : t('Create Routine') }}
         </button>
       </div>
     </form>

@@ -4,11 +4,13 @@
  * (first name, last name, email). Displays read-only username and roles.
  */
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { userApi } from '@/api/users'
 import { HttpError } from '@/api/client'
 
 const auth = useAuthStore()
+const { t } = useI18n()
 /** Bound first name input value. */
 const firstName = ref('')
 /** Bound last name input value. */
@@ -45,9 +47,9 @@ async function save() {
       email: email.value,
     })
     auth.user = updated
-    success.value = 'Profile updated successfully'
+    success.value = t('Profile updated successfully')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to update profile'
+    error.value = err instanceof HttpError ? err.message : t('Failed to update profile')
   } finally {
     saving.value = false
   }
@@ -57,32 +59,32 @@ async function save() {
 <template>
   <div>
     <div class="page-header">
-      <h1>Settings</h1>
+      <h1>{{ t('Settings') }}</h1>
     </div>
 
     <div class="card" style="max-width: 500px;">
-      <h2>Profile</h2>
+      <h2>{{ t('Profile') }}</h2>
       <div v-if="success" class="alert-success">{{ success }}</div>
       <div v-if="error" class="alert-error">{{ error }}</div>
       <form @submit.prevent="save">
         <div class="form-group">
-          <label class="form-label">Username</label>
+          <label class="form-label">{{ t('Username') }}</label>
           <input :value="auth.user?.username" class="form-input" disabled />
         </div>
         <div class="form-group">
-          <label class="form-label">First Name</label>
+          <label class="form-label">{{ t('First Name') }}</label>
           <input v-model="firstName" class="form-input" maxlength="100" />
         </div>
         <div class="form-group">
-          <label class="form-label">Last Name</label>
+          <label class="form-label">{{ t('Last Name') }}</label>
           <input v-model="lastName" class="form-input" maxlength="100" />
         </div>
         <div class="form-group">
-          <label class="form-label">Email</label>
+          <label class="form-label">{{ t('Email') }}</label>
           <input v-model="email" type="email" class="form-input" maxlength="255" />
         </div>
         <div class="form-group">
-          <label class="form-label">Roles</label>
+          <label class="form-label">{{ t('Roles') }}</label>
           <div class="roles-display">
             <span v-for="role in auth.user?.roles" :key="role" class="status-badge info">
               {{ role.replace('ROLE_', '') }}
@@ -90,7 +92,7 @@ async function save() {
           </div>
         </div>
         <button type="submit" class="btn btn-primary" :disabled="saving">
-          {{ saving ? 'Saving...' : 'Save Changes' }}
+          {{ saving ? t('Saving...') : t('Save Changes') }}
         </button>
       </form>
     </div>

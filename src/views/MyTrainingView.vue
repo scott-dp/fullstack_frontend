@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { trainingApi, type TrainingAssignment } from '@/api/trainings'
 import { HttpError } from '@/api/client'
 
@@ -11,6 +12,7 @@ const error = ref('')
 const showAck = ref<number | null>(null)
 const ackChecked = ref(false)
 const ackComments = ref('')
+const { t, locale } = useI18n()
 
 const filtered = computed(() => {
   return assignments.value.filter((a: TrainingAssignment) => {
@@ -35,7 +37,7 @@ function statusClass(s: string) {
 }
 
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString()
+  return new Date(iso).toLocaleDateString(locale.value)
 }
 
 function startComplete(id: number) {
@@ -54,7 +56,7 @@ async function handleComplete(assignmentId: number) {
     if (idx >= 0) assignments.value[idx].status = 'COMPLETED'
     showAck.value = null
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to complete training'
+    error.value = err instanceof HttpError ? err.message : t('Failed to complete training')
   } finally {
     completing.value = null
   }
@@ -64,54 +66,54 @@ async function handleComplete(assignmentId: number) {
 <template>
   <div>
     <div class="page-header">
-      <h1>My Training</h1>
+      <h1>{{ t('My Training') }}</h1>
     </div>
 
     <div class="filter-bar">
       <select v-model="statusFilter" class="form-select">
-        <option value="">All Status</option>
-        <option value="ASSIGNED">Assigned</option>
-        <option value="COMPLETED">Completed</option>
-        <option value="OVERDUE">Overdue</option>
+        <option value="">{{ t('All Status') }}</option>
+        <option value="ASSIGNED">{{ t('Assigned') }}</option>
+        <option value="COMPLETED">{{ t('Completed') }}</option>
+        <option value="OVERDUE">{{ t('Overdue') }}</option>
       </select>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
 
     <div v-else-if="filtered.length === 0" class="empty-state">
-      <h3>No training assignments</h3>
-      <p>You have no training assigned to you.</p>
+      <h3>{{ t('No training assignments') }}</h3>
+      <p>{{ t('You have no training assigned to you.') }}</p>
     </div>
 
     <div v-else class="assignments-list">
       <div v-for="a in filtered" :key="a.id" class="card assignment-card">
         <div class="assignment-header">
           <h3>{{ a.templateTitle }}</h3>
-          <span class="status-badge" :class="statusClass(a.status)">{{ a.status }}</span>
+          <span class="status-badge" :class="statusClass(a.status)">{{ t(a.status.charAt(0) + a.status.slice(1).toLowerCase()) }}</span>
         </div>
         <div class="assignment-meta">
-          <span>Assigned by {{ a.assignedByUsername }} on {{ formatDate(a.assignedAt) }}</span>
-          <span v-if="a.dueAt">Due: {{ formatDate(a.dueAt) }}</span>
+          <span>{{ t('Assigned by {username} on {date}', { username: a.assignedByUsername, date: formatDate(a.assignedAt) }) }}</span>
+          <span v-if="a.dueAt">{{ t('Due: {date}', { date: formatDate(a.dueAt) }) }}</span>
         </div>
 
         <div v-if="a.status === 'ASSIGNED' || a.status === 'OVERDUE'">
           <button v-if="showAck !== a.id" class="btn btn-primary btn-sm" @click="startComplete(a.id)">
-            Mark as Completed
+            {{ t('Mark as Completed') }}
           </button>
 
           <div v-else class="ack-form">
             <div v-if="error" class="alert-error">{{ error }}</div>
             <label class="checkbox-label">
               <input v-model="ackChecked" type="checkbox" />
-              I have read and understood this training
+              {{ t('I have read and understood this training') }}
             </label>
             <div class="form-group">
-              <textarea v-model="ackComments" class="form-textarea" rows="2" placeholder="Comments (optional)..." />
+              <textarea v-model="ackComments" class="form-textarea" rows="2" :placeholder="t('Comments (optional)...')" />
             </div>
             <div style="display: flex; gap: 8px;">
-              <button class="btn btn-secondary btn-sm" @click="showAck = null">Cancel</button>
+              <button class="btn btn-secondary btn-sm" @click="showAck = null">{{ t('Cancel') }}</button>
               <button class="btn btn-primary btn-sm" :disabled="completing === a.id" @click="handleComplete(a.id)">
-                {{ completing === a.id ? 'Completing...' : 'Confirm Completion' }}
+                {{ completing === a.id ? t('Completing...') : t('Confirm Completion') }}
               </button>
             </div>
           </div>

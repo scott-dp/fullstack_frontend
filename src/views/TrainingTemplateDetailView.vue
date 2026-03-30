@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { trainingApi, type TrainingTemplate } from '@/api/trainings'
 import { useAuthStore } from '@/stores/auth'
@@ -13,6 +14,7 @@ const template = ref<TrainingTemplate | null>(null)
 const loading = ref(true)
 const error = ref('')
 const deleting = ref(false)
+const { t, locale } = useI18n()
 
 const templateId = computed(() => Number(route.params.id))
 
@@ -20,16 +22,16 @@ onMounted(async () => {
   try {
     template.value = await trainingApi.getTemplate(templateId.value)
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to load training template'
+    error.value = err instanceof HttpError ? err.message : t('Failed to load training template')
   } finally {
     loading.value = false
   }
 })
 
 function moduleLabel(mt: string) {
-  if (mt === 'IK_MAT') return 'IK-Mat'
-  if (mt === 'IK_ALKOHOL') return 'IK-Alkohol'
-  return 'Shared'
+  if (mt === 'IK_MAT') return t('IK-Mat')
+  if (mt === 'IK_ALKOHOL') return t('IK-Alkohol')
+  return t('Shared')
 }
 
 function prettyEnum(value: string) {
@@ -37,13 +39,13 @@ function prettyEnum(value: string) {
 }
 
 async function handleDelete() {
-  if (!window.confirm('Delete this training template? This will also remove its assignments.')) return
+  if (!window.confirm(t('Delete this training template? This will also remove its assignments.'))) return
   deleting.value = true
   try {
     await trainingApi.deleteTemplate(templateId.value)
     router.push('/app/training')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to delete training template'
+    error.value = err instanceof HttpError ? err.message : t('Failed to delete training template')
   } finally {
     deleting.value = false
   }
@@ -54,19 +56,19 @@ async function handleDelete() {
   <div>
     <div class="page-header">
       <div>
-        <h1>{{ template?.title || 'Training Template' }}</h1>
+        <h1>{{ template?.title || t('Training Template') }}</h1>
         <p v-if="template" class="text-muted">
           {{ moduleLabel(template.moduleType) }} · {{ prettyEnum(template.category) }}
         </p>
       </div>
       <div class="actions">
-        <button type="button" class="btn btn-secondary" @click="router.push('/app/training')">Back</button>
+        <button type="button" class="btn btn-secondary" @click="router.push('/app/training')">{{ t('Back') }}</button>
         <router-link
           v-if="auth.hasManageAccess && template"
           :to="`/app/training/templates/${template.id}/assign`"
           class="btn btn-primary"
         >
-          Assign Training
+          {{ t('Assign Training') }}
         </router-link>
         <button
           v-if="auth.hasManageAccess && template"
@@ -75,7 +77,7 @@ async function handleDelete() {
           :disabled="deleting"
           @click="handleDelete"
         >
-          {{ deleting ? 'Deleting...' : 'Delete' }}
+          {{ deleting ? t('Deleting...') : t('Delete') }}
         </button>
       </div>
     </div>
@@ -91,45 +93,45 @@ async function handleDelete() {
         <div class="badges">
           <span class="status-badge info">{{ moduleLabel(template.moduleType) }}</span>
           <span class="status-badge">{{ prettyEnum(template.requiredForRole) }}</span>
-          <span v-if="template.isMandatory" class="status-badge danger">Mandatory</span>
+          <span v-if="template.isMandatory" class="status-badge danger">{{ t('Mandatory') }}</span>
           <span class="status-badge" :class="template.active ? 'success' : 'warning'">
-            {{ template.active ? 'Active' : 'Inactive' }}
+            {{ template.active ? t('Active') : t('Inactive') }}
           </span>
         </div>
 
         <div class="section">
-          <h3>Description</h3>
-          <p class="text-muted">{{ template.description || 'No description provided.' }}</p>
+          <h3>{{ t('Description') }}</h3>
+          <p class="text-muted">{{ template.description || t('No description provided.') }}</p>
         </div>
 
         <div class="section">
-          <h3>Training Content</h3>
-          <p class="content">{{ template.contentText || 'No training content added yet.' }}</p>
+          <h3>{{ t('Training Content') }}</h3>
+          <p class="content">{{ template.contentText || t('No training content added yet.') }}</p>
         </div>
       </section>
 
       <aside class="card meta-card">
-        <h3>Template Details</h3>
+        <h3>{{ t('Template Details') }}</h3>
         <dl class="meta-list">
           <div>
-            <dt>Category</dt>
+            <dt>{{ t('Category') }}</dt>
             <dd>{{ prettyEnum(template.category) }}</dd>
           </div>
           <div>
-            <dt>Validity</dt>
-            <dd>{{ template.validityDays ? `${template.validityDays} days` : 'No expiry' }}</dd>
+            <dt>{{ t('Validity') }}</dt>
+            <dd>{{ template.validityDays ? t('Valid for {days} days', { days: template.validityDays }) : t('No expiry') }}</dd>
           </div>
           <div>
-            <dt>Acknowledgment</dt>
-            <dd>{{ template.acknowledgmentRequired ? 'Required' : 'Not required' }}</dd>
+            <dt>{{ t('Acknowledgment') }}</dt>
+            <dd>{{ template.acknowledgmentRequired ? t('Required') : t('Not required') }}</dd>
           </div>
           <div>
-            <dt>Created</dt>
-            <dd>{{ new Date(template.createdAt).toLocaleString() }}</dd>
+            <dt>{{ t('Created') }}</dt>
+            <dd>{{ new Date(template.createdAt).toLocaleString(locale) }}</dd>
           </div>
           <div>
-            <dt>Updated</dt>
-            <dd>{{ new Date(template.updatedAt).toLocaleString() }}</dd>
+            <dt>{{ t('Updated') }}</dt>
+            <dd>{{ new Date(template.updatedAt).toLocaleString(locale) }}</dd>
           </div>
         </dl>
       </aside>

@@ -5,6 +5,7 @@
  * user assignment, and a threaded comment section.
  */
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { deviationApi, type Deviation } from '@/api/deviations'
@@ -30,6 +31,7 @@ const commentError = ref('')
 const updateError = ref('')
 /** Whether a comment is currently being submitted. */
 const submittingComment = ref(false)
+const { t, locale } = useI18n()
 
 onMounted(async () => {
   try {
@@ -51,7 +53,7 @@ async function updateStatus(newStatus: string) {
   try {
     deviation.value = await deviationApi.update(deviationId, { status: newStatus })
   } catch (err: unknown) {
-    updateError.value = err instanceof HttpError ? err.message : 'Update failed'
+    updateError.value = err instanceof HttpError ? err.message : t('Update failed')
   }
 }
 
@@ -64,7 +66,7 @@ async function assign(userId: number | undefined) {
   try {
     deviation.value = await deviationApi.update(deviationId, { assignedToId: userId })
   } catch (err: unknown) {
-    updateError.value = err instanceof HttpError ? err.message : 'Assignment failed'
+    updateError.value = err instanceof HttpError ? err.message : t('Assignment failed')
   }
 }
 
@@ -78,7 +80,7 @@ async function addComment() {
     deviation.value?.comments.push(comment)
     newComment.value = ''
   } catch (err: unknown) {
-    commentError.value = err instanceof HttpError ? err.message : 'Failed to add comment'
+    commentError.value = err instanceof HttpError ? err.message : t('Failed to add comment')
   } finally {
     submittingComment.value = false
   }
@@ -112,7 +114,31 @@ function statusClass(s: string) {
  * @returns Formatted date/time string
  */
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleString()
+  return new Date(iso).toLocaleString(locale.value)
+}
+
+function statusLabel(status: string) {
+  const labels: Record<string, string> = {
+    OPEN: t('Open'),
+    IN_PROGRESS: t('In Progress'),
+    RESOLVED: t('Resolved'),
+    CLOSED: t('Closed'),
+  }
+  return labels[status] ?? status
+}
+
+function severityLabel(severity: string) {
+  const labels: Record<string, string> = {
+    LOW: t('Low'),
+    MEDIUM: t('Medium'),
+    HIGH: t('High'),
+    CRITICAL: t('Critical'),
+  }
+  return labels[severity] ?? severity
+}
+
+function categoryLabel(category: string) {
+  return category === 'FOOD' ? t('IK-Mat') : t('IK-Alkohol')
 }
 </script>
 
@@ -120,7 +146,7 @@ function formatDate(iso: string) {
   <div>
     <div class="page-header">
       <h1 v-if="deviation">{{ deviation.title }}</h1>
-      <router-link to="/app/deviations" class="btn btn-secondary">Back</router-link>
+      <router-link to="/app/deviations" class="btn btn-secondary">{{ t('Back') }}</router-link>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
@@ -129,36 +155,36 @@ function formatDate(iso: string) {
       <div class="detail-grid">
         <div class="card detail-main">
           <div class="meta-row">
-            <span class="status-badge" :class="severityClass(deviation.severity)">{{ deviation.severity }}</span>
-            <span class="status-badge" :class="statusClass(deviation.status)">{{ deviation.status.replace('_', ' ') }}</span>
+            <span class="status-badge" :class="severityClass(deviation.severity)">{{ severityLabel(deviation.severity) }}</span>
+            <span class="status-badge" :class="statusClass(deviation.status)">{{ statusLabel(deviation.status) }}</span>
             <span class="status-badge" :class="deviation.category === 'FOOD' ? 'success' : 'warning'">
-              {{ deviation.category === 'FOOD' ? 'IK-Mat' : 'IK-Alkohol' }}
+              {{ categoryLabel(deviation.category) }}
             </span>
           </div>
           <p class="description">{{ deviation.description }}</p>
           <div class="info-grid">
-            <div><span class="info-label">Reported by</span><span>{{ deviation.reportedByUsername }}</span></div>
-            <div><span class="info-label">Assigned to</span><span>{{ deviation.assignedToUsername || 'Unassigned' }}</span></div>
-            <div><span class="info-label">Created</span><span>{{ formatDate(deviation.createdAt) }}</span></div>
-            <div v-if="deviation.resolvedAt"><span class="info-label">Resolved</span><span>{{ formatDate(deviation.resolvedAt) }} by {{ deviation.resolvedByUsername }}</span></div>
+            <div><span class="info-label">{{ t('Reported by') }}</span><span>{{ deviation.reportedByUsername }}</span></div>
+            <div><span class="info-label">{{ t('Assigned to') }}</span><span>{{ deviation.assignedToUsername || t('Unassigned') }}</span></div>
+            <div><span class="info-label">{{ t('Created') }}</span><span>{{ formatDate(deviation.createdAt) }}</span></div>
+            <div v-if="deviation.resolvedAt"><span class="info-label">{{ t('Resolved') }}</span><span>{{ formatDate(deviation.resolvedAt) }} {{ t('by') }} {{ deviation.resolvedByUsername }}</span></div>
           </div>
 
           <!-- Manager/Admin actions -->
           <div v-if="auth.hasManageAccess" class="actions-section">
             <div v-if="updateError" class="alert-error">{{ updateError }}</div>
             <div class="action-row">
-              <label class="form-label">Update Status</label>
+              <label class="form-label">{{ t('Update Status') }}</label>
               <div class="action-buttons">
-                <button v-if="deviation.status !== 'IN_PROGRESS'" class="btn btn-sm btn-secondary" @click="updateStatus('IN_PROGRESS')">In Progress</button>
-                <button v-if="deviation.status !== 'RESOLVED'" class="btn btn-sm btn-primary" @click="updateStatus('RESOLVED')">Resolve</button>
-                <button v-if="deviation.status !== 'CLOSED'" class="btn btn-sm btn-secondary" @click="updateStatus('CLOSED')">Close</button>
-                <button v-if="deviation.status !== 'OPEN'" class="btn btn-sm btn-secondary" @click="updateStatus('OPEN')">Reopen</button>
+                <button v-if="deviation.status !== 'IN_PROGRESS'" class="btn btn-sm btn-secondary" @click="updateStatus('IN_PROGRESS')">{{ t('In Progress') }}</button>
+                <button v-if="deviation.status !== 'RESOLVED'" class="btn btn-sm btn-primary" @click="updateStatus('RESOLVED')">{{ t('Resolve') }}</button>
+                <button v-if="deviation.status !== 'CLOSED'" class="btn btn-sm btn-secondary" @click="updateStatus('CLOSED')">{{ t('Close') }}</button>
+                <button v-if="deviation.status !== 'OPEN'" class="btn btn-sm btn-secondary" @click="updateStatus('OPEN')">{{ t('Reopen') }}</button>
               </div>
             </div>
             <div class="action-row">
-              <label class="form-label">Assign To</label>
+              <label class="form-label">{{ t('Assign To') }}</label>
               <select class="form-select" @change="assign(Number(($event.target as HTMLSelectElement).value) || undefined)">
-                <option value="">Unassigned</option>
+                <option value="">{{ t('Unassigned') }}</option>
                 <option v-for="u in users" :key="u.id" :value="u.id" :selected="u.username === deviation.assignedToUsername">
                   {{ u.firstName ? u.firstName + ' ' + u.lastName : u.username }}
                 </option>
@@ -170,7 +196,7 @@ function formatDate(iso: string) {
         <!-- Comments -->
         <div class="card comments-section">
           <h2>Comments ({{ deviation.comments.length }})</h2>
-          <div v-if="deviation.comments.length === 0" class="text-muted text-sm">No comments yet.</div>
+          <div v-if="deviation.comments.length === 0" class="text-muted text-sm">{{ t('No comments yet.') }}</div>
           <div v-for="c in deviation.comments" :key="c.id" class="comment">
             <div class="comment-header">
               <strong>{{ c.authorUsername }}</strong>
@@ -180,9 +206,9 @@ function formatDate(iso: string) {
           </div>
           <form @submit.prevent="addComment" class="comment-form">
             <div v-if="commentError" class="alert-error">{{ commentError }}</div>
-            <textarea v-model="newComment" class="form-textarea" rows="2" placeholder="Add a comment..." required />
+            <textarea v-model="newComment" class="form-textarea" rows="2" :placeholder="t('Add a comment...')" required />
             <button type="submit" class="btn btn-primary btn-sm" :disabled="submittingComment">
-              {{ submittingComment ? 'Posting...' : 'Post Comment' }}
+              {{ submittingComment ? t('Posting...') : t('Post Comment') }}
             </button>
           </form>
         </div>

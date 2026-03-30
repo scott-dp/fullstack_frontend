@@ -5,6 +5,7 @@
  * navigate to the supplier detail page. Managers can create new suppliers.
  */
 import { ref, onMounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { supplierApi, type Supplier } from '@/api/suppliers'
 
@@ -16,6 +17,7 @@ const suppliers = ref<Supplier[]>([])
 const loading = ref(true)
 /** Active status filter: '' = all, 'true' = active, 'false' = inactive. */
 const activeFilter = ref('')
+const { t, locale } = useI18n()
 
 /** Suppliers filtered by the selected active status. */
 const filtered = computed(() => {
@@ -40,43 +42,43 @@ onMounted(async () => {
  * @returns Formatted date string
  */
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString()
+  return new Date(iso).toLocaleDateString(locale.value)
 }
 </script>
 
 <template>
   <div>
     <div class="page-header">
-      <h1>Suppliers</h1>
-      <router-link v-if="auth.hasManageAccess" to="/app/suppliers/new" class="btn btn-primary">New Supplier</router-link>
+      <h1>{{ t('Suppliers') }}</h1>
+      <router-link v-if="auth.hasManageAccess" to="/app/suppliers/new" class="btn btn-primary">{{ t('New Supplier') }}</router-link>
     </div>
 
     <div class="filter-bar">
       <select v-model="activeFilter" class="form-select">
-        <option value="">All Suppliers</option>
-        <option value="true">Active</option>
-        <option value="false">Inactive</option>
+        <option value="">{{ t('All Suppliers') }}</option>
+        <option value="true">{{ t('Active') }}</option>
+        <option value="false">{{ t('Inactive') }}</option>
       </select>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
 
     <div v-else-if="filtered.length === 0" class="empty-state">
-      <h3>No suppliers found</h3>
-      <p>No suppliers match your filters.</p>
+      <h3>{{ t('No suppliers found') }}</h3>
+      <p>{{ t('No suppliers match your filters.') }}</p>
     </div>
 
     <div v-else class="card table-wrapper">
       <table>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Org. Number</th>
-            <th>Contact</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Status</th>
-            <th>Created</th>
+            <th>{{ t('Name') }}</th>
+            <th>{{ t('Org. Number') }}</th>
+            <th>{{ t('Contact') }}</th>
+            <th>{{ t('Email') }}</th>
+            <th>{{ t('Phone') }}</th>
+            <th>{{ t('Status') }}</th>
+            <th>{{ t('Created') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -86,7 +88,7 @@ function formatDate(iso: string) {
             <td>{{ s.contactName || '-' }}</td>
             <td>{{ s.email || '-' }}</td>
             <td>{{ s.phone || '-' }}</td>
-            <td><span class="status-badge" :class="s.active ? 'success' : 'warning'">{{ s.active ? 'Active' : 'Inactive' }}</span></td>
+            <td><span class="status-badge" :class="s.active ? 'success' : 'warning'">{{ s.active ? t('Active') : t('Inactive') }}</span></td>
             <td>{{ formatDate(s.createdAt) }}</td>
           </tr>
         </tbody>

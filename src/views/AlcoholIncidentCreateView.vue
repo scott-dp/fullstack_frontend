@@ -5,6 +5,7 @@
  * Redirects to the incidents list on successful submission.
  */
 import { onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { alcoholIncidentApi } from '@/api/alcoholIncidents'
 import { HttpError } from '@/api/client'
@@ -37,6 +38,7 @@ const assignedToId = ref<number | null>(null)
 const error = ref('')
 /** Whether the form is currently being submitted. */
 const submitting = ref(false)
+const { t } = useI18n()
 
 onMounted(async () => {
   if (!auth.hasManageAccess) {
@@ -71,7 +73,7 @@ async function submit() {
     })
     router.push('/app/alcohol-incidents')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to create incident'
+    error.value = err instanceof HttpError ? err.message : t('Failed to create incident')
   } finally {
     submitting.value = false
   }
@@ -81,8 +83,8 @@ async function submit() {
 <template>
   <div>
     <div class="page-header">
-      <h1>Report Alcohol Incident</h1>
-      <router-link to="/app/alcohol-incidents" class="btn btn-secondary">Back</router-link>
+      <h1>{{ t('Report Alcohol Incident') }}</h1>
+      <router-link to="/app/alcohol-incidents" class="btn btn-secondary">{{ t('Back') }}</router-link>
     </div>
 
     <div class="card">
@@ -90,68 +92,68 @@ async function submit() {
       <form @submit.prevent="submit">
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">When did it occur?</label>
+            <label class="form-label">{{ t('When did it occur?') }}</label>
             <input v-model="occurredAt" type="datetime-local" class="form-input" required />
           </div>
           <div class="form-group">
-            <label class="form-label">Shift</label>
-            <input v-model="shiftLabel" class="form-input" placeholder="e.g. Evening Shift" />
+            <label class="form-label">{{ t('Shift') }}</label>
+            <input v-model="shiftLabel" class="form-input" :placeholder="t('e.g. Evening Shift')" />
           </div>
           <div class="form-group">
-            <label class="form-label">Location / Area</label>
-            <input v-model="locationArea" class="form-input" placeholder="e.g. Bar Area" />
+            <label class="form-label">{{ t('Location / Area') }}</label>
+            <input v-model="locationArea" class="form-input" :placeholder="t('e.g. Bar Area')" />
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Incident Type</label>
+            <label class="form-label">{{ t('Incident Type') }}</label>
             <select v-model="incidentType" class="form-select" required>
-              <option value="AGE_DOUBT_REFUSAL">Age Doubt Refusal</option>
-              <option value="UNDERAGE_ATTEMPT">Underage Attempt</option>
-              <option value="INTOXICATION_REFUSAL">Intoxication Refusal</option>
-              <option value="GUEST_REMOVED">Guest Removed</option>
-              <option value="SUSPECTED_FAKE_ID">Suspected Fake ID</option>
-              <option value="BROUGHT_IN_ALCOHOL">Brought In Alcohol</option>
-              <option value="ALCOHOL_TAKEN_OUTSIDE_LICENSED_AREA">Alcohol Taken Outside Licensed Area</option>
-              <option value="SERVICE_AFTER_CLOSING_RISK">Service After Closing Risk</option>
-              <option value="OTHER">Other</option>
+              <option value="AGE_DOUBT_REFUSAL">{{ t('Age Doubt Refusal') }}</option>
+              <option value="UNDERAGE_ATTEMPT">{{ t('Underage Attempt') }}</option>
+              <option value="INTOXICATION_REFUSAL">{{ t('Intoxication Refusal') }}</option>
+              <option value="GUEST_REMOVED">{{ t('Guest Removed') }}</option>
+              <option value="SUSPECTED_FAKE_ID">{{ t('Suspected Fake ID') }}</option>
+              <option value="BROUGHT_IN_ALCOHOL">{{ t('Brought In Alcohol') }}</option>
+              <option value="ALCOHOL_TAKEN_OUTSIDE_LICENSED_AREA">{{ t('Alcohol Taken Outside Licensed Area') }}</option>
+              <option value="SERVICE_AFTER_CLOSING_RISK">{{ t('Service After Closing Risk') }}</option>
+              <option value="OTHER">{{ t('Other') }}</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Severity</label>
+            <label class="form-label">{{ t('Severity') }}</label>
             <select v-model="severity" class="form-select" required>
-              <option value="LOW">Low</option>
-              <option value="MEDIUM">Medium</option>
-              <option value="HIGH">High</option>
-              <option value="CRITICAL">Critical</option>
+              <option value="LOW">{{ t('Low') }}</option>
+              <option value="MEDIUM">{{ t('Medium') }}</option>
+              <option value="HIGH">{{ t('High') }}</option>
+              <option value="CRITICAL">{{ t('Critical') }}</option>
             </select>
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Description</label>
-          <textarea v-model="description" class="form-textarea" required maxlength="2000" rows="4" placeholder="Describe what happened, where, and the circumstances" />
+          <label class="form-label">{{ t('Description') }}</label>
+          <textarea v-model="description" class="form-textarea" required maxlength="2000" rows="4" :placeholder="t('Describe what happened, where, and the circumstances')" />
         </div>
         <div class="form-group">
-          <label class="form-label">Immediate Action Taken</label>
-          <textarea v-model="immediateActionTaken" class="form-textarea" maxlength="2000" rows="2" placeholder="What was done immediately in response?" />
+          <label class="form-label">{{ t('Immediate Action Taken') }}</label>
+          <textarea v-model="immediateActionTaken" class="form-textarea" maxlength="2000" rows="2" :placeholder="t('What was done immediately in response?')" />
         </div>
         <div class="form-group checkbox-group">
           <label class="checkbox-label">
             <input v-model="followUpRequired" type="checkbox" />
-            Follow-up required
+            {{ t('Follow-up required') }}
           </label>
         </div>
         <div v-if="auth.hasManageAccess" class="form-group">
-          <label class="form-label">Assign To</label>
+          <label class="form-label">{{ t('Assign To') }}</label>
           <select v-model="assignedToId" class="form-select">
-            <option :value="null">Unassigned</option>
+            <option :value="null">{{ t('Unassigned') }}</option>
             <option v-for="user in assignees" :key="user.id" :value="user.id">
               {{ [user.firstName, user.lastName].filter(Boolean).join(' ') || user.username }}
             </option>
           </select>
         </div>
         <button type="submit" class="btn btn-primary" :disabled="submitting">
-          {{ submitting ? 'Submitting...' : 'Report Incident' }}
+          {{ submitting ? t('Submitting...') : t('Report Incident') }}
         </button>
       </form>
     </div>

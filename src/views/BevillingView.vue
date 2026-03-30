@@ -4,10 +4,12 @@
  * its conditions, serving hours, and expiry warnings.
  */
 import { ref, onMounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { bevillingApi, type Bevilling } from '@/api/bevilling'
 import { useAuthStore } from '@/stores/auth'
 
 const auth = useAuthStore()
+const { t, locale } = useI18n()
 /** The current active bevilling, null if none. */
 const bevilling = ref<Bevilling | null>(null)
 /** Whether data is still loading. */
@@ -34,11 +36,6 @@ const isExpired = computed(() => {
 
 /** Ordered weekday labels for display. */
 const weekdayOrder = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
-const weekdayLabels: Record<string, string> = {
-  MON: 'Monday', TUE: 'Tuesday', WED: 'Wednesday', THU: 'Thursday',
-  FRI: 'Friday', SAT: 'Saturday', SUN: 'Sunday'
-}
-
 /** Serving hours sorted by weekday. */
 const sortedHours = computed(() => {
   if (!bevilling.value) return []
@@ -48,17 +45,11 @@ const sortedHours = computed(() => {
 })
 
 /** Alcohol group labels. */
-const groupLabels: Record<string, string> = {
-  GROUP_1: 'Group 1 (up to 4.7%)',
-  GROUP_2: 'Group 2 (4.7%-22%)',
-  GROUP_3: 'Group 3 (above 22%)'
-}
-
 onMounted(async () => {
   try {
     bevilling.value = await bevillingApi.getCurrent()
   } catch {
-    error.value = 'Failed to load bevilling information.'
+    error.value = t('Failed to load bevilling information.')
   } finally {
     loading.value = false
   }
@@ -67,10 +58,10 @@ onMounted(async () => {
 /**
  * Formats a bevilling type to a human-readable label.
  */
-function formatType(t: string) {
-  if (t === 'SKJENKING') return 'Skjenkebevilling (On-premises)'
-  if (t === 'SALG') return 'Salgsbevilling (Off-premises)'
-  return 'Combined License'
+function formatType(type: string) {
+  if (type === 'SKJENKING') return t('On-premises License')
+  if (type === 'SALG') return t('Off-premises License')
+  return t('Combined License')
 }
 
 /**
@@ -81,15 +72,41 @@ function statusClass(s: string) {
   if (s === 'SUSPENDED') return 'warning'
   return 'danger'
 }
+
+function weekdayLabel(day: string) {
+  const labels: Record<string, string> = {
+    MON: t('Monday'),
+    TUE: t('Tuesday'),
+    WED: t('Wednesday'),
+    THU: t('Thursday'),
+    FRI: t('Friday'),
+    SAT: t('Saturday'),
+    SUN: t('Sunday'),
+  }
+  return labels[day] ?? day
+}
+
+function groupLabel(group: string) {
+  const labels: Record<string, string> = {
+    GROUP_1: t('Group 1 (up to 4.7%)'),
+    GROUP_2: t('Group 2 (4.7%-22%)'),
+    GROUP_3: t('Group 3 (above 22%)'),
+  }
+  return labels[group] ?? group
+}
+
+function formatDate(value: string) {
+  return new Date(value).toLocaleDateString(locale.value)
+}
 </script>
 
 <template>
   <div>
     <div class="page-header">
-      <h1>Bevilling</h1>
+      <h1>{{ t('Bevilling') }}</h1>
       <div v-if="auth.hasManageAccess && bevilling" class="header-actions">
-        <router-link :to="`/app/bevilling/${bevilling.id}/edit`" class="btn btn-secondary">Edit License</router-link>
-        <router-link :to="`/app/bevilling/${bevilling.id}/conditions`" class="btn btn-secondary">Manage Conditions</router-link>
+        <router-link :to="`/app/bevilling/${bevilling.id}/edit`" class="btn btn-secondary">{{ t('Edit License') }}</router-link>
+        <router-link :to="`/app/bevilling/${bevilling.id}/conditions`" class="btn btn-secondary">{{ t('Manage Conditions') }}</router-link>
       </div>
     </div>
 
@@ -100,81 +117,81 @@ function statusClass(s: string) {
     </div>
 
     <div v-else-if="!bevilling" class="empty-state">
-      <h3>No active bevilling</h3>
-      <p>No active alcohol license has been registered for your organization.</p>
-      <router-link v-if="auth.hasManageAccess" to="/app/bevilling/new" class="btn btn-primary">Register License</router-link>
+      <h3>{{ t('No active bevilling') }}</h3>
+      <p>{{ t('No active alcohol license has been registered for your organization.') }}</p>
+      <router-link v-if="auth.hasManageAccess" to="/app/bevilling/new" class="btn btn-primary">{{ t('Register License') }}</router-link>
     </div>
 
     <template v-else>
       <!-- Expiry warnings -->
       <div v-if="isExpired" class="alert-error alert-banner">
-        This license expired {{ Math.abs(daysUntilExpiry!) }} days ago. Please renew immediately.
+        {{ t('This license expired {days} days ago. Please renew immediately.', { days: Math.abs(daysUntilExpiry!) }) }}
       </div>
       <div v-else-if="isExpiringSoon" class="alert-warning alert-banner">
-        This license expires in {{ daysUntilExpiry }} days. Consider starting the renewal process.
+        {{ t('This license expires in {days} days. Consider starting the renewal process.', { days: daysUntilExpiry }) }}
       </div>
 
       <!-- License details -->
       <div class="card">
         <div class="meta-row">
-          <span class="status-badge" :class="statusClass(bevilling.status)">{{ bevilling.status }}</span>
+          <span class="status-badge" :class="statusClass(bevilling.status)">{{ t(bevilling.status.charAt(0) + bevilling.status.slice(1).toLowerCase()) }}</span>
           <span class="status-badge info">{{ formatType(bevilling.bevillingType) }}</span>
         </div>
 
         <div class="info-grid">
-          <div><span class="info-label">Municipality</span><span>{{ bevilling.municipality }}</span></div>
-          <div><span class="info-label">License Number</span><span>{{ bevilling.licenseNumber || '-' }}</span></div>
-          <div><span class="info-label">Valid From</span><span>{{ bevilling.validFrom }}</span></div>
-          <div><span class="info-label">Valid To</span><span>{{ bevilling.validTo || 'Indefinite' }}</span></div>
-          <div><span class="info-label">Styrer</span><span>{{ bevilling.styrerName || '-' }}</span></div>
-          <div><span class="info-label">Stedfortreder</span><span>{{ bevilling.stedfortrederName || '-' }}</span></div>
-          <div><span class="info-label">Indoor</span><span>{{ bevilling.indoorAllowed ? 'Yes' : 'No' }}</span></div>
-          <div><span class="info-label">Outdoor</span><span>{{ bevilling.outdoorAllowed ? 'Yes' : 'No' }}</span></div>
+          <div><span class="info-label">{{ t('Municipality') }}</span><span>{{ bevilling.municipality }}</span></div>
+          <div><span class="info-label">{{ t('License Number') }}</span><span>{{ bevilling.licenseNumber || '-' }}</span></div>
+          <div><span class="info-label">{{ t('Valid From') }}</span><span>{{ formatDate(bevilling.validFrom) }}</span></div>
+          <div><span class="info-label">{{ t('Valid To') }}</span><span>{{ bevilling.validTo ? formatDate(bevilling.validTo) : t('Indefinite') }}</span></div>
+          <div><span class="info-label">{{ t('License Manager') }}</span><span>{{ bevilling.styrerName || '-' }}</span></div>
+          <div><span class="info-label">{{ t('Deputy') }}</span><span>{{ bevilling.stedfortrederName || '-' }}</span></div>
+          <div><span class="info-label">{{ t('Indoor') }}</span><span>{{ bevilling.indoorAllowed ? t('Yes') : t('No') }}</span></div>
+          <div><span class="info-label">{{ t('Outdoor') }}</span><span>{{ bevilling.outdoorAllowed ? t('Yes') : t('No') }}</span></div>
         </div>
 
         <div v-if="bevilling.servingAreaDescription" class="section">
-          <h3>Serving Area</h3>
+          <h3>{{ t('Serving Area') }}</h3>
           <p>{{ bevilling.servingAreaDescription }}</p>
         </div>
 
         <div class="section">
-          <h3>Alcohol Groups Allowed</h3>
+          <h3>{{ t('Alcohol Groups Allowed') }}</h3>
           <div class="badge-row">
             <span v-for="g in bevilling.alcoholGroupsAllowed" :key="g" class="status-badge info">
-              {{ groupLabels[g] || g }}
+              {{ groupLabel(g) }}
             </span>
           </div>
         </div>
 
         <div v-if="bevilling.notes" class="section">
-          <h3>Notes</h3>
+          <h3>{{ t('Notes') }}</h3>
           <p class="notes-text">{{ bevilling.notes }}</p>
         </div>
       </div>
 
       <!-- Conditions -->
       <div class="card">
-        <h2>Conditions ({{ bevilling.conditions.length }})</h2>
-        <div v-if="bevilling.conditions.length === 0" class="text-muted text-sm">No conditions registered.</div>
+        <h2>{{ t('Conditions') }} ({{ bevilling.conditions.length }})</h2>
+        <div v-if="bevilling.conditions.length === 0" class="text-muted text-sm">{{ t('No conditions registered.') }}</div>
         <div v-for="c in bevilling.conditions" :key="c.id" class="condition-item">
           <div class="condition-header">
             <strong>{{ c.title }}</strong>
-            <span class="status-badge" :class="c.active ? 'success' : 'danger'">{{ c.active ? 'Active' : 'Inactive' }}</span>
+            <span class="status-badge" :class="c.active ? 'success' : 'danger'">{{ c.active ? t('Active') : t('Inactive') }}</span>
           </div>
-          <div class="condition-type">{{ c.conditionType.replace(/_/g, ' ') }}</div>
+          <div class="condition-type">{{ t(c.conditionType.replace(/_/g, ' ')) }}</div>
           <p v-if="c.description">{{ c.description }}</p>
         </div>
       </div>
 
       <!-- Serving Hours -->
       <div class="card">
-        <h2>Serving Hours</h2>
-        <div v-if="sortedHours.length === 0" class="text-muted text-sm">No serving hours configured.</div>
+        <h2>{{ t('Serving Hours') }}</h2>
+        <div v-if="sortedHours.length === 0" class="text-muted text-sm">{{ t('No serving hours configured.') }}</div>
         <div v-else class="hours-grid">
           <div v-for="h in sortedHours" :key="h.id" class="hours-row">
-            <span class="day-label">{{ weekdayLabels[h.weekday] || h.weekday }}</span>
+            <span class="day-label">{{ weekdayLabel(h.weekday) }}</span>
             <span class="hours-time">{{ h.startTime }} - {{ h.endTime }}</span>
-            <span class="hours-deadline">+{{ h.consumptionDeadlineMinutesAfterEnd }}min</span>
+            <span class="hours-deadline">+{{ h.consumptionDeadlineMinutesAfterEnd }} {{ t('min') }}</span>
           </div>
         </div>
       </div>

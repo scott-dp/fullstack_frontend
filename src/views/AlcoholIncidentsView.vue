@@ -5,6 +5,7 @@
  * to the incident detail page.
  */
 import { ref, onMounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { alcoholIncidentApi, type AlcoholIncident } from '@/api/alcoholIncidents'
 
 /** All incident reports loaded from the server. */
@@ -15,6 +16,7 @@ const loading = ref(true)
 const statusFilter = ref('')
 /** Currently selected type filter value, empty string for all. */
 const typeFilter = ref('')
+const { t, locale } = useI18n()
 
 /** Incidents filtered by the selected status and type. */
 const filtered = computed(() => {
@@ -70,70 +72,93 @@ function formatType(t: string) {
  * @returns Formatted date string
  */
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString()
+  return new Date(iso).toLocaleDateString(locale.value)
+}
+
+function statusLabel(status: string) {
+  const labels: Record<string, string> = {
+    OPEN: t('Open'),
+    UNDER_REVIEW: t('Under Review'),
+    CLOSED: t('Closed'),
+  }
+  return labels[status] ?? status
+}
+
+function severityLabel(severity: string) {
+  const labels: Record<string, string> = {
+    LOW: t('Low'),
+    MEDIUM: t('Medium'),
+    HIGH: t('High'),
+    CRITICAL: t('Critical'),
+  }
+  return labels[severity] ?? severity
+}
+
+function followUpLabel(value: boolean) {
+  return value ? t('Yes') : t('No')
 }
 </script>
 
 <template>
   <div>
     <div class="page-header">
-      <h1>Alcohol Incidents</h1>
+      <h1>{{ t('Alcohol Incidents') }}</h1>
       <div class="header-actions">
-        <router-link to="/app/alcohol-incidents/report" class="btn btn-secondary">View Report</router-link>
-        <router-link to="/app/alcohol-incidents/new" class="btn btn-primary">Report Incident</router-link>
+        <router-link to="/app/alcohol-incidents/report" class="btn btn-secondary">{{ t('View Report') }}</router-link>
+        <router-link to="/app/alcohol-incidents/new" class="btn btn-primary">{{ t('Report Incident') }}</router-link>
       </div>
     </div>
 
     <div class="filter-bar">
       <select v-model="statusFilter" class="form-select">
-        <option value="">All Statuses</option>
-        <option value="OPEN">Open</option>
-        <option value="UNDER_REVIEW">Under Review</option>
-        <option value="CLOSED">Closed</option>
+        <option value="">{{ t('All Statuses') }}</option>
+        <option value="OPEN">{{ t('Open') }}</option>
+        <option value="UNDER_REVIEW">{{ t('Under Review') }}</option>
+        <option value="CLOSED">{{ t('Closed') }}</option>
       </select>
       <select v-model="typeFilter" class="form-select">
-        <option value="">All Types</option>
-        <option value="AGE_DOUBT_REFUSAL">Age Doubt Refusal</option>
-        <option value="UNDERAGE_ATTEMPT">Underage Attempt</option>
-        <option value="INTOXICATION_REFUSAL">Intoxication Refusal</option>
-        <option value="GUEST_REMOVED">Guest Removed</option>
-        <option value="SUSPECTED_FAKE_ID">Suspected Fake ID</option>
-        <option value="BROUGHT_IN_ALCOHOL">Brought In Alcohol</option>
-        <option value="ALCOHOL_TAKEN_OUTSIDE_LICENSED_AREA">Outside Licensed Area</option>
-        <option value="SERVICE_AFTER_CLOSING_RISK">Service After Closing Risk</option>
-        <option value="OTHER">Other</option>
+        <option value="">{{ t('All Types') }}</option>
+        <option value="AGE_DOUBT_REFUSAL">{{ t('Age Doubt Refusal') }}</option>
+        <option value="UNDERAGE_ATTEMPT">{{ t('Underage Attempt') }}</option>
+        <option value="INTOXICATION_REFUSAL">{{ t('Intoxication Refusal') }}</option>
+        <option value="GUEST_REMOVED">{{ t('Guest Removed') }}</option>
+        <option value="SUSPECTED_FAKE_ID">{{ t('Suspected Fake ID') }}</option>
+        <option value="BROUGHT_IN_ALCOHOL">{{ t('Brought In Alcohol') }}</option>
+        <option value="ALCOHOL_TAKEN_OUTSIDE_LICENSED_AREA">{{ t('Outside Licensed Area') }}</option>
+        <option value="SERVICE_AFTER_CLOSING_RISK">{{ t('Service After Closing Risk') }}</option>
+        <option value="OTHER">{{ t('Other') }}</option>
       </select>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
 
     <div v-else-if="filtered.length === 0" class="empty-state">
-      <h3>No incidents found</h3>
-      <p>No alcohol incidents match your filters.</p>
+      <h3>{{ t('No incidents found') }}</h3>
+      <p>{{ t('No alcohol incidents match your filters.') }}</p>
     </div>
 
     <div v-else class="card table-wrapper">
       <table>
         <thead>
           <tr>
-            <th>Type</th>
-            <th>Severity</th>
-            <th>Status</th>
-            <th>Location</th>
-            <th>Reported By</th>
-            <th>Occurred</th>
-            <th>Follow-up</th>
+            <th>{{ t('Type') }}</th>
+            <th>{{ t('Severity') }}</th>
+            <th>{{ t('Status') }}</th>
+            <th>{{ t('Location') }}</th>
+            <th>{{ t('Reported By') }}</th>
+            <th>{{ t('Occurred') }}</th>
+            <th>{{ t('Follow-up') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="i in filtered" :key="i.id" class="clickable-row" @click="$router.push(`/app/alcohol-incidents/${i.id}`)">
-            <td><strong>{{ formatType(i.incidentType) }}</strong></td>
-            <td><span class="status-badge" :class="severityClass(i.severity)">{{ i.severity }}</span></td>
-            <td><span class="status-badge" :class="statusClass(i.status)">{{ i.status.replace('_', ' ') }}</span></td>
+            <td><strong>{{ t(formatType(i.incidentType)) }}</strong></td>
+            <td><span class="status-badge" :class="severityClass(i.severity)">{{ severityLabel(i.severity) }}</span></td>
+            <td><span class="status-badge" :class="statusClass(i.status)">{{ statusLabel(i.status) }}</span></td>
             <td>{{ i.locationArea || '-' }}</td>
             <td>{{ i.reportedByUsername }}</td>
             <td>{{ formatDate(i.occurredAt) }}</td>
-            <td>{{ i.followUpRequired ? 'Yes' : 'No' }}</td>
+            <td>{{ followUpLabel(i.followUpRequired) }}</td>
           </tr>
         </tbody>
       </table>

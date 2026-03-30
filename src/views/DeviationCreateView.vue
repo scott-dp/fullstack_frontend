@@ -5,6 +5,7 @@
  * Redirects to the deviations list on successful submission.
  */
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { deviationApi } from '@/api/deviations'
 import { HttpError } from '@/api/client'
@@ -22,6 +23,7 @@ const severity = ref('MEDIUM')
 const error = ref('')
 /** Whether the form is currently being submitted. */
 const submitting = ref(false)
+const { t } = useI18n()
 
 /**
  * Submits the deviation report to the server.
@@ -39,7 +41,7 @@ async function submit() {
     })
     router.push('/app/deviations')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to create deviation'
+    error.value = err instanceof HttpError ? err.message : t('Failed to create deviation')
   } finally {
     submitting.value = false
   }
@@ -49,41 +51,41 @@ async function submit() {
 <template>
   <div>
     <div class="page-header">
-      <h1>Report Deviation</h1>
-      <router-link to="/app/deviations" class="btn btn-secondary">Back</router-link>
+      <h1>{{ t('Report Deviation') }}</h1>
+      <router-link to="/app/deviations" class="btn btn-secondary">{{ t('Back') }}</router-link>
     </div>
 
     <div class="card">
       <div v-if="error" class="alert-error">{{ error }}</div>
       <form @submit.prevent="submit">
         <div class="form-group">
-          <label class="form-label">Title</label>
-          <input v-model="title" class="form-input" required maxlength="255" placeholder="Brief description of the issue" />
+          <label class="form-label">{{ t('Title') }}</label>
+          <input v-model="title" class="form-input" required maxlength="255" :placeholder="t('Brief description of the issue')" />
         </div>
         <div class="form-group">
-          <label class="form-label">Description</label>
-          <textarea v-model="description" class="form-textarea" required maxlength="2000" rows="4" placeholder="Detailed description of what happened, where, and any immediate actions taken" />
+          <label class="form-label">{{ t('Description') }}</label>
+          <textarea v-model="description" class="form-textarea" required maxlength="2000" rows="4" :placeholder="t('Detailed description of what happened, where, and any immediate actions taken')" />
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Category</label>
+            <label class="form-label">{{ t('Category') }}</label>
             <select v-model="category" class="form-select">
-              <option value="FOOD">IK-Mat (Food)</option>
-              <option value="ALCOHOL">IK-Alkohol</option>
+              <option value="FOOD">{{ t('IK-Mat (Food)') }}</option>
+              <option value="ALCOHOL">{{ t('IK-Alkohol') }}</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Severity</label>
+            <label class="form-label">{{ t('Severity') }}</label>
             <select v-model="severity" class="form-select">
-              <option value="LOW">Low</option>
-              <option value="MEDIUM">Medium</option>
-              <option value="HIGH">High</option>
-              <option value="CRITICAL">Critical</option>
+              <option value="LOW">{{ t('Low') }}</option>
+              <option value="MEDIUM">{{ t('Medium') }}</option>
+              <option value="HIGH">{{ t('High') }}</option>
+              <option value="CRITICAL">{{ t('Critical') }}</option>
             </select>
           </div>
         </div>
         <button type="submit" class="btn btn-primary" :disabled="submitting">
-          {{ submitting ? 'Submitting...' : 'Report Deviation' }}
+          {{ submitting ? t('Submitting...') : t('Report Deviation') }}
         </button>
       </form>
     </div>

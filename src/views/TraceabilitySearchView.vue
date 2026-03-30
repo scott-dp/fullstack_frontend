@@ -5,6 +5,7 @@
  * Results are displayed in a table linking items back to their delivery and supplier.
  */
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { deliveryApi, type TraceabilityResult } from '@/api/deliveries'
 import { HttpError } from '@/api/client'
 
@@ -20,11 +21,12 @@ const searched = ref(false)
 const searching = ref(false)
 /** Error message from a failed search. */
 const error = ref('')
+const { t, locale } = useI18n()
 
 /** Executes the traceability search with the current field values. */
 async function search() {
   if (!productName.value.trim() && !batchLot.value.trim()) {
-    error.value = 'Please enter a product name or batch/lot number to search'
+    error.value = t('Please enter a product name or batch/lot number to search')
     return
   }
   error.value = ''
@@ -37,7 +39,7 @@ async function search() {
     })
     searched.value = true
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Search failed'
+    error.value = err instanceof HttpError ? err.message : t('Search failed')
   } finally {
     searching.value = false
   }
@@ -49,14 +51,14 @@ async function search() {
  * @returns Formatted date string
  */
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString()
+  return new Date(iso).toLocaleDateString(locale.value)
 }
 </script>
 
 <template>
   <div>
     <div class="page-header">
-      <h1>Traceability Search</h1>
+      <h1>{{ t('Traceability Search') }}</h1>
     </div>
 
     <div class="card">
@@ -64,16 +66,16 @@ function formatDate(iso: string) {
         <div v-if="error" class="alert-error">{{ error }}</div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Product Name</label>
-            <input v-model="productName" class="form-input" placeholder="Search by product name" maxlength="255" />
+            <label class="form-label">{{ t('Product Name') }}</label>
+            <input v-model="productName" class="form-input" :placeholder="t('Search by product name')" maxlength="255" />
           </div>
           <div class="form-group">
-            <label class="form-label">Batch / Lot Number</label>
-            <input v-model="batchLot" class="form-input" placeholder="Search by batch or lot number" maxlength="100" />
+            <label class="form-label">{{ t('Batch / Lot Number') }}</label>
+            <input v-model="batchLot" class="form-input" :placeholder="t('Search by batch or lot number')" maxlength="100" />
           </div>
         </div>
         <button type="submit" class="btn btn-primary" :disabled="searching">
-          {{ searching ? 'Searching...' : 'Search' }}
+          {{ searching ? t('Searching...') : t('Search') }}
         </button>
       </form>
     </div>
@@ -81,20 +83,20 @@ function formatDate(iso: string) {
     <div v-if="searching" class="loading"><div class="spinner" /></div>
 
     <div v-else-if="searched && results.length === 0" class="empty-state">
-      <h3>No results found</h3>
-      <p>No delivery items match your search criteria.</p>
+      <h3>{{ t('No results found') }}</h3>
+      <p>{{ t('No delivery items match your search criteria.') }}</p>
     </div>
 
     <div v-else-if="searched && results.length > 0" class="card table-wrapper" style="margin-top: 16px;">
       <table>
         <thead>
           <tr>
-            <th>Product Name</th>
-            <th>Batch/Lot</th>
-            <th>Supplier</th>
-            <th>Delivery Date</th>
-            <th>Expiry Date</th>
-            <th>Delivery</th>
+            <th>{{ t('Product Name') }}</th>
+            <th>{{ t('Batch/Lot') }}</th>
+            <th>{{ t('Supplier') }}</th>
+            <th>{{ t('Delivery Date') }}</th>
+            <th>{{ t('Expiry Date') }}</th>
+            <th>{{ t('Delivery') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -104,7 +106,7 @@ function formatDate(iso: string) {
             <td>{{ r.supplierName }}</td>
             <td>{{ formatDate(r.deliveryDate) }}</td>
             <td>{{ r.expiryDate ? formatDate(r.expiryDate) : '-' }}</td>
-            <td><span class="link-text">View Delivery</span></td>
+            <td><span class="link-text">{{ t('View Delivery') }}</span></td>
           </tr>
         </tbody>
       </table>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { trainingApi, type TrainingTemplate } from '@/api/trainings'
 import { userApi, type UserSummary } from '@/api/users'
@@ -17,6 +18,7 @@ const loading = ref(true)
 const assigning = ref(false)
 const error = ref('')
 const success = ref('')
+const { t } = useI18n()
 
 onMounted(async () => {
   try {
@@ -27,7 +29,7 @@ onMounted(async () => {
     template.value = t
     users.value = u
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to load data'
+    error.value = err instanceof HttpError ? err.message : t('Failed to load data')
   } finally {
     loading.value = false
   }
@@ -52,7 +54,7 @@ function deselectAll() {
 
 async function handleAssign() {
   if (selectedUserIds.value.length === 0) {
-    error.value = 'Select at least one user'
+    error.value = t('Select at least one user')
     return
   }
   error.value = ''
@@ -60,10 +62,10 @@ async function handleAssign() {
   assigning.value = true
   try {
     await trainingApi.assign(templateId.value, selectedUserIds.value, dueAt.value || undefined)
-    success.value = `Training assigned to ${selectedUserIds.value.length} user(s)`
+    success.value = t('Training assigned to {count} user(s)', { count: selectedUserIds.value.length })
     selectedUserIds.value = []
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to assign training'
+    error.value = err instanceof HttpError ? err.message : t('Failed to assign training')
   } finally {
     assigning.value = false
   }
@@ -73,7 +75,7 @@ async function handleAssign() {
 <template>
   <div>
     <div class="page-header">
-      <h1>Assign Training</h1>
+      <h1>{{ t('Assign Training') }}</h1>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
@@ -88,11 +90,11 @@ async function handleAssign() {
         <div v-if="error" class="alert-error">{{ error }}</div>
         <div v-if="success" class="alert-success">{{ success }}</div>
 
-        <h3>Select Users</h3>
+        <h3>{{ t('Select Users') }}</h3>
         <div class="user-actions">
-          <button class="btn btn-sm btn-secondary" @click="selectAll">Select All</button>
-          <button class="btn btn-sm btn-secondary" @click="deselectAll">Deselect All</button>
-          <span class="text-muted text-sm">{{ selectedUserIds.length }} selected</span>
+          <button class="btn btn-sm btn-secondary" @click="selectAll">{{ t('Select All') }}</button>
+          <button class="btn btn-sm btn-secondary" @click="deselectAll">{{ t('Deselect All') }}</button>
+          <span class="text-muted text-sm">{{ t('{count} selected', { count: selectedUserIds.length }) }}</span>
         </div>
 
         <div class="user-list">
@@ -106,14 +108,14 @@ async function handleAssign() {
         </div>
 
         <div class="form-group" style="margin-top: 16px;">
-          <label class="form-label">Due Date (optional)</label>
+          <label class="form-label">{{ t('Due Date (optional)') }}</label>
           <input v-model="dueAt" type="date" class="form-input" style="max-width: 200px;" />
         </div>
 
         <div class="form-actions">
-          <button type="button" class="btn btn-secondary" @click="router.push('/app/training')">Cancel</button>
+          <button type="button" class="btn btn-secondary" @click="router.push('/app/training')">{{ t('Cancel') }}</button>
           <button class="btn btn-primary" :disabled="assigning || selectedUserIds.length === 0" @click="handleAssign">
-            {{ assigning ? 'Assigning...' : `Assign to ${selectedUserIds.length} user(s)` }}
+            {{ assigning ? t('Assigning...') : t('Assign to {count} user(s)', { count: selectedUserIds.length }) }}
           </button>
         </div>
       </div>

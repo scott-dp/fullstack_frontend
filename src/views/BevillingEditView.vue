@@ -4,12 +4,14 @@
  * an alcohol license with alcohol group checkboxes and serving hours grid.
  */
 import { ref, onMounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter, useRoute } from 'vue-router'
 import { bevillingApi, type ServingHoursEntry } from '@/api/bevilling'
 import { HttpError } from '@/api/client'
 
 const router = useRouter()
 const route = useRoute()
+const { t } = useI18n()
 /** Bevilling ID from the route, or null for new. */
 const bevillingId = route.params.id ? Number(route.params.id) : null
 /** Whether this is edit mode. */
@@ -33,10 +35,6 @@ const group3 = ref(false)
 
 // Serving hours
 const weekdays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
-const weekdayLabels: Record<string, string> = {
-  MON: 'Monday', TUE: 'Tuesday', WED: 'Wednesday', THU: 'Thursday',
-  FRI: 'Friday', SAT: 'Saturday', SUN: 'Sunday'
-}
 const hoursEnabled = ref<Record<string, boolean>>({
   MON: true, TUE: true, WED: true, THU: true, FRI: true, SAT: true, SUN: true
 })
@@ -157,18 +155,31 @@ async function submit() {
     }
     router.push('/app/bevilling')
   } catch (err: unknown) {
-    error.value = err instanceof HttpError ? err.message : 'Failed to save bevilling'
+    error.value = err instanceof HttpError ? err.message : t('Failed to save bevilling')
   } finally {
     submitting.value = false
   }
+}
+
+function weekdayLabel(day: string) {
+  const labels: Record<string, string> = {
+    MON: t('Monday'),
+    TUE: t('Tuesday'),
+    WED: t('Wednesday'),
+    THU: t('Thursday'),
+    FRI: t('Friday'),
+    SAT: t('Saturday'),
+    SUN: t('Sunday'),
+  }
+  return labels[day] ?? day
 }
 </script>
 
 <template>
   <div>
     <div class="page-header">
-      <h1>{{ isEdit ? 'Edit Bevilling' : 'Register Bevilling' }}</h1>
-      <router-link to="/app/bevilling" class="btn btn-secondary">Back</router-link>
+      <h1>{{ isEdit ? t('Edit Bevilling') : t('Register Bevilling') }}</h1>
+      <router-link to="/app/bevilling" class="btn btn-secondary">{{ t('Back') }}</router-link>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
@@ -178,94 +189,94 @@ async function submit() {
       <form @submit.prevent="submit">
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Municipality</label>
-            <input v-model="municipality" class="form-input" required placeholder="e.g. Trondheim" />
+            <label class="form-label">{{ t('Municipality') }}</label>
+            <input v-model="municipality" class="form-input" required :placeholder="t('e.g. Trondheim')" />
           </div>
           <div class="form-group">
-            <label class="form-label">License Type</label>
+            <label class="form-label">{{ t('License Type') }}</label>
             <select v-model="bevillingType" class="form-select" required>
-              <option value="SKJENKING">Skjenkebevilling (On-premises)</option>
-              <option value="SALG">Salgsbevilling (Off-premises)</option>
-              <option value="COMBINED">Combined</option>
+              <option value="SKJENKING">{{ t('On-premises License') }}</option>
+              <option value="SALG">{{ t('Off-premises License') }}</option>
+              <option value="COMBINED">{{ t('Combined') }}</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">License Number</label>
-            <input v-model="licenseNumber" class="form-input" placeholder="e.g. SK-2025-001" />
+            <label class="form-label">{{ t('License Number') }}</label>
+            <input v-model="licenseNumber" class="form-input" :placeholder="t('e.g. SK-2025-001')" />
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Valid From</label>
+            <label class="form-label">{{ t('Valid From') }}</label>
             <input v-model="validFrom" type="date" class="form-input" required />
           </div>
           <div class="form-group">
-            <label class="form-label">Valid To (optional)</label>
+            <label class="form-label">{{ t('Valid To (optional)') }}</label>
             <input v-model="validTo" type="date" class="form-input" />
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Styrer (License Manager)</label>
-            <input v-model="styrerName" class="form-input" placeholder="Full name" />
+            <label class="form-label">{{ t('License Manager') }}</label>
+            <input v-model="styrerName" class="form-input" :placeholder="t('Full name')" />
           </div>
           <div class="form-group">
-            <label class="form-label">Stedfortreder (Deputy)</label>
-            <input v-model="stedfortrederName" class="form-input" placeholder="Full name" />
+            <label class="form-label">{{ t('Deputy') }}</label>
+            <input v-model="stedfortrederName" class="form-input" :placeholder="t('Full name')" />
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Alcohol Groups Allowed</label>
+          <label class="form-label">{{ t('Alcohol Groups Allowed') }}</label>
           <div class="checkbox-row">
-            <label class="checkbox-label"><input v-model="group1" type="checkbox" /> Group 1 (up to 4.7%)</label>
-            <label class="checkbox-label"><input v-model="group2" type="checkbox" /> Group 2 (4.7%-22%)</label>
-            <label class="checkbox-label"><input v-model="group3" type="checkbox" /> Group 3 (above 22%)</label>
+            <label class="checkbox-label"><input v-model="group1" type="checkbox" /> {{ t('Group 1 (up to 4.7%)') }}</label>
+            <label class="checkbox-label"><input v-model="group2" type="checkbox" /> {{ t('Group 2 (4.7%-22%)') }}</label>
+            <label class="checkbox-label"><input v-model="group3" type="checkbox" /> {{ t('Group 3 (above 22%)') }}</label>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group checkbox-group">
-            <label class="checkbox-label"><input v-model="indoorAllowed" type="checkbox" /> Indoor serving allowed</label>
+            <label class="checkbox-label"><input v-model="indoorAllowed" type="checkbox" /> {{ t('Indoor serving allowed') }}</label>
           </div>
           <div class="form-group checkbox-group">
-            <label class="checkbox-label"><input v-model="outdoorAllowed" type="checkbox" /> Outdoor serving allowed</label>
+            <label class="checkbox-label"><input v-model="outdoorAllowed" type="checkbox" /> {{ t('Outdoor serving allowed') }}</label>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Serving Area Description</label>
-          <textarea v-model="servingAreaDescription" class="form-textarea" maxlength="2000" rows="2" placeholder="Describe the serving area" />
+          <label class="form-label">{{ t('Serving Area Description') }}</label>
+          <textarea v-model="servingAreaDescription" class="form-textarea" maxlength="2000" rows="2" :placeholder="t('Describe the serving area')" />
         </div>
 
         <div class="form-group">
-          <label class="form-label">Notes</label>
-          <textarea v-model="notes" class="form-textarea" maxlength="2000" rows="2" placeholder="Any additional notes" />
+          <label class="form-label">{{ t('Notes') }}</label>
+          <textarea v-model="notes" class="form-textarea" maxlength="2000" rows="2" :placeholder="t('Any additional notes')" />
         </div>
 
         <!-- Serving Hours Grid -->
         <div class="hours-section">
-          <h3>Serving Hours</h3>
+          <h3>{{ t('Serving Hours') }}</h3>
           <div class="hours-grid">
             <div v-for="day in weekdays" :key="day" class="hours-row">
               <label class="checkbox-label day-check">
                 <input v-model="hoursEnabled[day]" type="checkbox" />
-                <span class="day-name">{{ weekdayLabels[day] }}</span>
+                <span class="day-name">{{ weekdayLabel(day) }}</span>
               </label>
               <input v-model="hoursStart[day]" type="time" class="form-input time-input" :disabled="!hoursEnabled[day]" />
-              <span class="time-sep">to</span>
+              <span class="time-sep">{{ t('to') }}</span>
               <input v-model="hoursEnd[day]" type="time" class="form-input time-input" :disabled="!hoursEnabled[day]" />
               <span class="time-sep">+</span>
               <input v-model.number="hoursDeadline[day]" type="number" class="form-input deadline-input" :disabled="!hoursEnabled[day]" min="0" max="120" />
-              <span class="time-sep">min</span>
+              <span class="time-sep">{{ t('min') }}</span>
             </div>
           </div>
         </div>
 
         <button type="submit" class="btn btn-primary" :disabled="submitting">
-          {{ submitting ? 'Saving...' : (isEdit ? 'Update Bevilling' : 'Register Bevilling') }}
+          {{ submitting ? t('Saving...') : (isEdit ? t('Update Bevilling') : t('Register Bevilling')) }}
         </button>
       </form>
     </div>

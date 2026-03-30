@@ -103,5 +103,355 @@
   "Login failed": "साइन इन असफल भयो",
   "Digital Internal Control": "डिजिटल आन्तरिक नियन्त्रण",
   "for Food & Alcohol Compliance": "खाना र मदिरा अनुपालनका लागि",
-  "Replace paper checklists and manual routines with a structured digital solution. Monitor daily operations, ensure proper documentation, and pass inspections with confidence.": "कागजी चेकलिस्ट र म्यानुअल दिनचर्यालाई संरचित डिजिटल समाधानले प्रतिस्थापन गर्नुहोस्। दैनिक कार्यहरू निगरानी गर्नुहोस्, उचित कागजात सुनिश्चित गर्नुहोस् र आत्मविश्वासका साथ निरीक्षण पार गर्नुहोस्।"
+  "Replace paper checklists and manual routines with a structured digital solution. Monitor daily operations, ensure proper documentation, and pass inspections with confidence.": "कागजी चेकलिस्ट र म्यानुअल दिनचर्यालाई संरचित डिजिटल समाधानले प्रतिस्थापन गर्नुहोस्। दैनिक कार्यहरू निगरानी गर्नुहोस्, उचित कागजात सुनिश्चित गर्नुहोस् र आत्मविश्वासका साथ निरीक्षण पार गर्नुहोस्।",
+  "Invitation accepted. Your organization dashboard is now ready.": "निमन्त्रणा स्वीकार गरियो। तपाईंको संस्थाको ड्यासबोर्ड अब तयार छ।",
+  "Failed to accept invitation": "निमन्त्रणा स्वीकार गर्न असफल भयो",
+  "You need an invitation from an admin or restaurant manager before you can access restaurant data.": "रेस्टुरेन्टको डाटा पहुँच गर्नुअघि तपाईंलाई एडमिन वा रेस्टुरेन्ट प्रबन्धकबाट निमन्त्रणा चाहिन्छ।",
+  "Checklist Templates": "चेकलिस्ट टेम्प्लेटहरू",
+  "Active templates": "सक्रिय टेम्प्लेटहरू",
+  "Completed Today": "आज पूरा भएका",
+  "Checklists finished": "पूरा भएका चेकलिस्टहरू",
+  "Temperature Alerts": "तापक्रम चेतावनीहरू",
+  "Alerts today": "आजका चेतावनीहरू",
+  "Open Deviations": "खुला विचलनहरू",
+  "Needing attention": "ध्यान चाहिने",
+  "In Progress": "प्रगतिमा",
+  "Being resolved": "समाधान भइरहेको",
+  "Unread": "नपढिएका",
+  "Quick Actions": "छिटो कार्यहरू",
+  "Complete Checklist": "चेकलिस्ट पूरा गर्नुहोस्",
+  "Complete a daily, weekly, or monthly checklist": "दैनिक, साप्ताहिक वा मासिक चेकलिस्ट पूरा गर्नुहोस्",
+  "Log Temperature": "तापक्रम लेख्नुहोस्",
+  "Record storage temperature readings": "भण्डारण तापक्रमका रेकर्डहरू राख्नुहोस्",
+  "Report Deviation": "विचलन रिपोर्ट गर्नुहोस्",
+  "Report a non-compliance issue": "अनुपालन नभएको समस्या रिपोर्ट गर्नुहोस्",
+  "Dishes": "परिकारहरू",
+  "Ingredients": "सामग्रीहरू",
+  "Allergen Sheet": "एलर्जेन पाना",
+  "New Dish": "नयाँ परिकार",
+  "No dishes found": "कुनै परिकार फेला परेन",
+  "Add your first dish to get started.": "सुरु गर्न आफ्नो पहिलो परिकार थप्नुहोस्।",
+  "Status": "स्थिति",
+  "Approval": "स्वीकृति",
+  "None": "कुनै छैन",
+  "Active": "सक्रिय",
+  "Inactive": "निष्क्रिय",
+  "Needs approval": "स्वीकृति आवश्यक",
+  "Approved": "स्वीकृत",
+  "Not approved": "स्वीकृत छैन",
+  "Failed to load dish": "परिकार लोड गर्न असफल भयो",
+  "Failed to approve": "स्वीकृत गर्न असफल भयो",
+  "Failed to add override": "ओभरराइड थप्न असफल भयो",
+  "Failed to remove override": "ओभरराइड हटाउन असफल भयो",
+  "Delete this dish? This cannot be undone.": "यो परिकार मेटाउने? यो पूर्ववत् गर्न सकिँदैन।",
+  "Failed to delete dish": "परिकार मेटाउन असफल भयो",
+  "Dish Details": "परिकार विवरण",
+  "Edit": "सम्पादन",
+  "Approving...": "स्वीकृत गर्दै...",
+  "Approve Allergens": "एलर्जेन स्वीकृत गर्नुहोस्",
+  "Deleting...": "मेटाउँदै...",
+  "Delete": "मेटाउनुहोस्",
+  "Never approved": "कहिल्यै स्वीकृत भएको छैन",
+  "Last approved:": "अन्तिम स्वीकृति:",
+  "by": "द्वारा",
+  "No ingredients.": "कुनै सामग्री छैन।",
+  "Derived Allergens": "उत्पन्न एलर्जेनहरू",
+  "No allergens.": "कुनै एलर्जेन छैन।",
+  "Allergen Overrides": "एलर्जेन ओभरराइडहरू",
+  "Included": "समावेश",
+  "Excluded": "बहिष्कृत",
+  "Remove": "हटाउनुहोस्",
+  "No overrides.": "कुनै ओभरराइड छैन।",
+  "Add Override": "ओभरराइड थप्नुहोस्",
+  "Select allergen...": "एलर्जेन छान्नुहोस्...",
+  "Include": "समावेश गर्नुहोस्",
+  "Exclude": "बहिष्कार गर्नुहोस्",
+  "Reason...": "कारण...",
+  "Add": "थप्नुहोस्",
+  "Unknown": "अज्ञात",
+  "Failed to save dish": "परिकार सेभ गर्न असफल भयो",
+  "Edit Dish": "परिकार सम्पादन",
+  "Back": "फर्कनुहोस्",
+  "Dish name": "परिकारको नाम",
+  "Description": "विवरण",
+  "Optional description": "वैकल्पिक विवरण",
+  "Notes": "टिप्पणीहरू",
+  "Internal notes": "आन्तरिक टिप्पणीहरू",
+  "Add an ingredient...": "सामग्री थप्नुहोस्...",
+  "Quantity (optional)": "परिमाण (वैकल्पिक)",
+  "No ingredients added yet.": "अहिलेसम्म कुनै सामग्री थपिएको छैन।",
+  "Derived Allergens (from ingredients)": "उत्पन्न एलर्जेनहरू (सामग्रीबाट)",
+  "No allergens detected from selected ingredients.": "चयन गरिएका सामग्रीबाट कुनै एलर्जेन भेटिएन।",
+  "Saving...": "सेभ हुँदैछ...",
+  "Update Dish": "परिकार अद्यावधिक गर्नुहोस्",
+  "Create Dish": "परिकार सिर्जना गर्नुहोस्",
+  "New Ingredient": "नयाँ सामग्री",
+  "No ingredients found": "कुनै सामग्री फेला परेन",
+  "Add your first ingredient to get started.": "सुरु गर्न आफ्नो पहिलो सामग्री थप्नुहोस्।",
+  "Updated": "अद्यावधिक",
+  "Failed to save ingredient": "सामग्री सेभ गर्न असफल भयो",
+  "Delete this ingredient? This cannot be undone.": "यो सामग्री मेटाउने? यो पूर्ववत् गर्न सकिँदैन।",
+  "Failed to delete ingredient": "सामग्री मेटाउन असफल भयो",
+  "Edit Ingredient": "सामग्री सम्पादन",
+  "Ingredient name": "सामग्रीको नाम",
+  "Optional notes about this ingredient": "यस सामग्रीबारे वैकल्पिक टिप्पणी",
+  "Update Ingredient": "सामग्री अद्यावधिक गर्नुहोस्",
+  "Create Ingredient": "सामग्री सिर्जना गर्नुहोस्",
+  "Print": "प्रिन्ट",
+  "No dishes": "कुनै परिकार छैन",
+  "Add dishes to generate the allergen sheet.": "एलर्जेन पाना बनाउन परिकारहरू थप्नुहोस्।",
+  "Allergen Information": "एलर्जेन जानकारी",
+  "Dish": "परिकार",
+  "X = contains allergen, - = not present": "X = एलर्जेन छ, - = छैन",
+  "Mark all as read": "सबैलाई पढिएको रूपमा चिन्ह लगाउनुहोस्",
+  "No notifications": "कुनै सूचनाहरू छैनन्",
+  "You're all caught up.": "तपाईं सबै अद्यावधिक हुनुहुन्छ।",
+  "Temperature Alert": "तापक्रम चेतावनी",
+  "Deviation Assigned": "विचलन तोकिएको",
+  "Training Assigned": "तालिम तोकिएको",
+  "Task Due": "कार्यको समयसीमा सकियो",
+  "General": "सामान्य",
+  "Profile": "प्रोफाइल",
+  "First Name": "पहिलो नाम",
+  "Last Name": "थर",
+  "Email": "इमेल",
+  "Roles": "भूमिकाहरू",
+  "Profile updated successfully": "प्रोफाइल सफलतापूर्वक अद्यावधिक भयो",
+  "Failed to update profile": "प्रोफाइल अद्यावधिक गर्न सकिएन",
+  "Save Changes": "परिवर्तनहरू सुरक्षित गर्नुहोस्",
+  "Admin Dashboard": "एडमिन ड्यासबोर्ड",
+  "Total Users": "कुल प्रयोगकर्ताहरू",
+  "In organization": "संस्थामा",
+  "Admins": "एडमिनहरू",
+  "Managers": "प्रबन्धकहरू",
+  "Staff": "कर्मचारीहरू",
+  "System administrators": "प्रणाली प्रशासकहरू",
+  "Compliance managers": "अनुपालन प्रबन्धकहरू",
+  "Operational staff": "सञ्चालन कर्मचारीहरू",
+  "Compliance Overview": "अनुपालनको अवलोकन",
+  "Active Templates": "सक्रिय टेम्प्लेटहरू",
+  "Checklist templates": "चेकलिस्ट टेम्प्लेटहरू",
+  "Temp Alerts": "तापक्रम चेतावनीहरू",
+  "Today": "आज",
+  "Administration": "प्रशासन",
+  "View and manage user accounts and roles": "प्रयोगकर्ता खाताहरू र भूमिकाहरू हेर्नुहोस् र व्यवस्थापन गर्नुहोस्",
+  "Create and manage compliance checklists": "अनुपालन चेकलिस्टहरू सिर्जना गर्नुहोस् र व्यवस्थापन गर्नुहोस्",
+  "Review and assign open deviations": "खुला विचलनहरू समीक्षा गर्नुहोस् र तोक्नुहोस्",
+  "Audit History": "अडिट इतिहास",
+  "View checklist completion history": "चेकलिस्ट पूरा भएको इतिहास हेर्नुहोस्",
+  "Create Invitation": "निमन्त्रणा सिर्जना गर्नुहोस्",
+  "Superadmins can create manager or staff invites for any restaurant.": "सुपरएडमिनहरूले कुनै पनि रेस्टुरेन्टका लागि प्रबन्धक वा कर्मचारी निमन्त्रणाहरू सिर्जना गर्न सक्छन्।",
+  "Admins can create manager or staff invites for their restaurant.": "एडमिनहरूले आफ्नो रेस्टुरेन्टका लागि प्रबन्धक वा कर्मचारी निमन्त्रणाहरू सिर्जना गर्न सक्छन्।",
+  "Managers can invite staff users into their own restaurant.": "प्रबन्धकहरूले आफ्नै रेस्टुरेन्टमा कर्मचारी प्रयोगकर्ताहरूलाई निमन्त्रणा गर्न सक्छन्।",
+  "Role": "भूमिका",
+  "Manager": "प्रबन्धक",
+  "Admin": "एडमिन",
+  "Superadmin": "सुपरएडमिन",
+  "Restaurant": "रेस्टुरेन्ट",
+  "Select restaurant": "रेस्टुरेन्ट चयन गर्नुहोस्",
+  "Expires in days": "कति दिनमा म्याद सकिन्छ",
+  "Creating invite...": "निमन्त्रणा सिर्जना हुँदैछ...",
+  "Create invite": "निमन्त्रणा सिर्जना गर्नुहोस्",
+  "Latest invite token": "सबैभन्दा नयाँ निमन्त्रणा टोकन",
+  "No users found": "कुनै प्रयोगकर्ता फेला परेन",
+  "Name": "नाम",
+  "Actions": "कार्यहरू",
+  "Invitations": "निमन्त्रणाहरू",
+  "Token": "टोकन",
+  "Expires": "म्याद सकिन्छ",
+  "Pending": "पेन्डिङ",
+  "Accepted by {username}": "{username} द्वारा स्वीकार गरियो",
+  "No invitations created yet": "अहिलेसम्म कुनै निमन्त्रणाहरू सिर्जना गरिएको छैन",
+  "Invite created for {organizationName}. Share the token below with the user.": "{organizationName} का लागि निमन्त्रणा सिर्जना गरियो। तलको टोकन प्रयोगकर्तासँग साझा गर्नुहोस्।",
+  "Failed to create invite": "निमन्त्रणा सिर्जना गर्न सकिएन",
+  "Delete this user? This will remove their access.": "यो प्रयोगकर्ता मेटाउने? यसले उनीहरूको पहुँच हटाउनेछ।",
+  "Failed to delete user": "प्रयोगकर्ता मेटाउन सकिएन"
+  ,"New Supplier": "नयाँ आपूर्तिकर्ता"
+  ,"All Suppliers": "सबै आपूर्तिकर्ता"
+  ,"No suppliers found": "कुनै आपूर्तिकर्ता फेला परेन"
+  ,"No suppliers match your filters.": "तपाईंको फिल्टरसँग मेल खाने आपूर्तिकर्ता छैनन्।"
+  ,"Org. Number": "संस्था नं."
+  ,"Contact": "सम्पर्क"
+  ,"Organization Number": "संस्था नम्बर"
+  ,"Contact Name": "सम्पर्क व्यक्तिको नाम"
+  ,"Supplier company name": "आपूर्तिकर्ता कम्पनीको नाम"
+  ,"e.g. 123 456 789": "जस्तै 123 456 789"
+  ,"Primary contact person": "मुख्य सम्पर्क व्यक्ति"
+  ,"contact@supplier.com": "contact@supplier.com"
+  ,"+47 123 45 678": "+47 123 45 678"
+  ,"Address": "ठेगाना"
+  ,"Street address, city": "सडक ठेगाना, सहर"
+  ,"Internal notes about this supplier": "यस आपूर्तिकर्ताबारे आन्तरिक टिप्पणीहरू"
+  ,"Creating...": "सिर्जना गर्दै..."
+  ,"Create Supplier": "आपूर्तिकर्ता सिर्जना गर्नुहोस्"
+  ,"Failed to create supplier": "आपूर्तिकर्ता सिर्जना गर्न सकिएन"
+  ,"Edit Supplier": "आपूर्तिकर्ता सम्पादन"
+  ,"Failed to update supplier": "आपूर्तिकर्ता अद्यावधिक गर्न सकिएन"
+  ,"Save": "सुरक्षित गर्नुहोस्"
+  ,"Deactivate": "निष्क्रिय गर्नुहोस्"
+  ,"Activate": "सक्रिय गर्नुहोस्"
+  ,"No deliveries from this supplier yet.": "यस आपूर्तिकर्ताबाट अझै कुनै डेलिभरी छैन।"
+  ,"New Delivery": "नयाँ डेलिभरी"
+  ,"No deliveries found": "कुनै डेलिभरी फेला परेन"
+  ,"No delivery records have been created yet.": "अहिलेसम्म कुनै डेलिभरी रेकर्ड सिर्जना गरिएको छैन।"
+  ,"Document #": "कागजात नं."
+  ,"Received By": "प्राप्त गर्ने"
+  ,"Document Number": "कागजात नम्बर"
+  ,"Invoice or delivery note number": "इनभ्वाइस वा डेलिभरी नोट नम्बर"
+  ,"Optional notes about this delivery": "यस डेलिभरीबारे वैकल्पिक टिप्पणीहरू"
+  ,"Please select a supplier": "कृपया आपूर्तिकर्ता छान्नुहोस्"
+  ,"Please enter a delivery date": "कृपया डेलिभरी मिति प्रविष्ट गर्नुहोस्"
+  ,"Please add at least one item with a product name": "कृपया उत्पादन नाम सहित कम्तीमा एक वस्तु थप्नुहोस्"
+  ,"Select a supplier": "आपूर्तिकर्ता छान्नुहोस्"
+  ,"Delivery Date": "डेलिभरी मिति"
+  ,"Product Name": "उत्पादन नाम"
+  ,"Product name": "उत्पादन नाम"
+  ,"Quantity": "परिमाण"
+  ,"Qty": "परिमाण"
+  ,"Unit": "एकाइ"
+  ,"kg, pcs, L": "kg, pcs, L"
+  ,"Batch/Lot": "ब्याच/लट"
+  ,"Batch / Lot Number": "ब्याच / लट नम्बर"
+  ,"Batch or lot number": "ब्याच वा लट नम्बर"
+  ,"Expiry Date": "म्याद समाप्ति मिति"
+  ,"Create Delivery": "डेलिभरी सिर्जना गर्नुहोस्"
+  ,"Failed to create delivery": "डेलिभरी सिर्जना गर्न सकिएन"
+  ,"Delivery Detail": "डेलिभरी विवरण"
+  ,"No items recorded.": "कुनै वस्तु रेकर्ड गरिएको छैन।"
+  ,"Traceability Search": "ट्रेसबिलिटी खोज"
+  ,"Search by product name": "उत्पादन नामद्वारा खोज्नुहोस्"
+  ,"Search by batch or lot number": "ब्याच वा लट नम्बरद्वारा खोज्नुहोस्"
+  ,"Please enter a product name or batch/lot number to search": "खोज्न उत्पादन नाम वा ब्याच/लट नम्बर प्रविष्ट गर्नुहोस्"
+  ,"Search failed": "खोज असफल भयो"
+  ,"No results found": "कुनै नतिजा फेला परेन"
+  ,"No delivery items match your search criteria.": "तपाईंको खोज मापदण्डसँग मेल खाने कुनै डेलिभरी वस्तु छैन।"
+  ,"View Delivery": "डेलिभरी हेर्नुहोस्"
+  ,"Training Templates": "प्रशिक्षण टेम्प्लेटहरू"
+  ,"No training templates found": "कुनै प्रशिक्षण टेम्प्लेट फेला परेन"
+  ,"Create your first training template to get started.": "सुरु गर्न आफ्नो पहिलो प्रशिक्षण टेम्प्लेट सिर्जना गर्नुहोस्।"
+  ,"Mandatory": "अनिवार्य"
+  ,"Valid for {days} days": "{days} दिनका लागि मान्य"
+  ,"Acknowledgment required": "स्वीकृति आवश्यक"
+  ,"All Staff": "सबै कर्मचारी"
+  ,"IK-Alkohol": "IK-अल्कोहल"
+  ,"Food Hygiene": "खाद्य स्वच्छता"
+  ,"HACCP Awareness": "HACCP जानकारी"
+  ,"Intoxication Handling": "मादकता व्यवस्थापन"
+  ,"License Rules": "इजाजतपत्र नियमहरू"
+  ,"Responsible Hosting": "जिम्मेवार सेवा"
+  ,"Custom": "अनुकूलित"
+  ,"New Training Template": "नयाँ प्रशिक्षण टेम्प्लेट"
+  ,"Title is required": "शीर्षक आवश्यक छ"
+  ,"e.g. Basic food hygiene": "जस्तै आधारभूत खाद्य स्वच्छता"
+  ,"Training Content": "प्रशिक्षण सामग्री"
+  ,"Full training material text...": "पूरा प्रशिक्षण सामग्रीको पाठ..."
+  ,"Required For": "कसका लागि आवश्यक"
+  ,"Validity (days)": "वैधता (दिन)"
+  ,"e.g. 365": "जस्तै 365"
+  ,"Mandatory training": "अनिवार्य प्रशिक्षण"
+  ,"Requires acknowledgment": "स्वीकृति आवश्यक"
+  ,"Training Template": "प्रशिक्षण टेम्प्लेट"
+  ,"Failed to load training template": "प्रशिक्षण टेम्प्लेट लोड गर्न सकिएन"
+  ,"Delete this training template? This will also remove its assignments.": "यो प्रशिक्षण टेम्प्लेट मेटाउने? यसका असाइनमेन्टहरू पनि हट्नेछन्।"
+  ,"Failed to delete training template": "प्रशिक्षण टेम्प्लेट मेटाउन सकिएन"
+  ,"No description provided.": "कुनै विवरण दिइएको छैन।"
+  ,"No training content added yet.": "अहिलेसम्म कुनै प्रशिक्षण सामग्री थपिएको छैन।"
+  ,"Template Details": "टेम्प्लेट विवरण"
+  ,"Validity": "वैधता"
+  ,"No expiry": "म्याद छैन"
+  ,"Acknowledgment": "स्वीकृति"
+  ,"Required": "आवश्यक"
+  ,"Not required": "आवश्यक छैन"
+  ,"Assign Training": "प्रशिक्षण असाइन गर्नुहोस्"
+  ,"Failed to load data": "डेटा लोड गर्न सकिएन"
+  ,"Select at least one user": "कम्तीमा एक प्रयोगकर्ता छान्नुहोस्"
+  ,"Training assigned to {count} user(s)": "{count} प्रयोगकर्तालाई प्रशिक्षण असाइन गरियो"
+  ,"Failed to assign training": "प्रशिक्षण असाइन गर्न सकिएन"
+  ,"Select Users": "प्रयोगकर्ताहरू छान्नुहोस्"
+  ,"Select All": "सबै छान्नुहोस्"
+  ,"Deselect All": "सबै हटाउनुहोस्"
+  ,"{count} selected": "{count} चयन गरियो"
+  ,"Due Date (optional)": "अन्तिम मिति (वैकल्पिक)"
+  ,"Assigning...": "असाइन गर्दै..."
+  ,"Assign to {count} user(s)": "{count} प्रयोगकर्तालाई असाइन गर्नुहोस्"
+  ,"No training assignments": "कुनै प्रशिक्षण असाइनमेन्ट छैन"
+  ,"You have no training assigned to you.": "तपाईंलाई कुनै प्रशिक्षण असाइन गरिएको छैन।"
+  ,"Assigned": "असाइन गरिएको"
+  ,"Overdue": "म्याद नाघेको"
+  ,"Assigned by {username} on {date}": "{date} मा {username} द्वारा असाइन गरिएको"
+  ,"Due: {date}": "अन्तिम मिति: {date}"
+  ,"Mark as Completed": "सम्पन्न चिन्ह लगाउनुहोस्"
+  ,"I have read and understood this training": "मैले यो प्रशिक्षण पढेको र बुझेको छु"
+  ,"Comments (optional)...": "टिप्पणीहरू (वैकल्पिक)..."
+  ,"Completing...": "सम्पन्न गर्दै..."
+  ,"Confirm Completion": "सम्पन्नता पुष्टि गर्नुहोस्"
+  ,"Failed to complete training": "प्रशिक्षण पूरा गर्न सकिएन"
+  ,"Training Report": "प्रशिक्षण प्रतिवेदन"
+  ,"Templates": "टेम्प्लेटहरू"
+  ,"Active training templates": "सक्रिय प्रशिक्षण टेम्प्लेटहरू"
+  ,"Total Assignments": "कुल असाइनमेन्ट"
+  ,"All time": "सधैंका लागि"
+  ,"Training completed": "प्रशिक्षण पूरा भयो"
+  ,"Completion Rate": "सम्पन्नता दर"
+  ,"Overall": "समग्र"
+  ,"Failed to load bevilling information.": "इजाजतपत्र जानकारी लोड गर्न सकिएन।"
+  ,"Edit License": "इजाजतपत्र सम्पादन"
+  ,"Manage Conditions": "शर्तहरू व्यवस्थापन"
+  ,"No active bevilling": "कुनै सक्रिय इजाजतपत्र छैन"
+  ,"No active alcohol license has been registered for your organization.": "तपाईंको संस्थाका लागि कुनै सक्रिय मदिरा इजाजतपत्र दर्ता गरिएको छैन।"
+  ,"Register License": "इजाजतपत्र दर्ता गर्नुहोस्"
+  ,"This license expired {days} days ago. Please renew immediately.": "यो इजाजतपत्र {days} दिन अघि समाप्त भयो। कृपया तुरुन्त नवीकरण गर्नुहोस्।"
+  ,"This license expires in {days} days. Consider starting the renewal process.": "यो इजाजतपत्र {days} दिनमा समाप्त हुन्छ। नवीकरण प्रक्रिया सुरु गर्ने विचार गर्नुहोस्।"
+  ,"Municipality": "नगरपालिका"
+  ,"License Number": "इजाजतपत्र नम्बर"
+  ,"Valid From": "देखि मान्य"
+  ,"Valid To": "सम्म मान्य"
+  ,"Indefinite": "अनिश्चित"
+  ,"License Manager": "इजाजतपत्र प्रबन्धक"
+  ,"Deputy": "उपप्रबन्धक"
+  ,"Indoor": "भित्री"
+  ,"Outdoor": "बाहिरी"
+  ,"Serving Area": "सेवा क्षेत्र"
+  ,"Alcohol Groups Allowed": "अनुमत मदिरा समूहहरू"
+  ,"Conditions": "शर्तहरू"
+  ,"No conditions registered.": "कुनै शर्त दर्ता गरिएको छैन।"
+  ,"No serving hours configured.": "सेवा समय सेट गरिएको छैन।"
+  ,"Monday": "सोमबार"
+  ,"Tuesday": "मंगलबार"
+  ,"Wednesday": "बुधबार"
+  ,"Thursday": "बिहीबार"
+  ,"Friday": "शुक्रबार"
+  ,"Saturday": "शनिबार"
+  ,"Sunday": "आइतबार"
+  ,"On-premises License": "स्थलभित्र सेवा इजाजतपत्र"
+  ,"Off-premises License": "स्थल बाहिर बिक्री इजाजतपत्र"
+  ,"Combined License": "संयुक्त इजाजतपत्र"
+  ,"Edit Bevilling": "इजाजतपत्र सम्पादन"
+  ,"Register Bevilling": "इजाजतपत्र दर्ता गर्नुहोस्"
+  ,"License Type": "इजाजतपत्र प्रकार"
+  ,"Combined": "संयुक्त"
+  ,"Valid To (optional)": "सम्म मान्य (वैकल्पिक)"
+  ,"Full name": "पूरा नाम"
+  ,"Indoor serving allowed": "भित्री सेवा अनुमति"
+  ,"Outdoor serving allowed": "बाहिरी सेवा अनुमति"
+  ,"Serving Area Description": "सेवा क्षेत्रको विवरण"
+  ,"Describe the serving area": "सेवा क्षेत्रको विवरण लेख्नुहोस्"
+  ,"Any additional notes": "थप टिप्पणीहरू"
+  ,"to": "देखि"
+  ,"Update Bevilling": "इजाजतपत्र अद्यावधिक गर्नुहोस्"
+  ,"Failed to save bevilling": "इजाजतपत्र बचत गर्न सकिएन"
+  ,"Bevilling Conditions": "इजाजतपत्रका शर्तहरू"
+  ,"Failed to load bevilling.": "इजाजतपत्र लोड गर्न सकिएन।"
+  ,"Failed to add condition": "शर्त थप्न सकिएन"
+  ,"Failed to update condition": "शर्त अद्यावधिक गर्न सकिएन"
+  ,"Security Guard": "सुरक्षा गार्ड"
+  ,"Food Requirement": "खाद्य आवश्यकता"
+  ,"Area Limitation": "क्षेत्रीय सीमा"
+  ,"Event Limitation": "कार्यक्रम सीमा"
+  ,"Training Requirement": "प्रशिक्षण आवश्यकता"
+  ,"Condition title": "शर्त शीर्षक"
+  ,"Detailed description (optional)": "विस्तृत विवरण (वैकल्पिक)"
+  ,"Adding...": "थप्दै..."
+  ,"Add Condition": "शर्त थप्नुहोस्"
+  ,"No conditions registered yet.": "अहिलेसम्म कुनै शर्त दर्ता गरिएको छैन।"
 }

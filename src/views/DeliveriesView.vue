@@ -4,11 +4,13 @@
  * Rows are clickable to navigate to the delivery detail page.
  */
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { deliveryApi, type DeliveryRecord } from '@/api/deliveries'
 /** All delivery records loaded from the server. */
 const deliveries = ref<DeliveryRecord[]>([])
 /** Whether deliveries are still being fetched. */
 const loading = ref(true)
+const { t, locale } = useI18n()
 
 onMounted(async () => {
   try {
@@ -24,34 +26,34 @@ onMounted(async () => {
  * @returns Formatted date string
  */
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString()
+  return new Date(iso).toLocaleDateString(locale.value)
 }
 </script>
 
 <template>
   <div>
     <div class="page-header">
-      <h1>Deliveries</h1>
-      <router-link to="/app/deliveries/new" class="btn btn-primary">New Delivery</router-link>
+      <h1>{{ t('Deliveries') }}</h1>
+      <router-link to="/app/deliveries/new" class="btn btn-primary">{{ t('New Delivery') }}</router-link>
     </div>
 
     <div v-if="loading" class="loading"><div class="spinner" /></div>
 
     <div v-else-if="deliveries.length === 0" class="empty-state">
-      <h3>No deliveries found</h3>
-      <p>No delivery records have been created yet.</p>
+      <h3>{{ t('No deliveries found') }}</h3>
+      <p>{{ t('No delivery records have been created yet.') }}</p>
     </div>
 
     <div v-else class="card table-wrapper">
       <table>
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Supplier</th>
-            <th>Document #</th>
-            <th>Received By</th>
-            <th>Items</th>
-            <th>Created</th>
+            <th>{{ t('Date') }}</th>
+            <th>{{ t('Supplier') }}</th>
+            <th>{{ t('Document #') }}</th>
+            <th>{{ t('Received By') }}</th>
+            <th>{{ t('Items') }}</th>
+            <th>{{ t('Created') }}</th>
           </tr>
         </thead>
         <tbody>

@@ -103,5 +103,355 @@
   "Login failed": "Error de inicio de sesión",
   "Digital Internal Control": "Control interno digital",
   "for Food & Alcohol Compliance": "para el cumplimiento de alimentos y alcohol",
-  "Replace paper checklists and manual routines with a structured digital solution. Monitor daily operations, ensure proper documentation, and pass inspections with confidence.": "Sustituye las listas en papel y las rutinas manuales por una solución digital estructurada. Supervisa las operaciones diarias, garantiza la documentación adecuada y supera las inspecciones con confianza."
+  "Replace paper checklists and manual routines with a structured digital solution. Monitor daily operations, ensure proper documentation, and pass inspections with confidence.": "Sustituye las listas en papel y las rutinas manuales por una solución digital estructurada. Supervisa las operaciones diarias, garantiza la documentación adecuada y supera las inspecciones con confianza.",
+  "Invitation accepted. Your organization dashboard is now ready.": "Invitación aceptada. El panel de tu organización ya está listo.",
+  "Failed to accept invitation": "No se pudo aceptar la invitación",
+  "You need an invitation from an admin or restaurant manager before you can access restaurant data.": "Necesitas una invitación de un administrador o gerente antes de poder acceder a los datos del restaurante.",
+  "Checklist Templates": "Plantillas de listas",
+  "Active templates": "Plantillas activas",
+  "Completed Today": "Completadas hoy",
+  "Checklists finished": "Listas completadas",
+  "Temperature Alerts": "Alertas de temperatura",
+  "Alerts today": "Alertas hoy",
+  "Open Deviations": "Desviaciones abiertas",
+  "Needing attention": "Requieren atención",
+  "In Progress": "En progreso",
+  "Being resolved": "En resolución",
+  "Unread": "Sin leer",
+  "Quick Actions": "Acciones rápidas",
+  "Complete Checklist": "Completar lista",
+  "Complete a daily, weekly, or monthly checklist": "Completa una lista diaria, semanal o mensual",
+  "Log Temperature": "Registrar temperatura",
+  "Record storage temperature readings": "Registra lecturas de temperatura de almacenamiento",
+  "Report Deviation": "Reportar desviación",
+  "Report a non-compliance issue": "Reporta un problema de incumplimiento",
+  "Dishes": "Platos",
+  "Ingredients": "Ingredientes",
+  "Allergen Sheet": "Ficha de alérgenos",
+  "New Dish": "Nuevo plato",
+  "No dishes found": "No se encontraron platos",
+  "Add your first dish to get started.": "Añade tu primer plato para empezar.",
+  "Status": "Estado",
+  "Approval": "Aprobación",
+  "None": "Ninguno",
+  "Active": "Activo",
+  "Inactive": "Inactivo",
+  "Needs approval": "Necesita aprobación",
+  "Approved": "Aprobado",
+  "Not approved": "No aprobado",
+  "Failed to load dish": "No se pudo cargar el plato",
+  "Failed to approve": "No se pudo aprobar",
+  "Failed to add override": "No se pudo añadir la excepción",
+  "Failed to remove override": "No se pudo eliminar la excepción",
+  "Delete this dish? This cannot be undone.": "¿Eliminar este plato? Esta acción no se puede deshacer.",
+  "Failed to delete dish": "No se pudo eliminar el plato",
+  "Dish Details": "Detalles del plato",
+  "Edit": "Editar",
+  "Approving...": "Aprobando...",
+  "Approve Allergens": "Aprobar alérgenos",
+  "Deleting...": "Eliminando...",
+  "Delete": "Eliminar",
+  "Never approved": "Nunca aprobado",
+  "Last approved:": "Última aprobación:",
+  "by": "por",
+  "No ingredients.": "Sin ingredientes.",
+  "Derived Allergens": "Alérgenos derivados",
+  "No allergens.": "Sin alérgenos.",
+  "Allergen Overrides": "Excepciones de alérgenos",
+  "Included": "Incluido",
+  "Excluded": "Excluido",
+  "Remove": "Eliminar",
+  "No overrides.": "No hay excepciones.",
+  "Add Override": "Añadir excepción",
+  "Select allergen...": "Selecciona un alérgeno...",
+  "Include": "Incluir",
+  "Exclude": "Excluir",
+  "Reason...": "Motivo...",
+  "Add": "Añadir",
+  "Unknown": "Desconocido",
+  "Failed to save dish": "No se pudo guardar el plato",
+  "Edit Dish": "Editar plato",
+  "Back": "Volver",
+  "Dish name": "Nombre del plato",
+  "Description": "Descripción",
+  "Optional description": "Descripción opcional",
+  "Notes": "Notas",
+  "Internal notes": "Notas internas",
+  "Add an ingredient...": "Añadir un ingrediente...",
+  "Quantity (optional)": "Cantidad (opcional)",
+  "No ingredients added yet.": "Aún no se han añadido ingredientes.",
+  "Derived Allergens (from ingredients)": "Alérgenos derivados (de los ingredientes)",
+  "No allergens detected from selected ingredients.": "No se detectaron alérgenos en los ingredientes seleccionados.",
+  "Saving...": "Guardando...",
+  "Update Dish": "Actualizar plato",
+  "Create Dish": "Crear plato",
+  "New Ingredient": "Nuevo ingrediente",
+  "No ingredients found": "No se encontraron ingredientes",
+  "Add your first ingredient to get started.": "Añade tu primer ingrediente para empezar.",
+  "Updated": "Actualizado",
+  "Failed to save ingredient": "No se pudo guardar el ingrediente",
+  "Delete this ingredient? This cannot be undone.": "¿Eliminar este ingrediente? Esta acción no se puede deshacer.",
+  "Failed to delete ingredient": "No se pudo eliminar el ingrediente",
+  "Edit Ingredient": "Editar ingrediente",
+  "Ingredient name": "Nombre del ingrediente",
+  "Optional notes about this ingredient": "Notas opcionales sobre este ingrediente",
+  "Update Ingredient": "Actualizar ingrediente",
+  "Create Ingredient": "Crear ingrediente",
+  "Print": "Imprimir",
+  "No dishes": "No hay platos",
+  "Add dishes to generate the allergen sheet.": "Añade platos para generar la ficha de alérgenos.",
+  "Allergen Information": "Información de alérgenos",
+  "Dish": "Plato",
+  "X = contains allergen, - = not present": "X = contiene alérgeno, - = no presente",
+  "Mark all as read": "Marcar todo como leído",
+  "No notifications": "No hay notificaciones",
+  "You're all caught up.": "Estás al día.",
+  "Temperature Alert": "Alerta de temperatura",
+  "Deviation Assigned": "Desviación asignada",
+  "Training Assigned": "Formación asignada",
+  "Task Due": "Tarea vencida",
+  "General": "General",
+  "Profile": "Perfil",
+  "First Name": "Nombre",
+  "Last Name": "Apellido",
+  "Email": "Correo electrónico",
+  "Roles": "Roles",
+  "Profile updated successfully": "Perfil actualizado correctamente",
+  "Failed to update profile": "No se pudo actualizar el perfil",
+  "Save Changes": "Guardar cambios",
+  "Admin Dashboard": "Panel de administrador",
+  "Total Users": "Usuarios totales",
+  "In organization": "En la organización",
+  "Admins": "Administradores",
+  "Managers": "Gerentes",
+  "Staff": "Personal",
+  "System administrators": "Administradores del sistema",
+  "Compliance managers": "Gerentes de cumplimiento",
+  "Operational staff": "Personal operativo",
+  "Compliance Overview": "Resumen de cumplimiento",
+  "Active Templates": "Plantillas activas",
+  "Checklist templates": "Plantillas de listas",
+  "Temp Alerts": "Alertas de temperatura",
+  "Today": "Hoy",
+  "Administration": "Administración",
+  "View and manage user accounts and roles": "Ver y gestionar cuentas y roles de usuarios",
+  "Create and manage compliance checklists": "Crear y gestionar listas de cumplimiento",
+  "Review and assign open deviations": "Revisar y asignar desviaciones abiertas",
+  "Audit History": "Historial de auditoría",
+  "View checklist completion history": "Ver el historial de listas completadas",
+  "Create Invitation": "Crear invitación",
+  "Superadmins can create manager or staff invites for any restaurant.": "Los superadministradores pueden crear invitaciones para gerentes o personal de cualquier restaurante.",
+  "Admins can create manager or staff invites for their restaurant.": "Los administradores pueden crear invitaciones para gerentes o personal de su restaurante.",
+  "Managers can invite staff users into their own restaurant.": "Los gerentes pueden invitar al personal a su propio restaurante.",
+  "Role": "Rol",
+  "Manager": "Gerente",
+  "Admin": "Administrador",
+  "Superadmin": "Superadministrador",
+  "Restaurant": "Restaurante",
+  "Select restaurant": "Seleccionar restaurante",
+  "Expires in days": "Caduca en días",
+  "Creating invite...": "Creando invitación...",
+  "Create invite": "Crear invitación",
+  "Latest invite token": "Último token de invitación",
+  "No users found": "No se encontraron usuarios",
+  "Name": "Nombre",
+  "Actions": "Acciones",
+  "Invitations": "Invitaciones",
+  "Token": "Token",
+  "Expires": "Caduca",
+  "Pending": "Pendiente",
+  "Accepted by {username}": "Aceptada por {username}",
+  "No invitations created yet": "Aún no se han creado invitaciones",
+  "Invite created for {organizationName}. Share the token below with the user.": "Se creó una invitación para {organizationName}. Comparte el token de abajo con el usuario.",
+  "Failed to create invite": "No se pudo crear la invitación",
+  "Delete this user? This will remove their access.": "¿Eliminar este usuario? Esto eliminará su acceso.",
+  "Failed to delete user": "No se pudo eliminar al usuario"
+  ,"New Supplier": "Nuevo proveedor"
+  ,"All Suppliers": "Todos los proveedores"
+  ,"No suppliers found": "No se encontraron proveedores"
+  ,"No suppliers match your filters.": "Ningún proveedor coincide con tus filtros."
+  ,"Org. Number": "N.º org."
+  ,"Contact": "Contacto"
+  ,"Organization Number": "Número de organización"
+  ,"Contact Name": "Nombre de contacto"
+  ,"Supplier company name": "Nombre de la empresa proveedora"
+  ,"e.g. 123 456 789": "p. ej. 123 456 789"
+  ,"Primary contact person": "Persona de contacto principal"
+  ,"contact@supplier.com": "contacto@proveedor.com"
+  ,"+47 123 45 678": "+47 123 45 678"
+  ,"Address": "Dirección"
+  ,"Street address, city": "Dirección y ciudad"
+  ,"Internal notes about this supplier": "Notas internas sobre este proveedor"
+  ,"Creating...": "Creando..."
+  ,"Create Supplier": "Crear proveedor"
+  ,"Failed to create supplier": "No se pudo crear el proveedor"
+  ,"Edit Supplier": "Editar proveedor"
+  ,"Failed to update supplier": "No se pudo actualizar el proveedor"
+  ,"Save": "Guardar"
+  ,"Deactivate": "Desactivar"
+  ,"Activate": "Activar"
+  ,"No deliveries from this supplier yet.": "Todavía no hay entregas de este proveedor."
+  ,"New Delivery": "Nueva entrega"
+  ,"No deliveries found": "No se encontraron entregas"
+  ,"No delivery records have been created yet.": "Todavía no se han creado registros de entrega."
+  ,"Document #": "N.º de documento"
+  ,"Received By": "Recibido por"
+  ,"Document Number": "Número de documento"
+  ,"Invoice or delivery note number": "Número de factura o albarán"
+  ,"Optional notes about this delivery": "Notas opcionales sobre esta entrega"
+  ,"Please select a supplier": "Selecciona un proveedor"
+  ,"Please enter a delivery date": "Introduce una fecha de entrega"
+  ,"Please add at least one item with a product name": "Añade al menos un artículo con nombre de producto"
+  ,"Select a supplier": "Selecciona un proveedor"
+  ,"Delivery Date": "Fecha de entrega"
+  ,"Product Name": "Nombre del producto"
+  ,"Product name": "Nombre del producto"
+  ,"Quantity": "Cantidad"
+  ,"Qty": "Cant."
+  ,"Unit": "Unidad"
+  ,"kg, pcs, L": "kg, uds, L"
+  ,"Batch/Lot": "Lote"
+  ,"Batch / Lot Number": "Número de lote"
+  ,"Batch or lot number": "Número de lote"
+  ,"Expiry Date": "Fecha de caducidad"
+  ,"Create Delivery": "Crear entrega"
+  ,"Failed to create delivery": "No se pudo crear la entrega"
+  ,"Delivery Detail": "Detalle de entrega"
+  ,"No items recorded.": "No hay artículos registrados."
+  ,"Traceability Search": "Búsqueda de trazabilidad"
+  ,"Search by product name": "Buscar por nombre de producto"
+  ,"Search by batch or lot number": "Buscar por número de lote"
+  ,"Please enter a product name or batch/lot number to search": "Introduce un nombre de producto o número de lote para buscar"
+  ,"Search failed": "La búsqueda falló"
+  ,"No results found": "No se encontraron resultados"
+  ,"No delivery items match your search criteria.": "Ningún artículo coincide con tus criterios de búsqueda."
+  ,"View Delivery": "Ver entrega"
+  ,"Training Templates": "Plantillas de formación"
+  ,"No training templates found": "No se encontraron plantillas de formación"
+  ,"Create your first training template to get started.": "Crea tu primera plantilla de formación para comenzar."
+  ,"Mandatory": "Obligatorio"
+  ,"Valid for {days} days": "Válido durante {days} días"
+  ,"Acknowledgment required": "Requiere confirmación"
+  ,"All Staff": "Todo el personal"
+  ,"IK-Alkohol": "IK-Alcohol"
+  ,"Food Hygiene": "Higiene alimentaria"
+  ,"HACCP Awareness": "Conocimiento de HACCP"
+  ,"Intoxication Handling": "Gestión de intoxicación"
+  ,"License Rules": "Normas de licencia"
+  ,"Responsible Hosting": "Servicio responsable"
+  ,"Custom": "Personalizado"
+  ,"New Training Template": "Nueva plantilla de formación"
+  ,"Title is required": "El título es obligatorio"
+  ,"e.g. Basic food hygiene": "p. ej. higiene alimentaria básica"
+  ,"Training Content": "Contenido de la formación"
+  ,"Full training material text...": "Texto completo del material de formación..."
+  ,"Required For": "Requerido para"
+  ,"Validity (days)": "Validez (días)"
+  ,"e.g. 365": "p. ej. 365"
+  ,"Mandatory training": "Formación obligatoria"
+  ,"Requires acknowledgment": "Requiere confirmación"
+  ,"Training Template": "Plantilla de formación"
+  ,"Failed to load training template": "No se pudo cargar la plantilla de formación"
+  ,"Delete this training template? This will also remove its assignments.": "¿Eliminar esta plantilla de formación? Esto también eliminará sus asignaciones."
+  ,"Failed to delete training template": "No se pudo eliminar la plantilla de formación"
+  ,"No description provided.": "No se proporcionó descripción."
+  ,"No training content added yet.": "Aún no se ha añadido contenido de formación."
+  ,"Template Details": "Detalles de la plantilla"
+  ,"Validity": "Validez"
+  ,"No expiry": "Sin caducidad"
+  ,"Acknowledgment": "Confirmación"
+  ,"Required": "Requerido"
+  ,"Not required": "No requerido"
+  ,"Assign Training": "Asignar formación"
+  ,"Failed to load data": "No se pudieron cargar los datos"
+  ,"Select at least one user": "Selecciona al menos un usuario"
+  ,"Training assigned to {count} user(s)": "Formación asignada a {count} usuario(s)"
+  ,"Failed to assign training": "No se pudo asignar la formación"
+  ,"Select Users": "Seleccionar usuarios"
+  ,"Select All": "Seleccionar todo"
+  ,"Deselect All": "Deseleccionar todo"
+  ,"{count} selected": "{count} seleccionados"
+  ,"Due Date (optional)": "Fecha límite (opcional)"
+  ,"Assigning...": "Asignando..."
+  ,"Assign to {count} user(s)": "Asignar a {count} usuario(s)"
+  ,"No training assignments": "No hay formaciones asignadas"
+  ,"You have no training assigned to you.": "No tienes formación asignada."
+  ,"Assigned": "Asignado"
+  ,"Overdue": "Vencido"
+  ,"Assigned by {username} on {date}": "Asignado por {username} el {date}"
+  ,"Due: {date}": "Fecha límite: {date}"
+  ,"Mark as Completed": "Marcar como completado"
+  ,"I have read and understood this training": "He leído y entendido esta formación"
+  ,"Comments (optional)...": "Comentarios (opcionales)..."
+  ,"Completing...": "Completando..."
+  ,"Confirm Completion": "Confirmar finalización"
+  ,"Failed to complete training": "No se pudo completar la formación"
+  ,"Training Report": "Informe de formación"
+  ,"Templates": "Plantillas"
+  ,"Active training templates": "Plantillas de formación activas"
+  ,"Total Assignments": "Asignaciones totales"
+  ,"All time": "Todo el tiempo"
+  ,"Training completed": "Formación completada"
+  ,"Completion Rate": "Tasa de finalización"
+  ,"Overall": "General"
+  ,"Failed to load bevilling information.": "No se pudo cargar la información de la licencia."
+  ,"Edit License": "Editar licencia"
+  ,"Manage Conditions": "Gestionar condiciones"
+  ,"No active bevilling": "No hay licencia activa"
+  ,"No active alcohol license has been registered for your organization.": "No se ha registrado una licencia de alcohol activa para tu organización."
+  ,"Register License": "Registrar licencia"
+  ,"This license expired {days} days ago. Please renew immediately.": "Esta licencia expiró hace {days} días. Renuévala de inmediato."
+  ,"This license expires in {days} days. Consider starting the renewal process.": "Esta licencia vence en {days} días. Considera iniciar la renovación."
+  ,"Municipality": "Municipio"
+  ,"License Number": "Número de licencia"
+  ,"Valid From": "Válida desde"
+  ,"Valid To": "Válida hasta"
+  ,"Indefinite": "Indefinida"
+  ,"License Manager": "Responsable de licencia"
+  ,"Deputy": "Suplente"
+  ,"Indoor": "Interior"
+  ,"Outdoor": "Exterior"
+  ,"Serving Area": "Zona de servicio"
+  ,"Alcohol Groups Allowed": "Grupos de alcohol permitidos"
+  ,"Conditions": "Condiciones"
+  ,"No conditions registered.": "No hay condiciones registradas."
+  ,"No serving hours configured.": "No se configuraron horarios de servicio."
+  ,"Monday": "Lunes"
+  ,"Tuesday": "Martes"
+  ,"Wednesday": "Miércoles"
+  ,"Thursday": "Jueves"
+  ,"Friday": "Viernes"
+  ,"Saturday": "Sábado"
+  ,"Sunday": "Domingo"
+  ,"On-premises License": "Licencia para consumo en el local"
+  ,"Off-premises License": "Licencia para venta fuera del local"
+  ,"Combined License": "Licencia combinada"
+  ,"Edit Bevilling": "Editar licencia"
+  ,"Register Bevilling": "Registrar licencia"
+  ,"License Type": "Tipo de licencia"
+  ,"Combined": "Combinada"
+  ,"Valid To (optional)": "Válida hasta (opcional)"
+  ,"Full name": "Nombre completo"
+  ,"Indoor serving allowed": "Servicio interior permitido"
+  ,"Outdoor serving allowed": "Servicio exterior permitido"
+  ,"Serving Area Description": "Descripción del área de servicio"
+  ,"Describe the serving area": "Describe el área de servicio"
+  ,"Any additional notes": "Notas adicionales"
+  ,"to": "a"
+  ,"Update Bevilling": "Actualizar licencia"
+  ,"Failed to save bevilling": "No se pudo guardar la licencia"
+  ,"Bevilling Conditions": "Condiciones de la licencia"
+  ,"Failed to load bevilling.": "No se pudo cargar la licencia."
+  ,"Failed to add condition": "No se pudo añadir la condición"
+  ,"Failed to update condition": "No se pudo actualizar la condición"
+  ,"Security Guard": "Guardia de seguridad"
+  ,"Food Requirement": "Requisito de comida"
+  ,"Area Limitation": "Limitación de área"
+  ,"Event Limitation": "Limitación de evento"
+  ,"Training Requirement": "Requisito de formación"
+  ,"Condition title": "Título de la condición"
+  ,"Detailed description (optional)": "Descripción detallada (opcional)"
+  ,"Adding...": "Añadiendo..."
+  ,"Add Condition": "Añadir condición"
+  ,"No conditions registered yet.": "Todavía no hay condiciones registradas."
 }
