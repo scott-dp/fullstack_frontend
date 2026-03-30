@@ -1,8 +1,8 @@
 import { render, fireEvent, screen } from '@testing-library/vue'
 import { describe, expect, it, vi } from 'vitest'
-import AdminSetupView from '@/views/AdminSetupView.vue'
+import AdminSetupView from '../../src/views/admin/AdminSetupView.vue'
 import { i18n } from '@/i18n'
-import { HttpError } from '@/api/client'
+import { HttpError } from '../../src/api/core/client'
 
 const { pushMock, routeMock, authApiMock } = vi.hoisted(() => ({
   pushMock: vi.fn(),
@@ -25,7 +25,7 @@ vi.mock('vue-router', async () => {
 })
 
 vi.mock('@/api/auth', async () => {
-  const actual = await vi.importActual<typeof import('@/api/auth')>('@/api/auth')
+  const actual = await vi.importActual<typeof import('../../src/api/auth/auth')>('@/api/auth')
   return {
     ...actual,
     authApi: authApiMock,

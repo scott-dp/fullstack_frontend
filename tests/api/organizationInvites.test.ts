@@ -8,7 +8,7 @@ vi.mock('@/api/client', () => ({
 
 describe('organizationInviteApi', () => {
   it('lists invites', async () => {
-    const { organizationInviteApi } = await import('@/api/organizationInvites')
+    const { organizationInviteApi } = await import('../../src/api/auth/organizationInvites')
 
     organizationInviteApi.list()
 
@@ -16,7 +16,7 @@ describe('organizationInviteApi', () => {
   })
 
   it('creates invites', async () => {
-    const { organizationInviteApi } = await import('@/api/organizationInvites')
+    const { organizationInviteApi } = await import('../../src/api/auth/organizationInvites')
 
     organizationInviteApi.create({ role: 'ROLE_MANAGER', organizationId: 2, expiresInDays: 7 })
 
@@ -27,7 +27,7 @@ describe('organizationInviteApi', () => {
   })
 
   it('accepts invites', async () => {
-    const { organizationInviteApi } = await import('@/api/organizationInvites')
+    const { organizationInviteApi } = await import('../../src/api/auth/organizationInvites')
 
     organizationInviteApi.accept({ token: 'abc' })
 

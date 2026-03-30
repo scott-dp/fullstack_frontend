@@ -8,7 +8,7 @@ vi.mock('@/api/client', () => ({
 
 describe('temperatureApi', () => {
   it('builds temperature list, get, and create requests correctly', async () => {
-    const { temperatureApi } = await import('@/api/temperature')
+    const { temperatureApi } = await import('../../src/api/operations/temperature')
     const payload = {
       location: 'Walk-in Fridge',
       temperature: 4,
@@ -34,7 +34,7 @@ describe('temperatureApi', () => {
   })
 
   it('omits the location query when not provided', async () => {
-    const { temperatureApi } = await import('@/api/temperature')
+    const { temperatureApi } = await import('../../src/api/operations/temperature')
 
     temperatureApi.list()
     expect(requestMock).toHaveBeenCalledWith('/temperature-logs')

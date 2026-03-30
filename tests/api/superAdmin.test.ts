@@ -8,7 +8,7 @@ vi.mock('@/api/client', () => ({
 
 describe('superAdminApi', () => {
   it('uses the expected superadmin endpoints', async () => {
-    const { superAdminApi } = await import('@/api/superAdmin')
+    const { superAdminApi } = await import('../../src/api/admin/superAdmin')
 
     const payload = {
       organizationName: 'North Peak Bistro',

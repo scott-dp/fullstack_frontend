@@ -8,7 +8,7 @@ vi.mock('@/api/client', () => ({
 
 describe('userApi', () => {
   it('uses the expected user endpoints', async () => {
-    const { userApi } = await import('@/api/users')
+    const { userApi } = await import('../../src/api/auth/users')
 
     userApi.me()
     userApi.updateProfile({ firstName: 'Alice' })

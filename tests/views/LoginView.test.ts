@@ -1,7 +1,7 @@
 import { render, fireEvent, screen } from '@testing-library/vue'
 import { describe, expect, it, vi } from 'vitest'
-import LoginView from '@/views/LoginView.vue'
-import { HttpError } from '@/api/client'
+import LoginView from '../../src/views/auth/LoginView.vue'
+import { HttpError } from '../../src/api/core/client'
 import { i18n } from '@/i18n'
 
 const pushMock = vi.fn()

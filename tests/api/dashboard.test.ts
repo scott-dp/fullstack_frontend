@@ -8,7 +8,7 @@ vi.mock('@/api/client', () => ({
 
 describe('dashboardApi', () => {
   it('requests the dashboard endpoint', async () => {
-    const { dashboardApi } = await import('@/api/dashboard')
+    const { dashboardApi } = await import('../../src/api/operations/dashboard')
 
     dashboardApi.get()
 

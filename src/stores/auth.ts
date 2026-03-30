@@ -9,7 +9,7 @@ import {
   type MessageResponse,
   type RegisterRequest,
   type RegistrationResponse,
-} from '@/api/auth'
+} from '@/api/auth/auth.ts'
 
 /**
  * Authentication store managing the current user session.

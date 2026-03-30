@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { notificationApi, type Notification } from '@/api/notifications'
+import { notificationApi, type Notification } from '@/api/operations/notifications.ts'
 
 /**
  * Notification store managing the current user's notifications.

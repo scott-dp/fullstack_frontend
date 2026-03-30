@@ -8,7 +8,7 @@ vi.mock('@/api/client', () => ({
 
 describe('checklistApi', () => {
   it('builds checklist template and completion requests correctly', async () => {
-    const { checklistApi } = await import('@/api/checklists')
+    const { checklistApi } = await import('../../src/api/operations/checklists')
     const templatePayload = {
       title: 'Daily kitchen',
       frequency: 'DAILY',
@@ -57,7 +57,7 @@ describe('checklistApi', () => {
   })
 
   it('omits the template category query when not provided', async () => {
-    const { checklistApi } = await import('@/api/checklists')
+    const { checklistApi } = await import('../../src/api/operations/checklists')
 
     checklistApi.listTemplates()
     expect(requestMock).toHaveBeenCalledWith('/checklists/templates')

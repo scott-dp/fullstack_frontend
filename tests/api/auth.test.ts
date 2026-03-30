@@ -8,7 +8,7 @@ vi.mock('@/api/client', () => ({
 
 describe('authApi', () => {
   it('uses the expected auth endpoints', async () => {
-    const { authApi } = await import('@/api/auth')
+    const { authApi } = await import('../../src/api/auth/auth')
 
     const loginPayload = { identifier: 'alice@example.com', password: 'secret' }
     const registerPayload = { username: 'alice', email: 'alice@example.com', password: 'secret' }

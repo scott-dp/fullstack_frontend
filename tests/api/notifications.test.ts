@@ -8,7 +8,7 @@ vi.mock('@/api/client', () => ({
 
 describe('notificationApi', () => {
   it('uses the expected notification endpoints', async () => {
-    const { notificationApi } = await import('@/api/notifications')
+    const { notificationApi } = await import('../../src/api/operations/notifications')
 
     notificationApi.list()
     notificationApi.unreadCount()

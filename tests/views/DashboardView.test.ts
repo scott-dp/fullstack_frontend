@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/vue'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import DashboardView from '@/views/DashboardView.vue'
+import DashboardView from '../../src/views/dashboard/DashboardView.vue'
 import { i18n } from '@/i18n'
 
 const {

@@ -8,7 +8,7 @@ vi.mock('@/api/client', () => ({
 
 describe('deviationApi', () => {
   it('builds list, CRUD, and comment requests correctly', async () => {
-    const { deviationApi } = await import('@/api/deviations')
+    const { deviationApi } = await import('../../src/api/operations/deviations')
 
     deviationApi.list('OPEN', 'FOOD')
     deviationApi.get(1)
@@ -44,7 +44,7 @@ describe('deviationApi', () => {
   })
 
   it('omits empty list filters from the query string', async () => {
-    const { deviationApi } = await import('@/api/deviations')
+    const { deviationApi } = await import('../../src/api/operations/deviations')
 
     deviationApi.list()
     expect(requestMock).toHaveBeenCalledWith('/deviations')
