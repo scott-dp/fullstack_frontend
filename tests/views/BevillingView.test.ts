@@ -45,7 +45,6 @@ describe('BevillingView', () => {
       styrerName: 'Anna Admin',
       stedfortrederName: 'Bjørn Backup',
       notes: 'Renewal in progress',
-      attachmentId: null,
       conditions: [
         { id: 1, conditionType: 'SECURITY_PLAN', title: 'Security plan', description: 'Keep updated', active: true },
       ],

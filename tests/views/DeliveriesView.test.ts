@@ -34,7 +34,6 @@ describe('DeliveriesView', () => {
         documentNumber: 'DEL-21',
         receivedByUsername: 'manager',
         notes: null,
-        attachmentId: null,
         items: [{ id: 1, productName: 'Salmon' }],
         createdAt: '2026-03-25T10:30:00',
       },

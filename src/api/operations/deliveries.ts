@@ -39,8 +39,6 @@ export interface DeliveryRecord {
   receivedByUsername: string
   /** Notes about the delivery, optional. */
   notes?: string
-  /** Attachment file ID, optional. */
-  attachmentId?: number
   /** Items included in this delivery. */
   items: DeliveryItem[]
   /** ISO-8601 creation timestamp. */
