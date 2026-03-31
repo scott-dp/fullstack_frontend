@@ -63,8 +63,6 @@ export interface Bevilling {
   stedfortrederName: string | null
   /** Additional notes. */
   notes: string | null
-  /** Attachment ID, if any. */
-  attachmentId: number | null
   /** Conditions attached to this bevilling. */
   conditions: BevillingCondition[]
   /** Serving hours for this bevilling. */
