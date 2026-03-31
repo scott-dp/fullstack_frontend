@@ -179,6 +179,7 @@
   "Failed to save dish": "Failed to save dish",
   "Edit Dish": "Edit Dish",
   "Back": "Back",
+  "Cancel": "Cancel",
   "Dish name": "Dish name",
   "Description": "Description",
   "Optional description": "Optional description",
@@ -669,4 +670,25 @@
   ,"Invalid username, email, or password": "Invalid username, email, or password"
   ,"Could not create account. Check your details or try a different username or email.": "Could not create account. Check your details or try a different username or email."
   ,"Join restaurants, bars, and cafes already using CheckMate to stay audit-ready.": "Join restaurants, bars, and cafes already using CheckMate to stay audit-ready."
+  ,"IK-Mat (Food)": "IK-Mat (Food)"
+  ,"HACCP": "HACCP"
+  ,"Archived": "Archived"
+  ,"Frequency": "Frequency"
+  ,"All": "All"
+  ,"Never": "Never"
+  ,"Phone": "Phone"
+  ,"Supplier": "Supplier"
+  ,"Items": "Items"
+  ,"Temperature (°C)": "Temperature (°C)"
+  ,"Min Threshold (°C)": "Min Threshold (°C)"
+  ,"Max Threshold (°C)": "Max Threshold (°C)"
+  ,"Temp (°C)": "Temp (°C)"
+  ,"Complete": "Complete"
+  ,"Group 1 (up to 4.7%)": "Group 1 (up to 4.7%)"
+  ,"Group 2 (4.7%-22%)": "Group 2 (4.7%-22%)"
+  ,"Group 3 (above 22%)": "Group 3 (above 22%)"
+  ,"SECURITY PLAN": "Security Plan"
+  ,"Serving Hours": "Serving Hours"
+  ,"min": "min"
+  ,"GUEST REMOVED": "Guest Removed"
 }
