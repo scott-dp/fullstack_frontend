@@ -174,6 +174,7 @@
   "Failed to save dish": "No se pudo guardar el plato",
   "Edit Dish": "Editar plato",
   "Back": "Volver",
+  "Cancel": "Cancelar",
   "Dish name": "Nombre del plato",
   "Description": "Descripción",
   "Optional description": "Descripción opcional",
@@ -379,6 +380,8 @@
   ,"No training assignments": "No hay formaciones asignadas"
   ,"You have no training assigned to you.": "No tienes formación asignada."
   ,"Assigned": "Asignado"
+  ,"Assign To": "Asignar a"
+  ,"Completed": "Completado"
   ,"Overdue": "Vencido"
   ,"Assigned by {username} on {date}": "Asignado por {username} el {date}"
   ,"Due: {date}": "Fecha límite: {date}"
@@ -473,4 +476,34 @@
   ,"Invalid username, email, or password": "Nombre de usuario, correo o contraseña no válidos"
   ,"Could not create account. Check your details or try a different username or email.": "No se pudo crear la cuenta. Revisa tus datos o prueba con otro nombre de usuario o correo."
   ,"Join restaurants, bars, and cafes already using CheckMate to stay audit-ready.": "Únete a restaurantes, bares y cafeterías que ya usan CheckMate para estar preparados para las inspecciones."
+  ,"IK-Mat (Food)": "IK-Mat (Alimentos)"
+  ,"HACCP": "HACCP"
+  ,"Archived": "Archivado"
+  ,"Frequency": "Frecuencia"
+  ,"All": "Todos"
+  ,"Never": "Nunca"
+  ,"Phone": "Teléfono"
+  ,"Supplier": "Proveedor"
+  ,"Items": "Artículos"
+  ,"Temperature (°C)": "Temperatura (°C)"
+  ,"Min Threshold (°C)": "Umbral mínimo (°C)"
+  ,"Max Threshold (°C)": "Umbral máximo (°C)"
+  ,"Temp (°C)": "Temp (°C)"
+  ,"Complete": "Completar"
+  ,"Group 1 (up to 4.7%)": "Grupo 1 (hasta 4,7 %)"
+  ,"Group 2 (4.7%-22%)": "Grupo 2 (4,7 %-22 %)"
+  ,"Group 3 (above 22%)": "Grupo 3 (más de 22 %)"
+  ,"SECURITY PLAN": "Plan de seguridad"
+  ,"Serving Hours": "Horario de servicio"
+  ,"min": "min"
+  ,"GUEST REMOVED": "Cliente retirado"
+  ,"Verification token is missing": "Falta el token de verificación"
+  ,"Verify Email": "Verificar correo"
+  ,"Activate your account before signing in.": "Activa tu cuenta antes de iniciar sesión."
+  ,"Verifying your email...": "Verificando tu correo..."
+  ,"Go to login": "Ir al inicio de sesión"
+  ,"Comment (required)": "Comentario (obligatorio)"
+  ,"Comment (optional)": "Comentario (opcional)"
+  ,"Overall Comment (optional)": "Comentario general (opcional)"
+  ,"Submit Checklist": "Enviar lista de verificación"
 }

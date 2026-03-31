@@ -174,6 +174,7 @@
   "Failed to save dish": "परिकार सेभ गर्न असफल भयो",
   "Edit Dish": "परिकार सम्पादन",
   "Back": "फर्कनुहोस्",
+  "Cancel": "रद्द गर्नुहोस्",
   "Dish name": "परिकारको नाम",
   "Description": "विवरण",
   "Optional description": "वैकल्पिक विवरण",
@@ -379,6 +380,8 @@
   ,"No training assignments": "कुनै प्रशिक्षण असाइनमेन्ट छैन"
   ,"You have no training assigned to you.": "तपाईंलाई कुनै प्रशिक्षण असाइन गरिएको छैन।"
   ,"Assigned": "असाइन गरिएको"
+  ,"Assign To": "जिम्मा दिनुहोस्"
+  ,"Completed": "सम्पन्न"
   ,"Overdue": "म्याद नाघेको"
   ,"Assigned by {username} on {date}": "{date} मा {username} द्वारा असाइन गरिएको"
   ,"Due: {date}": "अन्तिम मिति: {date}"
@@ -473,4 +476,34 @@
   ,"Invalid username, email, or password": "प्रयोगकर्ता नाम, इमेल वा पासवर्ड मिलेन"
   ,"Could not create account. Check your details or try a different username or email.": "खाता बनाउन सकिएन। आफ्नो विवरण जाँच गर्नुहोस् वा फरक प्रयोगकर्ता नाम वा इमेल प्रयोग गर्नुहोस्।"
   ,"Join restaurants, bars, and cafes already using CheckMate to stay audit-ready.": "पहिले नै CheckMate प्रयोग गरिरहेका रेस्टुरेन्ट, बार र क्याफेहरूसँग जोडिनुहोस् र निरीक्षणका लागि तयार रहनुहोस्।"
+  ,"IK-Mat (Food)": "IK-Mat (खाना)"
+  ,"HACCP": "HACCP"
+  ,"Archived": "संग्रहित"
+  ,"Frequency": "आवृत्ति"
+  ,"All": "सबै"
+  ,"Never": "कहिल्यै होइन"
+  ,"Phone": "फोन"
+  ,"Supplier": "आपूर्तिकर्ता"
+  ,"Items": "वस्तुहरू"
+  ,"Temperature (°C)": "तापक्रम (°C)"
+  ,"Min Threshold (°C)": "न्यूनतम सीमा (°C)"
+  ,"Max Threshold (°C)": "अधिकतम सीमा (°C)"
+  ,"Temp (°C)": "ताप (°C)"
+  ,"Complete": "सम्पन्न गर्नुहोस्"
+  ,"Group 1 (up to 4.7%)": "समूह 1 (४.७% सम्म)"
+  ,"Group 2 (4.7%-22%)": "समूह 2 (४.७%-२२%)"
+  ,"Group 3 (above 22%)": "समूह 3 (२२% भन्दा माथि)"
+  ,"SECURITY PLAN": "सुरक्षा योजना"
+  ,"Serving Hours": "सेवा समय"
+  ,"min": "मिनेट"
+  ,"GUEST REMOVED": "अतिथि हटाइयो"
+  ,"Verification token is missing": "प्रमाणीकरण टोकन हराइरहेको छ"
+  ,"Verify Email": "इमेल प्रमाणित गर्नुहोस्"
+  ,"Activate your account before signing in.": "साइन इन गर्नु अघि आफ्नो खाता सक्रिय गर्नुहोस्।"
+  ,"Verifying your email...": "तपाईंको इमेल प्रमाणित हुँदैछ..."
+  ,"Go to login": "लगइनमा जानुहोस्"
+  ,"Comment (required)": "टिप्पणी (आवश्यक)"
+  ,"Comment (optional)": "टिप्पणी (वैकल्पिक)"
+  ,"Overall Comment (optional)": "समग्र टिप्पणी (वैकल्पिक)"
+  ,"Submit Checklist": "चेकलिस्ट बुझाउनुहोस्"
 }
