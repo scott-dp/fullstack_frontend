@@ -114,6 +114,7 @@ npm run cy:open
 ## Deployment To The VM
 
 The production frontend is deployed to a VM through GitHub Actions CD and a self-hosted runner.
+The deployed app can be found at https://idatt2105-20.idi.ntnu.no/
 
 ### Deployment Flow
 
@@ -161,3 +162,27 @@ The frontend does not connect directly to the database, but it is built to work 
 - H2 in-memory database in tests
 
 Those details are configured in the backend repository and documented in the backend README.
+
+## Credentials
+
+The given staff, manager and admin accounts belong to the organization Everest Fusion & Sushi
+
+Staff user credentials:
+ - Username: staff
+ - Password: staff123
+
+Manager user credentials:
+ - Username: manager
+ - Password: manager123
+
+Admin user credentials:
+ - Username: admin
+ - Password: admin123
+
+The only superadmin account credentials:
+ - Username: superadmin
+ - Password: superadmin123
+
+## System Architecture
+
+![system architecture](image.png)
