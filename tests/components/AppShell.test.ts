@@ -1,3 +1,6 @@
+/**
+ * Component tests for the lightweight app shell wrapper.
+ */
 import { fireEvent, render, screen } from '@testing-library/vue'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import AppShell from '@/components/layout/AppShell.vue'

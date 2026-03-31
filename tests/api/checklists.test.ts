@@ -1,14 +1,17 @@
+/**
+ * Contract tests for checklist API helpers.
+ */
 import { describe, expect, it, vi } from 'vitest'
 
 const requestMock = vi.fn()
 
-vi.mock('@/api/client', () => ({
+vi.mock('@/api/core/client.ts', () => ({
   request: requestMock,
 }))
 
 describe('checklistApi', () => {
   it('builds checklist template and completion requests correctly', async () => {
-    const { checklistApi } = await import('@/api/checklists')
+    const { checklistApi } = await import('../../src/api/operations/checklists')
     const templatePayload = {
       title: 'Daily kitchen',
       frequency: 'DAILY',
@@ -57,7 +60,7 @@ describe('checklistApi', () => {
   })
 
   it('omits the template category query when not provided', async () => {
-    const { checklistApi } = await import('@/api/checklists')
+    const { checklistApi } = await import('../../src/api/operations/checklists')
 
     checklistApi.listTemplates()
     expect(requestMock).toHaveBeenCalledWith('/checklists/templates')

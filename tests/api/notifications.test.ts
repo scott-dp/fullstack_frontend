@@ -1,14 +1,17 @@
+/**
+ * Contract tests for notification API helpers.
+ */
 import { describe, expect, it, vi } from 'vitest'
 
 const requestMock = vi.fn()
 
-vi.mock('@/api/client', () => ({
+vi.mock('@/api/core/client.ts', () => ({
   request: requestMock,
 }))
 
 describe('notificationApi', () => {
   it('uses the expected notification endpoints', async () => {
-    const { notificationApi } = await import('@/api/notifications')
+    const { notificationApi } = await import('../../src/api/operations/notifications')
 
     notificationApi.list()
     notificationApi.unreadCount()

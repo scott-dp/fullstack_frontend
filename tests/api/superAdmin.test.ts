@@ -1,14 +1,17 @@
+/**
+ * Contract tests for superadmin API helpers.
+ */
 import { describe, expect, it, vi } from 'vitest'
 
 const requestMock = vi.fn()
 
-vi.mock('@/api/client', () => ({
+vi.mock('@/api/core/client.ts', () => ({
   request: requestMock,
 }))
 
 describe('superAdminApi', () => {
   it('uses the expected superadmin endpoints', async () => {
-    const { superAdminApi } = await import('@/api/superAdmin')
+    const { superAdminApi } = await import('../../src/api/admin/superAdmin')
 
     const payload = {
       organizationName: 'North Peak Bistro',

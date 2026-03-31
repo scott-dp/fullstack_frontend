@@ -1,3 +1,6 @@
+/**
+ * Compatibility tests for the legacy HTTP client exports.
+ */
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ApiError, httpClient } from '@/services/httpClient'
 

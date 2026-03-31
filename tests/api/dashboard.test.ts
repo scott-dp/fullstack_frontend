@@ -1,14 +1,17 @@
+/**
+ * Contract tests for dashboard API requests.
+ */
 import { describe, expect, it, vi } from 'vitest'
 
 const requestMock = vi.fn()
 
-vi.mock('@/api/client', () => ({
+vi.mock('@/api/core/client.ts', () => ({
   request: requestMock,
 }))
 
 describe('dashboardApi', () => {
   it('requests the dashboard endpoint', async () => {
-    const { dashboardApi } = await import('@/api/dashboard')
+    const { dashboardApi } = await import('../../src/api/operations/dashboard')
 
     dashboardApi.get()
 

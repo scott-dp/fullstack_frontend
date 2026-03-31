@@ -1,8 +1,11 @@
+/**
+ * View tests for the invited-admin account setup flow.
+ */
 import { render, fireEvent, screen } from '@testing-library/vue'
 import { describe, expect, it, vi } from 'vitest'
-import AdminSetupView from '@/views/AdminSetupView.vue'
+import AdminSetupView from '../../src/views/admin/AdminSetupView.vue'
 import { i18n } from '@/i18n'
-import { HttpError } from '@/api/client'
+import { HttpError } from '../../src/api/core/client'
 
 const { pushMock, routeMock, authApiMock } = vi.hoisted(() => ({
   pushMock: vi.fn(),
@@ -24,10 +27,8 @@ vi.mock('vue-router', async () => {
   }
 })
 
-vi.mock('@/api/auth', async () => {
-  const actual = await vi.importActual<typeof import('@/api/auth')>('@/api/auth')
+vi.mock('@/api/auth/auth.ts', () => {
   return {
-    ...actual,
     authApi: authApiMock,
   }
 })

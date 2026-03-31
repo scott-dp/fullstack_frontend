@@ -1,3 +1,4 @@
+<!-- Notification center for reviewing assignment, reminder, and system alerts. -->
 <script setup lang="ts">
 /**
  * Notifications view displaying all user notifications in a list.
@@ -7,7 +8,7 @@
 import { onMounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useNotificationStore } from '@/stores/notifications'
-import type { Notification } from '@/api/notifications'
+import type { Notification } from '@/api/operations/notifications.ts'
 
 const store = useNotificationStore()
 const { t, locale } = useI18n()

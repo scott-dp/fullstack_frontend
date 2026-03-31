@@ -89,6 +89,7 @@
   "User Management": "صارفین کا انتظام",
   "Log out": "لاگ آؤٹ",
   "Toggle menu": "مینو ٹوگل کریں",
+  "Primary navigation": "بنیادی نیویگیشن",
   "Register": "رجسٹر کریں",
   "Create your account.": "اپنا اکاؤنٹ بنائیں۔",
   "Username": "صارف نام",
@@ -173,6 +174,7 @@
   "Failed to save dish": "ڈش محفوظ نہیں ہو سکی",
   "Edit Dish": "ڈش میں ترمیم کریں",
   "Back": "واپس",
+  "Cancel": "منسوخ کریں",
   "Dish name": "ڈش کا نام",
   "Description": "تفصیل",
   "Optional description": "اختیاری تفصیل",
@@ -378,6 +380,8 @@
   ,"No training assignments": "کوئی تربیتی اسائنمنٹ نہیں"
   ,"You have no training assigned to you.": "آپ کو کوئی تربیت تفویض نہیں کی گئی۔"
   ,"Assigned": "تفویض شدہ"
+  ,"Assign To": "تفویض کریں"
+  ,"Completed": "مکمل"
   ,"Overdue": "مدت گزر چکی"
   ,"Assigned by {username} on {date}": "{date} کو {username} کی طرف سے تفویض کیا گیا"
   ,"Due: {date}": "آخری تاریخ: {date}"
@@ -461,4 +465,45 @@
   ,"Supply Chain": "سپلائی چین"
   ,"Training": "تربیت"
   ,"Account": "اکاؤنٹ"
+  ,"Show": "دکھائیں"
+  ,"Hide": "چھپائیں"
+  ,"Show password": "پاس ورڈ دکھائیں"
+  ,"Hide password": "پاس ورڈ چھپائیں"
+  ,"Set Up Admin Account": "ایڈمن اکاؤنٹ سیٹ اپ کریں"
+  ,"Activate account": "اکاؤنٹ فعال کریں"
+  ,"Failed to complete account setup": "اکاؤنٹ سیٹ اپ مکمل نہ ہو سکا"
+  ,"This setup link is invalid or has expired. Ask for a new admin invitation.": "یہ سیٹ اپ لنک غلط ہے یا اس کی میعاد ختم ہو چکی ہے۔ نئی ایڈمن دعوت طلب کریں۔"
+  ,"Invalid username, email, or password": "غلط صارف نام، ای میل یا پاس ورڈ"
+  ,"Could not create account. Check your details or try a different username or email.": "اکاؤنٹ نہیں بنایا جا سکا۔ اپنی تفصیلات چیک کریں یا دوسرا صارف نام یا ای میل آزمائیں۔"
+  ,"Join restaurants, bars, and cafes already using CheckMate to stay audit-ready.": "ان ریستورانوں، بارز اور کیفیز کے ساتھ شامل ہوں جو پہلے ہی CheckMate استعمال کر رہے ہیں تاکہ معائنوں کے لیے تیار رہ سکیں۔"
+  ,"IK-Mat (Food)": "IK-Mat (خوراک)"
+  ,"HACCP": "HACCP"
+  ,"Archived": "آرکائیو شدہ"
+  ,"Frequency": "تعدد"
+  ,"All": "سب"
+  ,"Never": "کبھی نہیں"
+  ,"Phone": "فون"
+  ,"Supplier": "سپلائر"
+  ,"Items": "اشیاء"
+  ,"Temperature (°C)": "درجہ حرارت (°C)"
+  ,"Min Threshold (°C)": "کم از کم حد (°C)"
+  ,"Max Threshold (°C)": "زیادہ سے زیادہ حد (°C)"
+  ,"Temp (°C)": "درجہ حرارت (°C)"
+  ,"Complete": "مکمل کریں"
+  ,"Group 1 (up to 4.7%)": "گروپ 1 (4.7٪ تک)"
+  ,"Group 2 (4.7%-22%)": "گروپ 2 (4.7٪-22٪)"
+  ,"Group 3 (above 22%)": "گروپ 3 (22٪ سے اوپر)"
+  ,"SECURITY PLAN": "سیکیورٹی پلان"
+  ,"Serving Hours": "سروس کے اوقات"
+  ,"min": "منٹ"
+  ,"GUEST REMOVED": "مہمان ہٹایا گیا"
+  ,"Verification token is missing": "تصدیقی ٹوکن موجود نہیں ہے"
+  ,"Verify Email": "ای میل کی تصدیق کریں"
+  ,"Activate your account before signing in.": "سائن ان کرنے سے پہلے اپنا اکاؤنٹ فعال کریں۔"
+  ,"Verifying your email...": "آپ کی ای میل کی تصدیق کی جا رہی ہے..."
+  ,"Go to login": "لاگ اِن پر جائیں"
+  ,"Comment (required)": "تبصرہ (ضروری)"
+  ,"Comment (optional)": "تبصرہ (اختیاری)"
+  ,"Overall Comment (optional)": "مجموعی تبصرہ (اختیاری)"
+  ,"Submit Checklist": "چیک لسٹ جمع کریں"
 }

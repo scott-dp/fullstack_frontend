@@ -1,3 +1,4 @@
+/* Global base styles shared by the public landing page and authenticated app shell. */
 :root {
   font-family: Georgia, 'Times New Roman', serif;
   color: #1d2733;
@@ -9,6 +10,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
+}
+
+.clickable-row:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.clickable-row:focus-visible td {
+  background: var(--accent-bg);
 }
 
 * {

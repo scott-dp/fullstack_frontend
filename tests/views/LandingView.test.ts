@@ -1,3 +1,6 @@
+/**
+ * View tests for the public landing page content and navigation.
+ */
 import { render, screen } from '@testing-library/vue'
 import { describe, expect, it, vi } from 'vitest'
 import LandingView from '@/views/LandingView.vue'

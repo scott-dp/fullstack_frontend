@@ -1,3 +1,6 @@
+/**
+ * Store tests for authentication state management and role helpers.
+ */
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
@@ -13,7 +16,7 @@ const { authApiMock } = vi.hoisted(() => ({
   },
 }))
 
-vi.mock('@/api/auth', () => ({
+vi.mock('@/api/auth/auth.ts', () => ({
   authApi: authApiMock,
 }))
 
@@ -72,8 +75,7 @@ describe('auth store', () => {
 
   it('returns registration verification details without authenticating the user', async () => {
     authApiMock.register.mockResolvedValue({
-      message: 'Registration successful. Verify your email before logging in.',
-      verificationLink: 'http://localhost:5173/verify-email?token=abc',
+      message: 'Registration successful. Check your email to verify your account before logging in.',
     })
     const store = useAuthStore()
 
@@ -83,7 +85,7 @@ describe('auth store', () => {
       password: 'secret',
     })
 
-    expect(response.verificationLink).toContain('verify-email')
+    expect(response.message).toContain('Check your email')
     expect(store.user).toBeNull()
     expect(store.loading).toBe(false)
   })

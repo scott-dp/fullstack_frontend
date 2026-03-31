@@ -89,6 +89,7 @@
   "User Management": "User Management",
   "Log out": "Log out",
   "Toggle menu": "Toggle menu",
+  "Primary navigation": "Primary navigation",
   "Register": "Register",
   "Create your account.": "Create your account.",
   "Username": "Username",
@@ -178,6 +179,7 @@
   "Failed to save dish": "Failed to save dish",
   "Edit Dish": "Edit Dish",
   "Back": "Back",
+  "Cancel": "Cancel",
   "Dish name": "Dish name",
   "Description": "Description",
   "Optional description": "Optional description",
@@ -393,6 +395,7 @@
   ,"Severity": "Severity"
   ,"Reported By": "Reported By"
   ,"Assigned To": "Assigned To"
+  ,"Assign To": "Assign To"
   ,"No deviations found": "No deviations found"
   ,"No deviations match your filters.": "No deviations match your filters."
   ,"Low": "Low"
@@ -574,6 +577,7 @@
   ,"No training assignments": "No training assignments"
   ,"You have no training assigned to you.": "You have no training assigned to you."
   ,"Assigned": "Assigned"
+  ,"Completed": "Completed"
   ,"Overdue": "Overdue"
   ,"Assigned by {username} on {date}": "Assigned by {username} on {date}"
   ,"Due: {date}": "Due: {date}"
@@ -657,4 +661,45 @@
   ,"Supply Chain": "Supply Chain"
   ,"Training": "Training"
   ,"Account": "Account"
+  ,"Show": "Show"
+  ,"Hide": "Hide"
+  ,"Show password": "Show password"
+  ,"Hide password": "Hide password"
+  ,"Set Up Admin Account": "Set Up Admin Account"
+  ,"Activate account": "Activate account"
+  ,"Failed to complete account setup": "Failed to complete account setup"
+  ,"This setup link is invalid or has expired. Ask for a new admin invitation.": "This setup link is invalid or has expired. Ask for a new admin invitation."
+  ,"Invalid username, email, or password": "Invalid username, email, or password"
+  ,"Could not create account. Check your details or try a different username or email.": "Could not create account. Check your details or try a different username or email."
+  ,"Join restaurants, bars, and cafes already using CheckMate to stay audit-ready.": "Join restaurants, bars, and cafes already using CheckMate to stay audit-ready."
+  ,"IK-Mat (Food)": "IK-Mat (Food)"
+  ,"HACCP": "HACCP"
+  ,"Archived": "Archived"
+  ,"Frequency": "Frequency"
+  ,"All": "All"
+  ,"Never": "Never"
+  ,"Phone": "Phone"
+  ,"Supplier": "Supplier"
+  ,"Items": "Items"
+  ,"Temperature (°C)": "Temperature (°C)"
+  ,"Min Threshold (°C)": "Min Threshold (°C)"
+  ,"Max Threshold (°C)": "Max Threshold (°C)"
+  ,"Temp (°C)": "Temp (°C)"
+  ,"Complete": "Complete"
+  ,"Group 1 (up to 4.7%)": "Group 1 (up to 4.7%)"
+  ,"Group 2 (4.7%-22%)": "Group 2 (4.7%-22%)"
+  ,"Group 3 (above 22%)": "Group 3 (above 22%)"
+  ,"SECURITY PLAN": "Security Plan"
+  ,"Serving Hours": "Serving Hours"
+  ,"min": "min"
+  ,"GUEST REMOVED": "Guest Removed"
+  ,"Verification token is missing": "Verification token is missing"
+  ,"Verify Email": "Verify Email"
+  ,"Activate your account before signing in.": "Activate your account before signing in."
+  ,"Verifying your email...": "Verifying your email..."
+  ,"Go to login": "Go to login"
+  ,"Comment (required)": "Comment (required)"
+  ,"Comment (optional)": "Comment (optional)"
+  ,"Overall Comment (optional)": "Overall Comment (optional)"
+  ,"Submit Checklist": "Submit Checklist"
 }

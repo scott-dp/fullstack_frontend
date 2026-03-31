@@ -1,3 +1,4 @@
+<!-- Shell component that renders page chrome slots for the public fallback views. -->
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -25,6 +26,7 @@ const signOut = async () => {
 }
 </script>
 
+<!-- Simple wrapper component for layout-level composition and UI tests. -->
 <template>
   <div class="shell">
     <header class="panel app-shell__header">

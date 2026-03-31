@@ -1,3 +1,6 @@
+/**
+ * Configures Vue I18n with the supported locale bundles and browser fallback behavior.
+ */
 import { createI18n } from 'vue-i18n'
 import en from '@/locales/en.json'
 import es from '@/locales/es.json'
